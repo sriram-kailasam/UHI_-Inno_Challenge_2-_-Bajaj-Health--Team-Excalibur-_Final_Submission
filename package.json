@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/sriram-kailasam/bfhl-group-consult#readme",
   "dependencies": {
-    "@trpc/server": "^9.25.3",
+    "@trpc/server": "9.25.3",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/serve-index": "^1.9.1",

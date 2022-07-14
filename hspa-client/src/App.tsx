@@ -7,7 +7,7 @@ function App() {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({
-      url: '/trpc',
+      url: '/api/trpc',
     }),
   );
 

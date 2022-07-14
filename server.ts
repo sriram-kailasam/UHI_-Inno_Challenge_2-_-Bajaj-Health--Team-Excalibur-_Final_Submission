@@ -7,7 +7,6 @@ import serveIndex from 'serve-index'
 
 export const appRouter = trpc
   .router()
-  // Create procedure at path 'hello'
   .query('hello', {
     resolve({ ctx }) {
       return {
@@ -27,7 +26,7 @@ app.use('/eua', express.static(euaDir), serveIndex('eua'))
 app.use('/hspa', express.static(hspaDir), serveIndex('hspa'))
 
 app.use(
-  '/trpc',
+  '/api/trpc',
   trpcExpress.createExpressMiddleware({
     router: appRouter,
   })
