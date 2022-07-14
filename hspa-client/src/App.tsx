@@ -7,7 +7,7 @@ function App() {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({
-      url: 'http://localhost:5000/trpc',
+      url: '/trpc',
     }),
   );
 
@@ -15,6 +15,7 @@ function App() {
     return (
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
+          <p>Hello</p>
           <Hello></Hello>
         </QueryClientProvider>
       </trpc.Provider>

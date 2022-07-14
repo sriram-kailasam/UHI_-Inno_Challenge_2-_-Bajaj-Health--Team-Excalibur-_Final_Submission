@@ -2,6 +2,8 @@ import * as trpc from '@trpc/server';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import express from "express"
 import cors from "cors"
+import path from "path"
+import serveIndex from 'serve-index'
 
 export const appRouter = trpc
   .router()
@@ -17,11 +19,17 @@ export const appRouter = trpc
 
 const app = express()
 app.use(cors())
+
+const euaDir = path.join(__dirname, '..', 'eua-client', 'build')
+const hspaDir = path.join(__dirname, '..', 'hspa-client', 'build')
+
+app.use('/eua', express.static(euaDir), serveIndex('eua'))
+app.use('/hspa', express.static(hspaDir), serveIndex('hspa'))
+
 app.use(
   '/trpc',
   trpcExpress.createExpressMiddleware({
     router: appRouter,
-
   })
 );
 
