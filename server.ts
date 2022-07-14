@@ -4,6 +4,7 @@ import express from "express"
 import cors from "cors"
 import path from "path"
 import serveIndex from 'serve-index'
+import 'dotenv/config'
 
 export const appRouter = trpc
   .router()
@@ -32,6 +33,6 @@ app.use(
   })
 );
 
-app.listen(5000, () => console.log("listening"))
+app.listen(process.env.PORT, () => console.log("listening"))
 
 export type AppRouter = typeof appRouter;
