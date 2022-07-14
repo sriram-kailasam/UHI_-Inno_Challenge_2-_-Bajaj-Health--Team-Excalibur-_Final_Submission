@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "yarn tsc && yarn build:eua && yarn build:hspa",
-    "build:eua": "cd eua-client && yarn build",
-    "build:hspa": "cd hspa-client && yarn build",
+    "build:eua": "cd eua-client && yarn && yarn build",
+    "build:hspa": "cd hspa-client && yarn && yarn build",
     "start": "node dist/server"
   },
   "repository": {
