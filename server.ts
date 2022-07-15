@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import path from "path"
 import serveIndex from 'serve-index'
+import bodyParser from "body-parser"
 import httpLogger from "pino-http"
 import 'dotenv/config'
 
@@ -15,6 +16,7 @@ const hspaDir = path.join(__dirname, '..', 'hspa-client', 'build')
 app.use('/eua', express.static(euaDir), serveIndex('eua'))
 app.use('/hspa', express.static(hspaDir), serveIndex('hspa'))
 
+app.use(bodyParser.json())
 app.use(httpLogger({
   serializers: {
     req(req) {

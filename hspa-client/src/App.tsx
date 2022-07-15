@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-
-function App() {
+const App  = () => {
   const [queryClient] = useState(() => new QueryClient());
 
     return (
