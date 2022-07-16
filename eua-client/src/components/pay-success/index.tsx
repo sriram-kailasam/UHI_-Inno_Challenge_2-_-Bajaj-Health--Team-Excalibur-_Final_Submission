@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { calendar2 } from "../../images";
 import { IPayState } from "../doc-profile";
 import dayjs from "dayjs";
@@ -9,6 +9,7 @@ const PaySuccess = () => {
     const location = useLocation();
     const { doctorProfile, userProfile, slotData } =
         location.state as IPayState;
+    const navigate = useNavigate();
 
     return (
         <div className="pay-success">
@@ -33,7 +34,12 @@ const PaySuccess = () => {
                     </span>
                     <span className="lower">{"Video Consultation"}</span>
                 </p>
-                <Button className="my-app-btn">{"My Appointment"}</Button>
+                <Button
+                    className="my-app-btn"
+                    onClick={() => navigate("/eua/my-appointments")}
+                >
+                    {"My Appointment"}
+                </Button>
             </div>
         </div>
     );
