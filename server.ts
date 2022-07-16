@@ -8,6 +8,7 @@ import 'dotenv/config'
 import { uhiHspaController } from "./api/uhi/hspa/uhiHspa.controller"
 import { Server } from 'socket.io'
 import { createServer } from 'http'
+import { SocketServer } from "./api/sockets"
 
 const app = express()
 app.use(cors())
@@ -28,7 +29,7 @@ app.use(httpLogger({
   },
 }))
 
-app.use('/api/hspa', uhiHspaController());
+app.use('/api/uhi/hspa', uhiHspaController());
 
 app.get('/eua/*', function (_, res) {
   res.sendFile(euaDir + '/index.html');
@@ -39,11 +40,6 @@ app.get('/hspa/*', function (_, res) {
 });
 
 const httpServer = createServer(app)
-const io = new Server(httpServer);
-
-io.on('connect', socket => {
-  console.log("connected", socket.id, 'data: ', socket.data)
-  socket.send("Connected as", socket.id)
-})
+SocketServer.init(httpServer)
 
 httpServer.listen(process.env.PORT, () => console.log("listening"))
