@@ -2,6 +2,7 @@ import { DoctorSearch, EuaHome } from "../components";
 import AppointmentPay from "../components/app-pay";
 import DocProfile from "../components/doc-profile";
 import Login from "../components/login";
+import PaySuccess from "../components/pay-success";
 import VideoCall from "../components/tele-consult/components/video-call";
 
 export const routes = [
@@ -26,7 +27,7 @@ export const routes = [
         path: "search/:docHprId/pay",
     },
     {
-        element: <></>,
+        element: <PaySuccess />,
         path: "search/:docHprId/pay-success",
     },
     {

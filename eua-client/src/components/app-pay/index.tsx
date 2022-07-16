@@ -92,7 +92,21 @@ const AppointmentPay = () => {
 
                 <div className="pay-footer">
                     <span className="total-fee">Total Fee</span>
-                    <Button className="pay-btn">
+                    <Button
+                        className="pay-btn"
+                        onClick={() => {
+                            navigate(
+                                `/eua/search/${doctorProfile.hprId}/pay-success`,
+                                {
+                                    state: {
+                                        doctorProfile,
+                                        userProfile,
+                                        slotData,
+                                    },
+                                }
+                            );
+                        }}
+                    >
                         Pay ₹ {doctorProfile.fees}
                     </Button>
                 </div>

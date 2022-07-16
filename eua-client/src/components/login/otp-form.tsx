@@ -28,6 +28,10 @@ const OtpForm = ({
         })
             .then(({ data }) => {
                 localStorage.setItem("auth-token", data.data.token);
+                localStorage.setItem(
+                    "user-profile",
+                    JSON.stringify(data.profile)
+                );
                 dispatch(
                     updateProfile({
                         profile: data.profile,
