@@ -1,9 +1,4 @@
 .login-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-
     .address-input-container {
         display: flex;
         flex-direction: column;
@@ -50,6 +45,64 @@
                 margin: unset;
                 padding: unset;
             }
+        }
+    }
+}
+
+.login-form,
+.otp-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+    .login-btn,
+    .otp-submit-btn {
+        background-color: #153e90;
+        width: 100%;
+        height: 40px;
+        border-radius: 6px;
+
+        & > span {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            letter-spacing: 0em;
+            text-align: left;
+            color: #fff;
+            margin: unset;
+            padding: unset;
+        }
+    }
+
+    .disabled {
+        background-color: #858585 !important;
+        cursor: not-allowed !important;
+    }
+
+    .otp-input {
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        margin-top: 12px;
+
+        & > input {
+            height: 50px;
+            width: 40px !important;
+            text-align: center;
+            border-radius: 10px;
+            border: 0.5px solid #d7dedd;
+        }
+    }
+
+    .otp-input-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & > div {
+            display: flex;
+            justify-content: center;
         }
     }
 }

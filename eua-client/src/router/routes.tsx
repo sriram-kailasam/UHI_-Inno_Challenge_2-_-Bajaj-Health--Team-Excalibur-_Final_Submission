@@ -1,4 +1,4 @@
-import { EuaHome } from "../components";
+import { DoctorSearch, EuaHome } from "../components";
 import Login from "../components/login";
 
 export const routes = [
@@ -9,6 +9,10 @@ export const routes = [
     {
         element: <Login />,
         path: "login",
+    },
+    {
+        element: <DoctorSearch />,
+        path: "search",
     },
     {
         // fallback route
