@@ -4,6 +4,7 @@ export function uhiEuaController() {
   const router = Router()
 
   router.post('/on_message', handleOnMessage)
+
   return router;
 }
 
