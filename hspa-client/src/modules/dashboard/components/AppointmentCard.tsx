@@ -5,6 +5,7 @@ import { getPatientAvatar, getPatientGender } from 'shared/utils/utils';
 import CalendarIcon from 'shared/assests/calendarIcon.svg';
 import ClockIcon from 'shared/assests/clockIcon.svg';
 import VideoCameraIcon from 'shared/assests/videoCameraIcon.svg';
+import GroupConsultIcon from 'shared/assests/groupConsultIcon.svg';
 import AbhaLogo from 'shared/assests/abhaLogo.jpg';
 import { AppointmentData } from '../types';
 
@@ -49,7 +50,8 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
           </div>
         </div>
         <div className='flex items-center justify-between'>
-          {appointmentData.isGroupConsult && <div className='text-xs text-[#4b4b4b] font-semibold'>
+          {appointmentData.isGroupConsult && <div className='text-xs text-[#4b4b4b] font-semibold flex'>
+            <img src={GroupConsultIcon} alt='video camera' className='mr-2 w-4 h-4'/>
             {appointmentData.groupConsult?.name || ''}
           </div>}
           <div className='flex items-center mr-2'>
