@@ -1,9 +1,12 @@
 import { FC, useEffect, useRef } from "react";
-import useWebSocket from "react-use-websocket";
 import { useSetState } from "react-use";
 
-import { HSPA_WEB_SOCKET_URL_HEROKU, rtcPeerConnectionConfig } from "../../../utils/constants";
+import {
+  HSPA_WEB_SOCKET_URL_NGROK,
+  rtcPeerConnectionConfig,
+} from "../../../utils/constants";
 import { useMessage } from "../services/message";
+import { useSocket, useSocketEvent } from "socket.io-react-hook";
 
 interface Props {}
 
@@ -26,33 +29,35 @@ const VideoCall: FC<Props> = () => {
     getLocalWebCamFeed();
   }, []);
 
-  const { lastMessage, readyState } = useWebSocket(HSPA_WEB_SOCKET_URL_HEROKU, {
-    fromSocketIO: true,
-    onMessage: (message) => {
-      console.log(message, "******** check message");
+  const { socket, connected } = useSocket(HSPA_WEB_SOCKET_URL_NGROK, {
+    transports: ["websocket"],
+    query: {
+      userId: "airesh@abha",
     },
-    onOpen: () => {
-      console.log("Openeedinng now");
-    },
-    // onMessage: function(event) {
-    //     const jsonData = JSON.parse(event.data);
-    // switch (jsonData.type){
-    //     case 'candidate':
-    //         handleCandidate(jsonData.data, jsonData.id);
-    //         break;
-    //     case 'offer':
-    //         handleOffer(jsonData.data, jsonData.id);
-    //         break;
-    //     case 'answer':
-    //         handleAnswer(jsonData.data, jsonData.id);
-    //         break;
-    //     default:
-    //         break
-    // }
-    // }
   });
 
+  useEffect(() => {
+    if (connected) {
+      createRTCPeerConnection();
+    }
+  }, [connected]);
+
+  const { lastMessage } = useSocketEvent(socket, "message");
+  useEffect(() => {
+    console.log(socket);
+    socket.on("message", (message: any) => {
+      console.log(message, "****** check the message here");
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    console.log('check last message here', lastMessage);
+  }, [lastMessage]);
+
   function createRTCPeerConnection() {
+    if (!(connection.current as any).addTrack) {
+      return;
+    }
     connection.current = new RTCPeerConnection(rtcPeerConnectionConfig);
 
     // Add both video and audio tracks to the connection
@@ -157,11 +162,6 @@ const VideoCall: FC<Props> = () => {
     setState({ localStream: stream });
   };
 
-  useEffect(() => {
-    console.log(readyState, "******* check connection status");
-    console.log(lastMessage, "******* check last message");
-  }, [lastMessage, readyState]);
-
   const getLocalWebCamFeed = () => {
     const constraints = {
       audio: true,
@@ -185,7 +185,6 @@ const VideoCall: FC<Props> = () => {
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function (stream: any) {
-          console.log(stream, "****** check stream");
           initiateSocketAndPeerConnection(stream);
         })
         .catch(function (e: any) {

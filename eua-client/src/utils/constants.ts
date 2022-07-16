@@ -1,5 +1,5 @@
-export const baseUrl = 'https://bfhl-group-consult.herokuapp.com/api'
-export const HSPA_WEB_SOCKET_URL_NGROK = "wss://9508-117-99-248-86.in.ngrok.io";
+export const baseUrl = 'https://24d0-117-99-248-86.in.ngrok.io'
+export const HSPA_WEB_SOCKET_URL_NGROK = "wss://24d0-117-99-248-86.in.ngrok.io";
 export const HSPA_WEB_SOCKET_URL_HEROKU =
   "wss://bfhl-group-consult.herokuapp.com/";
 

@@ -1,14 +1,13 @@
 import { FC, useEffect, useRef } from "react";
-import useWebSocket, { useSocketIO } from "react-use-websocket";
 import { useSetState } from "react-use";
-import isEmpty from "lodash/isEmpty";
 
 import log from "lib/log";
 import {
-    HSPA_WEB_SOCKET_URL_NGROK,
+  HSPA_WEB_SOCKET_URL_NGROK,
   rtcPeerConnectionConfig,
 } from "shared/constants";
 import { useMessage } from "modules/tele-communication/services/message";
+import { useSocket, useSocketEvent } from "socket.io-react-hook";
 
 interface Props {}
 
@@ -31,34 +30,26 @@ const VideoCall: FC<Props> = () => {
     getLocalWebCamFeed();
   }, []);
 
-  const { lastMessage, readyState } = useSocketIO(HSPA_WEB_SOCKET_URL_NGROK, {
-    fromSocketIO: true,
-    queryParams: {
-        userId: '12345678'
+  const { socket, connected } = useSocket(HSPA_WEB_SOCKET_URL_NGROK, {
+    transports: ["websocket"],
+    query: {
+      userId: "mohit@hpr.abdm",
     },
-    onMessage: (message) => {
-      console.log(message, "******** check message");
-    },
-    onOpen: () => {
-      createRTCPeerConnection();
-    },
-    // onMessage: function(event) {
-    //     const jsonData = JSON.parse(event.data);
-    // switch (jsonData.type){
-    //     case 'candidate':
-    //         handleCandidate(jsonData.data, jsonData.id);
-    //         break;
-    //     case 'offer':
-    //         handleOffer(jsonData.data, jsonData.id);
-    //         break;
-    //     case 'answer':
-    //         handleAnswer(jsonData.data, jsonData.id);
-    //         break;
-    //     default:
-    //         break
-    // }
-    // }
   });
+
+  useEffect(() => {
+    if (connected) {
+      createRTCPeerConnection();
+    }
+  }, [connected]);
+
+  const { lastMessage } = useSocketEvent(socket, "message");
+  useEffect(() => {
+    console.log(socket);
+    socket.on('message', (message: any) => {
+        console.log(message);
+    });
+  }, [socket]);
 
   function createRTCPeerConnection() {
     if (!(connection.current as any).addTrack) {
@@ -152,8 +143,8 @@ const VideoCall: FC<Props> = () => {
 
   const sendMessageHelper = async () => {
     const response = await sendMessage({
-      senderId: "bfhl-HSPA",
-      receiverId: "bfhl-EUA",
+      senderId: "mohit@hpr.abdm",
+      receiverId: "airesh@abha",
       timestamp: new Date(),
       content: {
         id: "CONNECT",
@@ -167,11 +158,6 @@ const VideoCall: FC<Props> = () => {
     (document.getElementById("localVideo") as any)!.srcObject = stream;
     setState({ localStream: stream });
   };
-
-  useEffect(() => {
-    console.log(readyState, "******* check connection status");
-    console.log(lastMessage, "******* check last message");
-  }, [lastMessage, readyState]);
 
   const getLocalWebCamFeed = () => {
     const constraints = {
@@ -196,7 +182,6 @@ const VideoCall: FC<Props> = () => {
       navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function (stream: any) {
-          console.log(stream, "****** check stream");
           initiateSocketAndPeerConnection(stream);
         })
         .catch(function (e: any) {

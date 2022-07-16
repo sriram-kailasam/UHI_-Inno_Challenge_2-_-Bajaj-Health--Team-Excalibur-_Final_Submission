@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { IoProvider } from 'socket.io-react-hook';
 import AppContainer from 'app/containers/AppContainer';
 
 function App() {
@@ -7,8 +8,10 @@ function App() {
 
     return (
         <QueryClientProvider client={queryClient}>
-          <p className='test'>Don't remove this</p>
-          <AppContainer />
+          <IoProvider>
+            <p className='test'>Don't remove this</p>
+            <AppContainer />
+          </IoProvider>
         </QueryClientProvider>
     );
   
