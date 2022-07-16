@@ -20,6 +20,10 @@ const PatientDetails = () => {
     return moment(appointmentData.appointment.startTime).format('dddd d MMM - h:mm A')
   }
 
+  const handleDoctorSearchNavigate = () => {
+    navigate('../doctorSearch', { state: appointmentData })
+  }
+
   const cards = [
     {
       id: 1,
@@ -61,7 +65,7 @@ const PatientDetails = () => {
         {cards.map((i) => 
           <Card {...i} />
         )}
-        <Button fullWidth className='!mt-20 !text-base !bg-[#0057cb] !h-12 !normal-case' variant='contained' type="submit">
+        <Button fullWidth className='!mt-20 !text-base !bg-[#0057cb] !h-12 !normal-case' variant='contained' onClick={handleDoctorSearchNavigate}>
           <img src={VideoCameraIcon} alt='video camera' />
           <span className='ml-2'>Add Doctor</span>
         </Button>

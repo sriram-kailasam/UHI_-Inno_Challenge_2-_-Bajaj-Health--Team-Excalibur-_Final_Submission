@@ -9,3 +9,9 @@ export type UhiPayload<T> = {
   context: unknown;
   message: T;
 }
+
+type Slot = {
+  slotId: string;
+  startTime: string;
+  endTime: string;
+}

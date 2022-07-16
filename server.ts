@@ -1,4 +1,6 @@
-import express from "express"
+import 'source-map-support';
+import 'express-async-errors';
+import express, { NextFunction, Request, Response } from "express"
 import cors from "cors"
 import path from "path"
 import serveIndex from 'serve-index'
@@ -6,6 +8,11 @@ import bodyParser from "body-parser"
 import httpLogger from "pino-http"
 import 'dotenv/config'
 import { uhiHspaController } from "./api/uhi/hspa/uhiHspa.controller"
+import { createServer } from 'http'
+import { SocketServer } from "./api/sockets"
+import { hspaController } from "./api/hspa/hspaController"
+import { uhiEuaController } from "./api/uhi/eua/uhiEuaController"
+import { euaController } from './api/eua/euaController';
 
 const app = express()
 app.use(cors())
@@ -26,7 +33,12 @@ app.use(httpLogger({
   },
 }))
 
-app.use('/api/hspa', uhiHspaController());
+
+app.use('/api/hspa', hspaController())
+app.use('/api/eua', euaController())
+
+app.use('/api/uhi/eua', uhiEuaController())
+app.use('/api/uhi/hspa', uhiHspaController());
 
 app.get('/eua/*', function (_, res) {
   res.sendFile(euaDir + '/index.html');
@@ -36,4 +48,14 @@ app.get('/hspa/*', function (_, res) {
   res.sendFile(hspaDir + '/index.html');
 });
 
-app.listen(process.env.PORT, () => console.log("listening"))
+app.use((error: Error, req: Request, res: Response, next: NextFunction): void => {
+  console.error(error)
+
+  const status = 500;
+  res.status(status).json({ error: error.message });
+})
+
+const httpServer = createServer(app)
+SocketServer.init(httpServer)
+
+httpServer.listen(process.env.PORT, () => console.log("listening"))
