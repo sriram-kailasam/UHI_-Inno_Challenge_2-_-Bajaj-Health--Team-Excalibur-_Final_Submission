@@ -4,12 +4,23 @@ import OtpForm from "./otp-form";
 
 const LoginWrapper = () => {
     const {
-        loginDetails: { address = "", isOtpRequested = false },
-        setLoginDetails,
+        isOtpRequested,
+        handleInputChange,
+        handleLoginPress,
+        isLoginActive,
+        requestData,
+        isLogging,
     } = useLoginWrapper();
 
-    if (isOtpRequested) return <OtpForm />;
-    return <LoginForm />;
+    if (isOtpRequested) return <OtpForm requestData={requestData} />;
+    return (
+        <LoginForm
+            handleInputChange={handleInputChange}
+            handleLoginPress={handleLoginPress}
+            isLoginActive={isLoginActive}
+            isLogging={isLogging}
+        />
+    );
 };
 
 export default LoginWrapper;

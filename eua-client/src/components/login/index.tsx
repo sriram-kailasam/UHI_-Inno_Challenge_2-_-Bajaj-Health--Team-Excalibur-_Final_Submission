@@ -7,7 +7,7 @@ const Login = () => {
             label="Login with ABHA Address"
             withBack
             onBack={() => {
-                console.log("back pressed");
+                window.location.reload();
             }}
         >
             <LoginWrapper />
