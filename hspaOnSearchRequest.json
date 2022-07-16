@@ -1,0 +1,3465 @@
+{
+  "level": 30,
+  "time": 1657957282905,
+  "pid": 54563,
+  "hostname": "L-FVFFV38QQ05N.local",
+  "req": {
+    "id": 4,
+    "method": "POST",
+    "url": "/api/uhi/eua/on_search",
+    "query": {},
+    "params": {},
+    "headers": {
+      "host": "d3f0-117-99-248-86.in.ngrok.io",
+      "user-agent": "ReactorNetty/1.0.17",
+      "content-length": "47174",
+      "accept": "*/*",
+      "accept-encoding": "gzip",
+      "content-type": "application/json",
+      "traceparent": "00-9ce6296fae84c2ac317be94ce73496b3-3219f79266b728c8-01",
+      "x-forwarded-for": "121.242.73.124",
+      "x-forwarded-proto": "https"
+    },
+    "remoteAddress": "::1",
+    "remotePort": 52040,
+    "body": {
+      "context": {
+        "domain": "nic2004:85111",
+        "country": "IND",
+        "city": "std:080",
+        "action": "on_search",
+        "timestamp": "2022-07-07T10:43:48.705082Z",
+        "core_version": "0.7.1",
+        "consumer_id": "bfhl-HSPA",
+        "consumer_uri": "https://d3f0-117-99-248-86.in.ngrok.io/api/uhi/eua",
+        "provider_id": "http://100.96.9.171:8084/api/v1",
+        "provider_uri": "http://100.96.9.171:8084/api/v1",
+        "transaction_id": "ae9e6d90-fde1-11ec-b66a-f551703a8c52"
+      },
+      "message": {
+        "catalog": {
+          "descriptor": {
+            "name": "HSPA"
+          },
+          "items": [
+            {
+              "id": "0",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "ba7c77fa-4624-49c9-b004-cd68ba5154f5"
+            },
+            {
+              "id": "1",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "7dc53419-1806-4d11-ad7c-4c8e8791cb95"
+            },
+            {
+              "id": "2",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "0478a8d6-16de-4737-b8a9-4c8ff95a818d"
+            },
+            {
+              "id": "3",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "ed123b63-462f-4b4e-b3b8-2d180c0a8611"
+            },
+            {
+              "id": "4",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "baf90f78-0d76-484f-8d3a-480e1af92c12"
+            },
+            {
+              "id": "5",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "c85a6617-6bae-43d0-9614-1754f6c1c26a"
+            },
+            {
+              "id": "6",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "3e68971a-fbbd-4aa2-a94c-61fcbabb0ac5"
+            },
+            {
+              "id": "7",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "19a69c22-8308-4dec-b29e-7276a9770511"
+            },
+            {
+              "id": "8",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "9a1a52f5-497a-40eb-9d3c-e51d1030e615"
+            },
+            {
+              "id": "9",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "835ca025-389b-4603-9585-afc54bec1f41"
+            },
+            {
+              "id": "10",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "fb6d6805-9c5d-4f5b-9aae-dd91faeda796"
+            },
+            {
+              "id": "11",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "42dc7b73-6a76-417a-897e-39445c35af82"
+            },
+            {
+              "id": "12",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "61b87d84-988c-4fbd-ad7d-301c9f3fc9b3"
+            },
+            {
+              "id": "13",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "111cb418-95e0-413d-8ef5-ba204138808d"
+            },
+            {
+              "id": "14",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "ffb8cf4a-2fc1-42be-aa66-6c99b009604a"
+            },
+            {
+              "id": "15",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "9b078a70-5e38-41ff-8c06-ba2d7e6923c1"
+            },
+            {
+              "id": "16",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "25751038-3090-4463-aa9a-be305aac5aa6"
+            },
+            {
+              "id": "17",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "9012783c-1d61-41bd-a98a-01e926826ebe"
+            },
+            {
+              "id": "18",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "88c8e07e-3049-4255-9675-50bb8051f6e0"
+            },
+            {
+              "id": "19",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "f50bc9f4-8b4a-4ce6-9974-e189c78b2db1"
+            },
+            {
+              "id": "20",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "471afc7d-e575-4cca-a40f-9eb80ab165e8"
+            },
+            {
+              "id": "21",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "01ceb478-dd02-438f-95ce-ea1d664f654c"
+            },
+            {
+              "id": "22",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "1c67c2c7-6817-445f-a16e-343e05ce4853"
+            },
+            {
+              "id": "23",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "a3c3abcb-cf30-44c2-b8e9-3d990ac74924"
+            },
+            {
+              "id": "24",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "c726c2df-c1b4-4ca8-8b09-3b0673b031b1"
+            },
+            {
+              "id": "25",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "ee845366-024a-41b4-b23b-d8e86f864df3"
+            },
+            {
+              "id": "26",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "3066db58-2433-4af1-8835-3fbff4c93e44"
+            },
+            {
+              "id": "27",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "70dfc211-bfe4-47fc-8cdc-b7b7e53af4f1"
+            },
+            {
+              "id": "28",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "cc88ec27-1688-4a87-9408-3edbc24003f0"
+            },
+            {
+              "id": "29",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "46fe7934-545b-45ac-9ce7-ee78485d6d46"
+            },
+            {
+              "id": "30",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "8d3053b4-e10c-46fa-b86f-068412366563"
+            },
+            {
+              "id": "31",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "35c97069-7bca-467f-bc4c-6a2faa48bb1f"
+            },
+            {
+              "id": "32",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "6345da16-1c0c-4878-aeb9-0eb4bd82b78d"
+            },
+            {
+              "id": "33",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "0a2d5901-6d64-4f9f-b7e2-774f0c063703"
+            },
+            {
+              "id": "34",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "9131d60d-8ea8-44a1-9a75-b2daf682241b"
+            },
+            {
+              "id": "35",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "56b821ad-4d23-4e6e-bc1d-518a39fb54dd"
+            },
+            {
+              "id": "36",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "42281766-8419-48fd-babe-6868b1135376"
+            },
+            {
+              "id": "37",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "c61490e2-788e-48e0-9bfe-a310e40cabf8"
+            },
+            {
+              "id": "38",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "c0e276fd-e24c-4ba4-84d9-18e89202dc7a"
+            },
+            {
+              "id": "39",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "d237b2d4-0196-40cd-b084-af84e86e98e6"
+            },
+            {
+              "id": "40",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "550f136e-2798-4867-81bf-c4b7c6ed0193"
+            },
+            {
+              "id": "41",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "f64d2bf0-760e-49ff-8af9-7bdbcca83ac3"
+            },
+            {
+              "id": "42",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "ba40b74b-1013-4229-90e1-589f4b219331"
+            },
+            {
+              "id": "43",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "03d2f54f-6f7b-4195-bb15-1409ffcc02ed"
+            },
+            {
+              "id": "44",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "df5e1471-f9c3-4c70-9984-efe50cc9b8c4"
+            },
+            {
+              "id": "45",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "d263fe65-43cc-444f-ad70-ccc3891fa7e7"
+            },
+            {
+              "id": "46",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "7e5fa606-0b88-40d5-b611-3f719de218b4"
+            },
+            {
+              "id": "47",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "5ddde551-0ad2-4f1c-91c5-a586dc60b955"
+            },
+            {
+              "id": "48",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "56c8eaf4-a63a-450e-93d7-7be596964bab"
+            },
+            {
+              "id": "49",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "aecb0573-bff7-4b22-bfd8-15d6ea9651a2"
+            },
+            {
+              "id": "50",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "90534c20-81e1-405b-98b4-3f739c7af005"
+            },
+            {
+              "id": "51",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "9ad91e7b-78cd-4cee-b2b6-928239db97ea"
+            },
+            {
+              "id": "52",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "dd9ee68c-2566-4626-834f-2f81c00348ab"
+            },
+            {
+              "id": "53",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "27eea5ee-ae8d-4818-9a82-d440f7db37e2"
+            },
+            {
+              "id": "54",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "cc1c246c-8849-4c58-8026-458e59551de2"
+            },
+            {
+              "id": "55",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "3981375c-3aea-4031-ae43-5939a4706a7c"
+            },
+            {
+              "id": "56",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "775c61bb-1425-4cf1-addd-727d21915a2e"
+            },
+            {
+              "id": "57",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "ec636682-4d0a-4478-a582-19c87a4f706e"
+            },
+            {
+              "id": "58",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "a0635028-f3aa-4c08-8c60-d54f07a2bee8"
+            },
+            {
+              "id": "59",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "22604786-9f14-4386-83fd-06bc1db519d1"
+            },
+            {
+              "id": "60",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "442a7eda-902b-4f36-9db4-35cc6779a505"
+            },
+            {
+              "id": "61",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "3478314f-0c5b-4555-b5c2-43b1a928f371"
+            },
+            {
+              "id": "62",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "22ca2be5-79af-472f-85f8-856f29e0b174"
+            },
+            {
+              "id": "63",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "d68ae6e0-6a06-4a74-94ca-edaa1448e82d"
+            },
+            {
+              "id": "64",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "57c66a11-35bd-4a13-929d-3d9f19742271"
+            },
+            {
+              "id": "65",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "d9ad3d03-ea79-4c15-bfd8-3173d0388a95"
+            },
+            {
+              "id": "66",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "8f95c204-1e3b-4c23-a725-02a114f838c1"
+            },
+            {
+              "id": "67",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "df270e3d-7137-41b6-9b0c-eb955f017fd0"
+            },
+            {
+              "id": "68",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "adef1b32-bd19-41ff-adb2-05c3c4d5917a"
+            },
+            {
+              "id": "69",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "031eced0-0fef-437f-9250-ce11c31bc261"
+            },
+            {
+              "id": "70",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "d8fc4ccc-18f2-4fad-83bc-0121c6268f92"
+            },
+            {
+              "id": "71",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "8e9a7088-ac62-4f38-85ec-40d3b87efff0"
+            },
+            {
+              "id": "72",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "a0f1c7e3-3413-4bd2-b9a1-0f7c097bd33e"
+            },
+            {
+              "id": "73",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "9e39a5fa-8782-4936-aab5-e704078e9753"
+            },
+            {
+              "id": "74",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "20a04d47-0459-4938-9952-fa79574a53b3"
+            },
+            {
+              "id": "75",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "2b6d1928-8327-4066-971b-985d2c0cf6bc"
+            },
+            {
+              "id": "76",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "68aef40c-b7d9-4b5a-87b1-0a7379cb4065"
+            },
+            {
+              "id": "77",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "6919a95f-04e6-49f4-93b5-394bfbbe7e26"
+            },
+            {
+              "id": "78",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "7f089a7f-5ba1-45bd-8e29-919b1aeb2a2e"
+            },
+            {
+              "id": "79",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "7cf87b07-c2a9-485a-8666-d3f9568255a0"
+            },
+            {
+              "id": "80",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "0252520f-c787-4448-bcb4-4e94455ffd23"
+            },
+            {
+              "id": "81",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "0f60bdf3-6d21-4a20-b0a0-332af7d5eacc"
+            },
+            {
+              "id": "82",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "c6a4fe6d-ae13-450c-b7bc-18c13bf20846"
+            },
+            {
+              "id": "83",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "bef4fe0c-aff7-4309-a4e9-2c3abf8f0839"
+            },
+            {
+              "id": "84",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "a86bb158-e1a7-4b0c-a309-00d8ef9bc358"
+            },
+            {
+              "id": "85",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "689b58dc-cd3e-4563-bfa7-ef9c8effbcb7"
+            },
+            {
+              "id": "86",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "396efeea-84ec-4ef0-b0c2-66e465fad60a"
+            },
+            {
+              "id": "87",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "3cf149a0-541a-4dbe-9319-2f81113296a8"
+            },
+            {
+              "id": "88",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "b0873596-da65-492a-8f76-1a84b7921ecb"
+            },
+            {
+              "id": "89",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "55f14402-21f5-40d7-9440-d0fa495725e7"
+            },
+            {
+              "id": "90",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "5eea5924-bd68-446b-b4f6-b42a4a5a4a2c"
+            },
+            {
+              "id": "91",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "968d7f62-f547-4441-980c-8eda08c1d5d7"
+            },
+            {
+              "id": "92",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "ff313edb-4f10-41e1-ba3e-f23583610f93"
+            },
+            {
+              "id": "93",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "3bb6a2b1-5b2c-4f3d-ad0e-2aa73dc9087d"
+            },
+            {
+              "id": "94",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "32040929-a1d2-4087-9201-b667b21bef78"
+            },
+            {
+              "id": "95",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "5534eee9-c2ef-48d0-99be-1741411dc83a"
+            },
+            {
+              "id": "96",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "64208828-c653-47c5-b698-34f1b76fd597"
+            },
+            {
+              "id": "97",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "43285b55-0984-49d8-ac5c-e164985dc812"
+            },
+            {
+              "id": "98",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "7237cc7a-f451-4084-a1d3-0b0261895dd0"
+            },
+            {
+              "id": "99",
+              "descriptor": {
+                "name": "Consultation"
+              },
+              "fulfillment_id": "fc7d2b3e-702f-4ff5-94e7-749cf70e7a64"
+            }
+          ],
+          "fulfillments": [
+            {
+              "id": "ba7c77fa-4624-49c9-b004-cd68ba5154f5",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-14T15:30:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-14T15:45:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "ba7c77fa-4624-49c9-b004-cd68ba5154f5"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "7dc53419-1806-4d11-ad7c-4c8e8791cb95",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-14T15:45:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-14T16:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "7dc53419-1806-4d11-ad7c-4c8e8791cb95"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "0478a8d6-16de-4737-b8a9-4c8ff95a818d",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-14T16:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-14T16:15:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "0478a8d6-16de-4737-b8a9-4c8ff95a818d"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "ed123b63-462f-4b4e-b3b8-2d180c0a8611",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-14T16:15:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-14T16:30:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "ed123b63-462f-4b4e-b3b8-2d180c0a8611"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "baf90f78-0d76-484f-8d3a-480e1af92c12",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-14T22:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-14T22:15:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "baf90f78-0d76-484f-8d3a-480e1af92c12"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "c85a6617-6bae-43d0-9614-1754f6c1c26a",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-14T22:15:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-14T22:30:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "c85a6617-6bae-43d0-9614-1754f6c1c26a"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "3e68971a-fbbd-4aa2-a94c-61fcbabb0ac5",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-14T22:30:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-14T22:45:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "3e68971a-fbbd-4aa2-a94c-61fcbabb0ac5"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "19a69c22-8308-4dec-b29e-7276a9770511",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-14T22:45:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-14T23:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "19a69c22-8308-4dec-b29e-7276a9770511"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "9a1a52f5-497a-40eb-9d3c-e51d1030e615",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-14T23:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-14T23:15:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "9a1a52f5-497a-40eb-9d3c-e51d1030e615"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "835ca025-389b-4603-9585-afc54bec1f41",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T14:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T14:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "835ca025-389b-4603-9585-afc54bec1f41"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "fb6d6805-9c5d-4f5b-9aae-dd91faeda796",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T14:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T14:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "fb6d6805-9c5d-4f5b-9aae-dd91faeda796"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "42dc7b73-6a76-417a-897e-39445c35af82",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T14:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T15:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "42dc7b73-6a76-417a-897e-39445c35af82"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "61b87d84-988c-4fbd-ad7d-301c9f3fc9b3",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T15:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T15:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "61b87d84-988c-4fbd-ad7d-301c9f3fc9b3"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "111cb418-95e0-413d-8ef5-ba204138808d",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T15:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T15:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "111cb418-95e0-413d-8ef5-ba204138808d"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "ffb8cf4a-2fc1-42be-aa66-6c99b009604a",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T15:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T16:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "ffb8cf4a-2fc1-42be-aa66-6c99b009604a"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "9b078a70-5e38-41ff-8c06-ba2d7e6923c1",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T16:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T16:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "9b078a70-5e38-41ff-8c06-ba2d7e6923c1"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "25751038-3090-4463-aa9a-be305aac5aa6",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T16:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T16:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "25751038-3090-4463-aa9a-be305aac5aa6"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "9012783c-1d61-41bd-a98a-01e926826ebe",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T16:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T17:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "9012783c-1d61-41bd-a98a-01e926826ebe"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "88c8e07e-3049-4255-9675-50bb8051f6e0",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T17:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T17:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "88c8e07e-3049-4255-9675-50bb8051f6e0"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "f50bc9f4-8b4a-4ce6-9974-e189c78b2db1",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T17:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T17:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "f50bc9f4-8b4a-4ce6-9974-e189c78b2db1"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "471afc7d-e575-4cca-a40f-9eb80ab165e8",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T17:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T18:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "471afc7d-e575-4cca-a40f-9eb80ab165e8"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "01ceb478-dd02-438f-95ce-ea1d664f654c",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T18:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T18:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "01ceb478-dd02-438f-95ce-ea1d664f654c"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "1c67c2c7-6817-445f-a16e-343e05ce4853",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T18:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T18:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "1c67c2c7-6817-445f-a16e-343e05ce4853"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "a3c3abcb-cf30-44c2-b8e9-3d990ac74924",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T18:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T19:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "a3c3abcb-cf30-44c2-b8e9-3d990ac74924"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "c726c2df-c1b4-4ca8-8b09-3b0673b031b1",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T19:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T19:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "c726c2df-c1b4-4ca8-8b09-3b0673b031b1"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "ee845366-024a-41b4-b23b-d8e86f864df3",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T19:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T19:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "ee845366-024a-41b4-b23b-d8e86f864df3"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "3066db58-2433-4af1-8835-3fbff4c93e44",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T19:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T20:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "3066db58-2433-4af1-8835-3fbff4c93e44"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "70dfc211-bfe4-47fc-8cdc-b7b7e53af4f1",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T20:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T20:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "70dfc211-bfe4-47fc-8cdc-b7b7e53af4f1"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "cc88ec27-1688-4a87-9408-3edbc24003f0",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T20:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T20:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "cc88ec27-1688-4a87-9408-3edbc24003f0"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "46fe7934-545b-45ac-9ce7-ee78485d6d46",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T20:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T21:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "46fe7934-545b-45ac-9ce7-ee78485d6d46"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "8d3053b4-e10c-46fa-b86f-068412366563",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T21:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T21:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "8d3053b4-e10c-46fa-b86f-068412366563"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "35c97069-7bca-467f-bc4c-6a2faa48bb1f",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T21:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T21:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "35c97069-7bca-467f-bc4c-6a2faa48bb1f"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "6345da16-1c0c-4878-aeb9-0eb4bd82b78d",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T21:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T22:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "6345da16-1c0c-4878-aeb9-0eb4bd82b78d"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "0a2d5901-6d64-4f9f-b7e2-774f0c063703",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T22:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T22:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "0a2d5901-6d64-4f9f-b7e2-774f0c063703"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "9131d60d-8ea8-44a1-9a75-b2daf682241b",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T22:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T22:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "9131d60d-8ea8-44a1-9a75-b2daf682241b"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "56b821ad-4d23-4e6e-bc1d-518a39fb54dd",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T22:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T23:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "56b821ad-4d23-4e6e-bc1d-518a39fb54dd"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "42281766-8419-48fd-babe-6868b1135376",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T23:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T23:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "42281766-8419-48fd-babe-6868b1135376"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "c61490e2-788e-48e0-9bfe-a310e40cabf8",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T23:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-15T23:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "c61490e2-788e-48e0-9bfe-a310e40cabf8"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "c0e276fd-e24c-4ba4-84d9-18e89202dc7a",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-15T23:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T00:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "c0e276fd-e24c-4ba4-84d9-18e89202dc7a"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "d237b2d4-0196-40cd-b084-af84e86e98e6",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T00:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T00:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "d237b2d4-0196-40cd-b084-af84e86e98e6"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "550f136e-2798-4867-81bf-c4b7c6ed0193",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T00:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T00:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "550f136e-2798-4867-81bf-c4b7c6ed0193"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "f64d2bf0-760e-49ff-8af9-7bdbcca83ac3",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T00:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T01:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "f64d2bf0-760e-49ff-8af9-7bdbcca83ac3"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "ba40b74b-1013-4229-90e1-589f4b219331",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T01:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T01:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "ba40b74b-1013-4229-90e1-589f4b219331"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "03d2f54f-6f7b-4195-bb15-1409ffcc02ed",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T01:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T01:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "03d2f54f-6f7b-4195-bb15-1409ffcc02ed"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "df5e1471-f9c3-4c70-9984-efe50cc9b8c4",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T01:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T02:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "df5e1471-f9c3-4c70-9984-efe50cc9b8c4"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "d263fe65-43cc-444f-ad70-ccc3891fa7e7",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T02:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T02:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "d263fe65-43cc-444f-ad70-ccc3891fa7e7"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "7e5fa606-0b88-40d5-b611-3f719de218b4",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T02:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T02:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "7e5fa606-0b88-40d5-b611-3f719de218b4"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "5ddde551-0ad2-4f1c-91c5-a586dc60b955",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T02:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T03:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "5ddde551-0ad2-4f1c-91c5-a586dc60b955"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "56c8eaf4-a63a-450e-93d7-7be596964bab",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T03:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T03:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "56c8eaf4-a63a-450e-93d7-7be596964bab"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "aecb0573-bff7-4b22-bfd8-15d6ea9651a2",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T03:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T03:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "aecb0573-bff7-4b22-bfd8-15d6ea9651a2"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "90534c20-81e1-405b-98b4-3f739c7af005",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T03:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T04:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "90534c20-81e1-405b-98b4-3f739c7af005"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "9ad91e7b-78cd-4cee-b2b6-928239db97ea",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T04:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T04:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "9ad91e7b-78cd-4cee-b2b6-928239db97ea"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "dd9ee68c-2566-4626-834f-2f81c00348ab",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T04:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T04:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "dd9ee68c-2566-4626-834f-2f81c00348ab"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "27eea5ee-ae8d-4818-9a82-d440f7db37e2",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T04:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T05:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "27eea5ee-ae8d-4818-9a82-d440f7db37e2"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "cc1c246c-8849-4c58-8026-458e59551de2",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T05:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T05:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "cc1c246c-8849-4c58-8026-458e59551de2"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "3981375c-3aea-4031-ae43-5939a4706a7c",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T05:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T05:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "3981375c-3aea-4031-ae43-5939a4706a7c"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "775c61bb-1425-4cf1-addd-727d21915a2e",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T05:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T06:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "775c61bb-1425-4cf1-addd-727d21915a2e"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "ec636682-4d0a-4478-a582-19c87a4f706e",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T06:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T06:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "ec636682-4d0a-4478-a582-19c87a4f706e"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "a0635028-f3aa-4c08-8c60-d54f07a2bee8",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T06:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T06:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "a0635028-f3aa-4c08-8c60-d54f07a2bee8"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "22604786-9f14-4386-83fd-06bc1db519d1",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T06:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T07:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "22604786-9f14-4386-83fd-06bc1db519d1"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "442a7eda-902b-4f36-9db4-35cc6779a505",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T07:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T07:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "442a7eda-902b-4f36-9db4-35cc6779a505"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "3478314f-0c5b-4555-b5c2-43b1a928f371",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T07:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T07:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "3478314f-0c5b-4555-b5c2-43b1a928f371"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "22ca2be5-79af-472f-85f8-856f29e0b174",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T07:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T08:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "22ca2be5-79af-472f-85f8-856f29e0b174"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "d68ae6e0-6a06-4a74-94ca-edaa1448e82d",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T08:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T08:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "d68ae6e0-6a06-4a74-94ca-edaa1448e82d"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "57c66a11-35bd-4a13-929d-3d9f19742271",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T08:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T08:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "57c66a11-35bd-4a13-929d-3d9f19742271"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "d9ad3d03-ea79-4c15-bfd8-3173d0388a95",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T08:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T09:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "d9ad3d03-ea79-4c15-bfd8-3173d0388a95"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "8f95c204-1e3b-4c23-a725-02a114f838c1",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T09:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T09:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "8f95c204-1e3b-4c23-a725-02a114f838c1"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "df270e3d-7137-41b6-9b0c-eb955f017fd0",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T09:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T09:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "df270e3d-7137-41b6-9b0c-eb955f017fd0"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "adef1b32-bd19-41ff-adb2-05c3c4d5917a",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T09:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T10:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "adef1b32-bd19-41ff-adb2-05c3c4d5917a"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "031eced0-0fef-437f-9250-ce11c31bc261",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T10:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T10:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "031eced0-0fef-437f-9250-ce11c31bc261"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "d8fc4ccc-18f2-4fad-83bc-0121c6268f92",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T10:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T10:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "d8fc4ccc-18f2-4fad-83bc-0121c6268f92"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "8e9a7088-ac62-4f38-85ec-40d3b87efff0",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T10:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T11:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "8e9a7088-ac62-4f38-85ec-40d3b87efff0"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "a0f1c7e3-3413-4bd2-b9a1-0f7c097bd33e",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T11:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T11:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "a0f1c7e3-3413-4bd2-b9a1-0f7c097bd33e"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "9e39a5fa-8782-4936-aab5-e704078e9753",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T11:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T11:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "9e39a5fa-8782-4936-aab5-e704078e9753"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "20a04d47-0459-4938-9952-fa79574a53b3",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T11:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T12:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "20a04d47-0459-4938-9952-fa79574a53b3"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "2b6d1928-8327-4066-971b-985d2c0cf6bc",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T12:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T12:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "2b6d1928-8327-4066-971b-985d2c0cf6bc"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "68aef40c-b7d9-4b5a-87b1-0a7379cb4065",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T12:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T12:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "68aef40c-b7d9-4b5a-87b1-0a7379cb4065"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "6919a95f-04e6-49f4-93b5-394bfbbe7e26",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T12:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T13:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "6919a95f-04e6-49f4-93b5-394bfbbe7e26"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "7f089a7f-5ba1-45bd-8e29-919b1aeb2a2e",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T13:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T13:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "7f089a7f-5ba1-45bd-8e29-919b1aeb2a2e"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "7cf87b07-c2a9-485a-8666-d3f9568255a0",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T13:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T13:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "7cf87b07-c2a9-485a-8666-d3f9568255a0"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "0252520f-c787-4448-bcb4-4e94455ffd23",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T13:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T14:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "0252520f-c787-4448-bcb4-4e94455ffd23"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "0f60bdf3-6d21-4a20-b0a0-332af7d5eacc",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T14:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T14:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "0f60bdf3-6d21-4a20-b0a0-332af7d5eacc"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "c6a4fe6d-ae13-450c-b7bc-18c13bf20846",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T14:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T14:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "c6a4fe6d-ae13-450c-b7bc-18c13bf20846"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "bef4fe0c-aff7-4309-a4e9-2c3abf8f0839",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T14:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T15:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "bef4fe0c-aff7-4309-a4e9-2c3abf8f0839"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "a86bb158-e1a7-4b0c-a309-00d8ef9bc358",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T15:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T15:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "a86bb158-e1a7-4b0c-a309-00d8ef9bc358"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "689b58dc-cd3e-4563-bfa7-ef9c8effbcb7",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T15:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T15:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "689b58dc-cd3e-4563-bfa7-ef9c8effbcb7"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "396efeea-84ec-4ef0-b0c2-66e465fad60a",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T15:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T16:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "396efeea-84ec-4ef0-b0c2-66e465fad60a"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "3cf149a0-541a-4dbe-9319-2f81113296a8",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T16:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T16:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "3cf149a0-541a-4dbe-9319-2f81113296a8"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "b0873596-da65-492a-8f76-1a84b7921ecb",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T16:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T16:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "b0873596-da65-492a-8f76-1a84b7921ecb"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "55f14402-21f5-40d7-9440-d0fa495725e7",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T16:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T17:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "55f14402-21f5-40d7-9440-d0fa495725e7"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "5eea5924-bd68-446b-b4f6-b42a4a5a4a2c",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T17:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T17:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "5eea5924-bd68-446b-b4f6-b42a4a5a4a2c"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "968d7f62-f547-4441-980c-8eda08c1d5d7",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T17:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T17:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "968d7f62-f547-4441-980c-8eda08c1d5d7"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "ff313edb-4f10-41e1-ba3e-f23583610f93",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T17:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T18:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "ff313edb-4f10-41e1-ba3e-f23583610f93"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "3bb6a2b1-5b2c-4f3d-ad0e-2aa73dc9087d",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T18:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T18:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "3bb6a2b1-5b2c-4f3d-ad0e-2aa73dc9087d"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "32040929-a1d2-4087-9201-b667b21bef78",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T18:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T18:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "32040929-a1d2-4087-9201-b667b21bef78"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "5534eee9-c2ef-48d0-99be-1741411dc83a",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T18:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T19:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "5534eee9-c2ef-48d0-99be-1741411dc83a"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "64208828-c653-47c5-b698-34f1b76fd597",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T19:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T19:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "64208828-c653-47c5-b698-34f1b76fd597"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "43285b55-0984-49d8-ac5c-e164985dc812",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T19:20:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T19:40:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "43285b55-0984-49d8-ac5c-e164985dc812"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "7237cc7a-f451-4084-a1d3-0b0261895dd0",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T19:40:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T20:00:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "7237cc7a-f451-4084-a1d3-0b0261895dd0"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            },
+            {
+              "id": "fc7d2b3e-702f-4ff5-94e7-749cf70e7a64",
+              "type": "DIGITAL-CONSULTATION",
+              "agent": {
+                "id": "mohit@hpr.abdm",
+                "name": "mohit@hpr.abdm - Mohit",
+                "gender": "M"
+              },
+              "start": {
+                "time": {
+                  "timestamp": "2022-07-16T20:00:00"
+                }
+              },
+              "end": {
+                "time": {
+                  "timestamp": "2022-07-16T20:20:00"
+                }
+              },
+              "tags": {
+                "@abdm/gov.in/slot": "fc7d2b3e-702f-4ff5-94e7-749cf70e7a64"
+              },
+              "quote": {
+                "price": {
+                  "currency": "INR"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "res": {
+    "statusCode": 404,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-security-policy": "default-src 'none'",
+      "x-content-type-options": "nosniff",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": 161
+    }
+  },
+  "responseTime": 1,
+  "msg": "request completed"
+}
