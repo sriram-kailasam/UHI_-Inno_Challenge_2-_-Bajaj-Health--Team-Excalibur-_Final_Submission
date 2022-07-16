@@ -1,4 +1,4 @@
-import express from "express"
+import express, { NextFunction, Request, Response } from "express"
 import cors from "cors"
 import path from "path"
 import serveIndex from 'serve-index'
@@ -9,6 +9,7 @@ import { uhiHspaController } from "./api/uhi/hspa/uhiHspa.controller"
 import { Server } from 'socket.io'
 import { createServer } from 'http'
 import { SocketServer } from "./api/sockets"
+import { hspaController } from "./api/hspa/hspaController"
 
 const app = express()
 app.use(cors())
@@ -29,6 +30,8 @@ app.use(httpLogger({
   },
 }))
 
+app.use('/api/hspa', hspaController())
+
 app.use('/api/uhi/hspa', uhiHspaController());
 
 app.get('/eua/*', function (_, res) {
@@ -38,6 +41,13 @@ app.get('/eua/*', function (_, res) {
 app.get('/hspa/*', function (_, res) {
   res.sendFile(hspaDir + '/index.html');
 });
+
+app.use((error: Error, req: Request, res: Response, next: NextFunction): void => {
+  console.error(error)
+
+  const status = 500;
+  res.status(status).json({ error: error.message });
+})
 
 const httpServer = createServer(app)
 SocketServer.init(httpServer)

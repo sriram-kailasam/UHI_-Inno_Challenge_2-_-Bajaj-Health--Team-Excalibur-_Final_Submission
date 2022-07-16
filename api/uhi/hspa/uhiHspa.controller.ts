@@ -15,6 +15,8 @@ export function uhiHspaController() {
 function handleOnMessage(req: Request, res: Response) {
   const { message } = req.body as UhiPayload<OnMessageRequest>
   console.log({ message })
+
+  res.json({ success: true })
 }
 
 function handleSearch(req: Request, res: Response) {

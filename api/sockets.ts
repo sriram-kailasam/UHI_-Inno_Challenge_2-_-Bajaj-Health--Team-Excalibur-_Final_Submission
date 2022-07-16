@@ -11,7 +11,7 @@ export class SocketServer {
 
   static init(httpServer?: Server): SocketServer {
     this.io = new SocketIOServer(httpServer);
-    this.io.on("connect", socket => {
+    this.io.on("connection", socket => {
       console.log("connected", socket.id, 'data: ', socket.data)
       socket.send("Connected as", socket.id)
     })
