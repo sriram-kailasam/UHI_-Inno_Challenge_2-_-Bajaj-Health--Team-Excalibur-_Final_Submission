@@ -116,8 +116,8 @@ async function handleInit(req: Request, res: Response) {
   saveAppointment({
     hprId: message.order.fulfillment.agent.id,
     slotId: message.order.fulfillment.id,
-    startTime: dayjs(message.order.fulfillment.start.time.timestamp).toDate(),
-    endTime: dayjs(message.order.fulfillment.end.time.timestamp).toDate(),
+    startTime: dayjs(message.order.fulfillment.start.time.timestamp).toISOString(),
+    endTime: dayjs(message.order.fulfillment.end.time.timestamp).toISOString(),
     isGroupConsult: false,
     doctor: {
       name: message.order.fulfillment.agent.name,
