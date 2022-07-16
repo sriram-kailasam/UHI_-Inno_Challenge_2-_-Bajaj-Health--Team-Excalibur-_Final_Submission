@@ -1,7 +1,7 @@
 export interface HeaderProps extends React.HTMLProps<HTMLDivElement> {
   heading : string
+  onBack: () => void
 }
-
 export interface AppointmentData {
   appointment : {
     id: string

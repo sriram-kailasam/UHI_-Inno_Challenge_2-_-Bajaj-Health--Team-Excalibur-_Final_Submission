@@ -1,5 +1,6 @@
-import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment'
+import Button from '@mui/material/Button';
 import CalendarIcon from 'shared/assests/calendarIcon.svg';
 import ClockIcon from 'shared/assests/clockIcon.svg';
 import VideoCameraIcon from 'shared/assests/videoCameraIcon.svg';
@@ -9,6 +10,7 @@ import AbhaLogo from 'shared/assests/abhaLogo.jpg';
 import { AppointmentData } from '../types';
 
 const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
+  const navigate = useNavigate();
   const getAppointmentDate = () => {
     return moment(appointmentData.appointment.startTime).format('DD MMM YYYY')
   };
@@ -29,6 +31,10 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
       return MaleAvatar;
     } 
     return FemaleAvatar;
+  }
+
+  const handleViewPatientProfile = () => {
+    navigate('../patientDetails', { state: appointmentData })
   }
 
   return (
@@ -74,7 +80,7 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
           <span className='ml-2'>Video Consult</span>
         </Button>
         </div>
-        {!appointmentData.isGroupConsult && <div className='text-sm mr-2 text-[#5c2d90] font-semibold'>
+        {!appointmentData.isGroupConsult && <div className='text-sm mr-2 text-[#5c2d90] font-semibold' onClick={handleViewPatientProfile}>
           View details
         </div>}
       </div>
