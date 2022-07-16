@@ -12,10 +12,10 @@ export async function saveAppointment(request: SaveAppointmentRequest) {
   })
 }
 
-export async function listAppointmentsByAbhaId(abhaId: string): Promise<Appointment[]> {
+export async function listAppointmentsByAbhaId(abhaAddress: string): Promise<Appointment[]> {
   const client = await getDbClient();
 
-  const appointments = await client.db().collection('appointments').find<Appointment>({ abhaId }).toArray();
+  const appointments = await client.db().collection('appointments').find<Appointment>({ "patient.abhaAddress": abhaAddress }).toArray();
 
   return appointments;
 }

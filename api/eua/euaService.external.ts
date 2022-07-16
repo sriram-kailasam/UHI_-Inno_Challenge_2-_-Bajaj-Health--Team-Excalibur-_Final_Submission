@@ -8,6 +8,7 @@ import { getCache } from "../cache";
 import { HspaSearchResult } from "./dto/hspaSearchResult.dto";
 import dayjs from 'dayjs'
 import { UhiPayload } from "../uhi/dto/uhiPayload";
+import { SaveAppointmentRequest } from "../appointments/dto/saveAppointment.dto";
 
 const cache = getCache();
 
@@ -134,4 +135,80 @@ async function sendGetSlotsRequest(hprId: string) {
 
 
   return transactionId
+}
+
+export async function initAppointment(request: SaveAppointmentRequest) {
+  const providerUri = cache.get<string>(`providerUri:${request.hprId}`);
+
+  await axios({
+    baseURL: providerUri || defaultHspaBaseUrl,
+    url: '/init',
+    method: 'post',
+    data: {
+      "context": {
+        "domain": "nic2004:85111",
+        "country": "IND",
+        "city": "std:080",
+        "action": "init",
+        "timestamp": new Date().toISOString(),
+        "core_version": "0.7.1",
+        "consumer_id": euaConsumerId,
+        "consumer_uri": euaConsumerUri,
+        "provider_id": "http://100.65.158.41:8084/api/v1",
+        "provider_uri": providerUri,
+        "transaction_id": uuid()
+      },
+      "message": {
+        "order": {
+          "id": uuid(),
+          "item": {
+            "id": "1",
+            "descriptor": {
+              "name": "Consultation"
+            },
+            "fulfillment_id": request.slotId,
+            "price": {
+              "currency": "INR",
+              "value": "1000"
+            }
+          },
+          "billing": {
+            "name": request.patient.name,
+          },
+          "fulfillment": {
+            "id": request.slotId,
+            "type": "Teleconsultation",
+            "agent": {
+              "id": request.hprId,
+              "name": request.doctor.name,
+              "gender": request.doctor.gender,
+              "tags": {
+                "@abdm/gov/in/hpr_id": request.hprId
+              }
+            },
+            "start": {
+              "time": {
+                "timestamp": request.startTime
+              }
+            },
+            "end": {
+              "time": {
+                "timestamp": request.endTime
+              }
+            },
+            "tags": {
+              "@abdm/gov.in/slot_id": request.slotId
+            }
+          },
+          "customer": {
+            "id": request.patient.abhaAddress,
+            "cred": request.patient.abhaAddress,
+            "person": {
+              "gender": request.patient.gender
+            }
+          }
+        }
+      }
+    }
+  })
 }

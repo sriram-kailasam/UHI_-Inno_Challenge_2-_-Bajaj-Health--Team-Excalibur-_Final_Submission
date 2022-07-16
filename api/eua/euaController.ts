@@ -1,7 +1,10 @@
 import { Request, Response, Router } from "express";
+import { listAppointmentsByAbhaId, saveAppointment } from "../appointments/appointmentsService";
+import { SaveAppointmentRequest, saveAppointmentRequestSchema } from "../appointments/dto/saveAppointment.dto";
 import { SendMessageRequest } from "../dto/sendMessage.dto";
 import { sendMessage } from "../hspa/hspService.external";
-import { getSlots, searchDoctors } from "./euaService.external";
+import { validateRequest } from "../validateRequest";
+import { getSlots, initAppointment, searchDoctors } from "./euaService.external";
 
 export function euaController() {
   const router = Router();
@@ -9,6 +12,8 @@ export function euaController() {
   router.get('/searchDoctors', handleSearchDoctors);
   router.get('/getSlots', handleGetSlots)
   router.post('/sendMessage', handleSendMessage)
+  router.get('/getAppointmentList', handleGetAppointmentListByAbhaAddress)
+  router.post('/bookAppointment', validateRequest('body', saveAppointmentRequestSchema), handleBookAppointment)
 
   return router;
 }
@@ -38,4 +43,22 @@ async function handleGetSlots(req: Request, res: Response) {
 
   const slots = await getSlots(request.hprId)
   res.json({ slots })
+}
+
+async function handleBookAppointment(req: Request, res: Response) {
+  const request = req.body as SaveAppointmentRequest;
+
+  await saveAppointment(request)
+  await initAppointment(request)
+
+  res.json({ success: true })
+}
+
+async function handleGetAppointmentListByAbhaAddress(req: Request, res: Response) {
+  const { abhaAddress } = req.query;
+
+  const results = await listAppointmentsByAbhaId(abhaAddress as string)
+
+
+  res.json({ results })
 }

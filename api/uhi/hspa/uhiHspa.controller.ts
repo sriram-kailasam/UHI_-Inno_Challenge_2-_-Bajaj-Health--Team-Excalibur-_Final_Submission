@@ -4,12 +4,16 @@ import { UhiPayload, uhiPayload } from "../dto/uhiPayload";
 import { onMessageDataSchema, OnMessageRequest } from "../dto/onMessage.dto";
 import { SocketServer } from "../../sockets";
 import { hspaConsumerId, hspaConsumerUri } from "../../configuration";
+import { InitRequest, initSchema } from "./dto/init.dto";
+import { saveAppointment } from "../../appointments/appointmentsService";
+import dayjs from 'dayjs'
 
 export function uhiHspaController() {
   const router = Router();
 
   router.post('/on_message', validateRequest('body', uhiPayload(onMessageDataSchema)), handleOnMessage);
   router.post("/search", handleSearch)
+  router.post('/init', validateRequest('body', uhiPayload(initSchema)), handleInit)
 
   return router;
 }
@@ -27,7 +31,6 @@ async function handleOnMessage(req: Request, res: Response) {
 
 function handleSearch(req: Request, res: Response) {
   res.json({
-
     "message": {
       "intent": null,
       "order": null,
@@ -105,4 +108,26 @@ function handleSearch(req: Request, res: Response) {
     }
   }
   )
+}
+
+async function handleInit(req: Request, res: Response) {
+  const { message } = req.body as UhiPayload<InitRequest>;
+
+  saveAppointment({
+    hprId: message.order.fulfillment.agent.id,
+    slotId: message.order.fulfillment.id,
+    startTime: dayjs(message.order.fulfillment.start.time.timestamp).toDate(),
+    endTime: dayjs(message.order.fulfillment.end.time.timestamp).toDate(),
+    isGroupConsult: false,
+    doctor: {
+      name: message.order.fulfillment.agent.name,
+      gender: message.order.fulfillment.agent.gender
+    },
+    patient: {
+      abhaAddress: message.order.customer.cred,
+      name: message.order.billing.name,
+    }
+  })
+
+  res.json({ success: true })
 }
