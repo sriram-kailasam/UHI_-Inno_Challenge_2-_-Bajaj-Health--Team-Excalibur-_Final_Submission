@@ -5,7 +5,7 @@ import serveIndex from 'serve-index'
 import bodyParser from "body-parser"
 import httpLogger from "pino-http"
 import 'dotenv/config'
-
+import { uhiHspaController } from "./api/uhi/hspa/uhiHspa.controller"
 
 const app = express()
 app.use(cors())
@@ -25,6 +25,8 @@ app.use(httpLogger({
     },
   },
 }))
+
+app.get('/api/hspa', uhiHspaController());
 
 app.get('/eua/*', function (_, res) {
   res.sendFile(euaDir + '/index.html');
