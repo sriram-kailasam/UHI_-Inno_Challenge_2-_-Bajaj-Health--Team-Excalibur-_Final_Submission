@@ -6,6 +6,8 @@ import bodyParser from "body-parser"
 import httpLogger from "pino-http"
 import 'dotenv/config'
 import { uhiHspaController } from "./api/uhi/hspa/uhiHspa.controller"
+import { Server } from 'socket.io'
+import { createServer } from 'http'
 
 const app = express()
 app.use(cors())
@@ -36,4 +38,12 @@ app.get('/hspa/*', function (_, res) {
   res.sendFile(hspaDir + '/index.html');
 });
 
-app.listen(process.env.PORT, () => console.log("listening"))
+const httpServer = createServer(app)
+const io = new Server(httpServer);
+
+io.on('connect', socket => {
+  console.log("connected", socket.id, 'data: ', socket.data)
+  socket.send("Connected as", socket.id)
+})
+
+httpServer.listen(process.env.PORT, () => console.log("listening"))
