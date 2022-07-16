@@ -6,6 +6,10 @@ export interface ISlot {
     endTime: string;
 }
 
+export interface ISlots {
+    slots: ISlot[];
+}
+
 export interface IDoctor {
     name: string;
     experience: number;

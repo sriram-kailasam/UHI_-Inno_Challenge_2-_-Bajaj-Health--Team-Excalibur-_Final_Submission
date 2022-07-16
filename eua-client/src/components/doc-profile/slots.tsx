@@ -11,7 +11,7 @@ const Slots = ({
     selectedSlotId: string;
 }) => (
     <div className="slots-container">
-        {slots.map((eachSlot) => {
+        {slots?.map((eachSlot) => {
             return (
                 <div
                     className={`each-slot${

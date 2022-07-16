@@ -1,14 +1,17 @@
 import { Button } from "antd";
+import { AxiosResponse } from "axios";
 import { useState } from "react";
+import { useQuery } from "react-query";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { femaleAvatar, maleAvatar, video } from "../../images";
 import { useAppSelector } from "../../redux/hooks";
 import { IUser } from "../../redux/slice/user";
 import { RootState } from "../../redux/store";
 import PageWrap from "../page-wrap";
-import { IDoctor, ISlot } from "../search-listing/doctor-mock";
+import { IDoctor, ISlot, ISlots } from "../search-listing/doctor-mock";
+import { getSlots } from "./api";
 import Slots from "./slots";
-import { slotsMock } from "./slots-mock";
+// import { slotsMock } from "./slots-mock";
 
 import "./styles.scss";
 
@@ -25,13 +28,17 @@ const DocProfile = () => {
     const location = useLocation();
     const doctorProfile = location.state as IDoctor;
     const { name, gender, speciality, experience, fees } = doctorProfile;
-
     const navigate = useNavigate();
     const [selectedSlot, setSelectedSlot] = useState("");
-
     const isBookActive = !!selectedSlot;
-
     const selectedUserProfile = useAppSelector(selectProfile);
+
+    const { data: { data: { slots = [] } = {} } = {} } = useQuery<
+        AxiosResponse<ISlots>,
+        Error
+    >(["doctor-slots", docHprId], () => getSlots(docHprId), {
+        enabled: !!docHprId,
+    });
 
     return (
         <PageWrap onBack={() => navigate(-1)} withBack label="">
@@ -69,7 +76,7 @@ const DocProfile = () => {
                 <div style={{ marginTop: "10px" }}>
                     <span className="section-label">Date & Time</span>
                     <Slots
-                        slots={slotsMock}
+                        slots={slots}
                         onSlotSelect={(slotId) => setSelectedSlot(slotId)}
                         selectedSlotId={selectedSlot}
                     />
@@ -82,7 +89,7 @@ const DocProfile = () => {
                                 state: {
                                     userProfile: selectedUserProfile,
                                     doctorProfile,
-                                    slotData: slotsMock.find(
+                                    slotData: slots?.find(
                                         (eachSlot) =>
                                             eachSlot.slotId === selectedSlot
                                     ),
