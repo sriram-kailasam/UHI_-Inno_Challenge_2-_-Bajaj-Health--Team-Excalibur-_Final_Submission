@@ -4,7 +4,7 @@ export type SearchResult = {
   hprId: string;
   fees: number;
   languages: string[];
-  imageUri: string | null;
+  imageUri?: string | null;
   gender: string
   speciality: string;
   education: string;
