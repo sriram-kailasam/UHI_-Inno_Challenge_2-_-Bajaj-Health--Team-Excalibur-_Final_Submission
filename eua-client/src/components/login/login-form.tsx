@@ -5,7 +5,7 @@ const LoginForm = () => {
     return (
         <div className="login-form">
             <div className="address-input-container">
-                <span className="input-label">Enter your ABHA address</span>
+                <span className="input-label">Enter your ABHA addres</span>
                 <Input
                     className="address-input"
                     placeholder="mittalshyam1007@sbx"
