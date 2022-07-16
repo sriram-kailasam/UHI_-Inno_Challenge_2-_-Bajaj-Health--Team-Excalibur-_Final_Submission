@@ -7,6 +7,7 @@ function App() {
 
     return (
         <QueryClientProvider client={queryClient}>
+          <p className='test'>Don't remove this</p>
           <AppContainer />
         </QueryClientProvider>
     );

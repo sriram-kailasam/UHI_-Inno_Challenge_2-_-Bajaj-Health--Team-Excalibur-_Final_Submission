@@ -26,4 +26,9 @@ app.use(httpLogger({
   },
 }))
 
+
+app.get('/*', function (req, res) {
+  res.sendFile(hspaDir + '/index.html');
+});
+
 app.listen(process.env.PORT, () => console.log("listening"))
