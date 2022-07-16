@@ -19,6 +19,10 @@ export interface IDoctor {
     slots: ISlot[];
 }
 
+export interface IDoctors {
+    searchResults: IDoctor[];
+}
+
 export const doctorListing: IDoctor[] = [
     {
         name: "Dr. Ankita Chauhan",

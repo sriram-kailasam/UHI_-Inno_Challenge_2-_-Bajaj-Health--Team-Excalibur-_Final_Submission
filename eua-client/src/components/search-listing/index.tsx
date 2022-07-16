@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 import { useDebounce } from "../../utils/helper";
 import { searchDoctor } from "./apis";
 import DoctorCard from "./doctor-card";
-import { IDoctor } from "./doctor-mock";
+import { IDoctors } from "./doctor-mock";
 import "./styles.scss";
 
 const SearchListing = () => {
@@ -16,12 +16,10 @@ const SearchListing = () => {
         setSearchText(e.target.value);
     };
 
-    const { data: someData } = useQuery<AxiosResponse<IDoctor[]>, Error>(
-        ["doctor-search", debSearchText],
-        () => searchDoctor(debSearchText)
-    );
-
-    console.log("someData", someData);
+    const { data: { data: { searchResults = [] } = {} } = {} } = useQuery<
+        AxiosResponse<IDoctors>,
+        Error
+    >(["doctor-search", debSearchText], () => searchDoctor(debSearchText));
 
     return (
         <div className="search-listing">
@@ -32,8 +30,9 @@ const SearchListing = () => {
                 className="search-input"
                 placeholder="Search via Doctor Name or HPR Id"
             />
-            <DoctorCard />
-            <DoctorCard />
+            {searchResults.map((eachItem) => (
+                <DoctorCard {...eachItem} />
+            ))}
         </div>
     );
 };

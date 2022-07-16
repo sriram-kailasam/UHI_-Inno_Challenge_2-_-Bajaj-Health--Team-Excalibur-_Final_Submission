@@ -30,7 +30,7 @@ const OtpForm = ({
                 localStorage.setItem("auth-token", data.data.token);
                 dispatch(
                     updateProfile({
-                        profile: data.data.profile,
+                        profile: data.profile,
                     })
                 );
                 navigate("/eua/search");
