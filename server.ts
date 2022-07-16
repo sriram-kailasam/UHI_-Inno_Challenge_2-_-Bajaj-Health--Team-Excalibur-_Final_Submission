@@ -26,8 +26,11 @@ app.use(httpLogger({
   },
 }))
 
+app.get('/eua/*', function (_, res) {
+  res.sendFile(euaDir + '/index.html');
+})
 
-app.get('/*', function (req, res) {
+app.get('/hspa/*', function (_, res) {
   res.sendFile(hspaDir + '/index.html');
 });
 
