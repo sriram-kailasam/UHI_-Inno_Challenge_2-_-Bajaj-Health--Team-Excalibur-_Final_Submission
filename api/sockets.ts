@@ -20,9 +20,9 @@ export class SocketServer {
     return this.instance
   }
 
-  static getInstance() {
+  static getInstance(): SocketServer {
     if (this.instance) return this.instance;
-    return this.init
+    return this.init()
   }
 
   static broadcast(message: string) {
