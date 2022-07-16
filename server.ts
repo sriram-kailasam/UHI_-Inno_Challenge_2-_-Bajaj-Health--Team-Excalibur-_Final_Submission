@@ -26,7 +26,7 @@ app.use(httpLogger({
   },
 }))
 
-app.get('/api/hspa', uhiHspaController());
+app.use('/api/hspa', uhiHspaController());
 
 app.get('/eua/*', function (_, res) {
   res.sendFile(euaDir + '/index.html');
