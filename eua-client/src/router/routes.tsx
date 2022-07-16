@@ -1,5 +1,6 @@
 import { DoctorSearch, EuaHome } from "../components";
 import Login from "../components/login";
+import VideoCall from "../components/tele-consult/components/video-call";
 
 export const routes = [
     {
@@ -13,6 +14,10 @@ export const routes = [
     {
         element: <DoctorSearch />,
         path: "search",
+    },
+    {
+        element: <VideoCall />,
+        path: 'video-call',
     },
     {
         // fallback route

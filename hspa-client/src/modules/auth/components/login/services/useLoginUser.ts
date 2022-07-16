@@ -1,9 +1,11 @@
-import axios from "axios";
 import { useMutation } from "react-query";
+import axios from "axios";
+
+import { BASE_URL } from "shared/constants";
 import { LoginPayload, LoginResponse } from '../types';
 
 const loginUser = async (payload: LoginPayload) => {
-  const response = await axios.post<LoginResponse>(`${process.env.REACT_APP_BASE_URL}/hspa/login`, {
+  const response = await axios.post<LoginResponse>(`${BASE_URL}/hspa/login`, {
     data: {
       hpAddress: payload.hpAddress,
       password: payload.password,
