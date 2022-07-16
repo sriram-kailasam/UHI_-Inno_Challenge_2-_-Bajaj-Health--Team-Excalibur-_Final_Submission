@@ -1,6 +1,6 @@
 export type MessagePayload = {
     senderId: string;
-    receiverId: string;
+    receiverId: string[];
     timestamp: Date;
     content: {
       id: string;
