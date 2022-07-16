@@ -36,7 +36,7 @@ export async function sendMessage(payload: SendMessageRequest) {
             },
             "content": {
               "content_id": payload.content.id,
-              "content_value": payload.content.value
+              "content_value": JSON.stringify(payload)
             },
             "time": {
               "timestamp": payload.timestamp

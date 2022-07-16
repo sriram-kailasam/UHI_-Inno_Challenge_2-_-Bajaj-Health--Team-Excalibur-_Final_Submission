@@ -29,13 +29,17 @@
     "react-query": "^3.39.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-use": "^17.4.0",
+    "react-use-websocket": "3.0.0",
     "sass": "^1.53.0",
+    "socket.io-client": "3.1.2",
+    "socket.io-react-hook": "^1.0.16",
     "tailwindcss": "^3.1.6",
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -58,6 +62,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/hspa",
-  "devDependencies": {}
+  "homepage": "/hspa"
 }
