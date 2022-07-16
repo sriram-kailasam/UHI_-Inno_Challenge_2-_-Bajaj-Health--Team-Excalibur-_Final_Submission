@@ -2,8 +2,8 @@ export const HSPA_WEB_SOCKET_URL_NGROK = "wss://24d0-117-99-248-86.in.ngrok.io";
 export const HSPA_WEB_SOCKET_URL_HEROKU =
   "wss://bfhl-group-consult.herokuapp.com/";
 
-export const BASE_URL = 'https://bfhl-group-consult.herokuapp.com/api'
-// export const BASE_URL = process.env.REACT_APP_BASE_URL;
+// export const BASE_URL = 'https://bfhl-group-consult.herokuapp.com/api'
+export const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const rtcPeerConnectionConfig = {
   iceServers: [
