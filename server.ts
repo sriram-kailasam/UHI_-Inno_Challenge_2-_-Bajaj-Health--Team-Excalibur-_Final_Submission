@@ -50,6 +50,7 @@ app.get('/hspa/*', function (_, res) {
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction): void => {
   console.log('server error', error.message)
+  console.log('stack', error.stack)
 
   const status = 500;
   res.status(status).json({ error: error.message });

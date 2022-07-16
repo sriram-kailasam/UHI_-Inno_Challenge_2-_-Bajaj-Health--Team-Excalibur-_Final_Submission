@@ -1,3 +1,4 @@
+export const dbUrl = process.env.DATABASE_URL;
 export const euaConsumerUri = process.env.EUA_CONSUMER_URI;
 export const hspaConsumerUri = process.env.HSPA_CONSUMER_URI;
 

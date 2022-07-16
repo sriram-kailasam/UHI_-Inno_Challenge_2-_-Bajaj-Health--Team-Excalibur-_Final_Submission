@@ -5,14 +5,15 @@ import { validateRequest } from "../../validateRequest";
 import { onMessageDataSchema, OnMessageRequest } from "../dto/onMessage.dto";
 import { uhiPayload, UhiPayload } from "../dto/uhiPayload";
 import { GatewayOnSearchRequest, gatewayOnSearchRequestSchema } from "./dto/gatewayOnSearch.dto";
-
+import { z } from 'zod'
+import { hspaSearchResultSchema } from "../../eua/dto/hspaSearchResult.dto";
 const cache = getCache();
 
 export function uhiEuaController() {
   const router = Router()
 
   router.post('/on_message', validateRequest('body', uhiPayload(onMessageDataSchema)), handleOnMessage)
-  router.post('/on_search', validateRequest('body', gatewayOnSearchRequestSchema), handleOnSearch)
+  router.post('/on_search', validateRequest('body', z.union([gatewayOnSearchRequestSchema, uhiPayload(hspaSearchResultSchema)])), handleOnSearch)
 
   return router;
 }
@@ -24,7 +25,7 @@ async function handleOnMessage(req: Request, res: Response) {
   const message = request.message.intent.chat.content.content_value;
   const receiver = request.message.intent.chat.reciever.person.cred;
 
-  SocketServer.sendTo(receiver, message)
+  SocketServer.sendTo([receiver], message)
 
   res.json({ success: true })
 }

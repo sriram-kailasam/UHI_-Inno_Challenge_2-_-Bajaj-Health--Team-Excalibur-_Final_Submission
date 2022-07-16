@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const sendMessageRequestSchema = z.object({
   senderId: z.string(),
-  receiverId: z.string(),
+  receiverId: z.array(z.string()),
   timestamp: z.string(),
   content: z.object({
     id: z.string(),

@@ -3,7 +3,9 @@ import axios from "axios"
 import { v4 as uuid } from 'uuid'
 
 export async function sendMessage(payload: SendMessageRequest) {
-  await axios({
+  const promises: Promise<unknown>[] = []
+
+  payload.receiverId.forEach(receiverId => promises.push(axios({
     baseURL: process.env.EUA_CONSUMER_URI,
     url: '/on_message',
     method: 'post',
@@ -31,7 +33,7 @@ export async function sendMessage(payload: SendMessageRequest) {
             },
             "reciever": {
               "person": {
-                "cred": payload.receiverId
+                "cred": receiverId
               }
             },
             "content": {
@@ -45,5 +47,7 @@ export async function sendMessage(payload: SendMessageRequest) {
         }
       }
     }
-  })
+  })))
+
+  await Promise.all(promises)
 }

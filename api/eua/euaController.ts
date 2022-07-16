@@ -1,12 +1,13 @@
 import { Request, Response, Router } from "express";
 import { SendMessageRequest } from "../dto/sendMessage.dto";
 import { sendMessage } from "../hspa/hspService.external";
-import { searchDoctors } from "./euaService.external";
+import { getSlots, searchDoctors } from "./euaService.external";
 
 export function euaController() {
   const router = Router();
 
   router.get('/searchDoctors', handleSearchDoctors);
+  router.get('/getSlots', handleGetSlots)
   router.post('/sendMessage', handleSendMessage)
 
   return router;
@@ -30,4 +31,11 @@ async function handleSearchDoctors(req: Request, res: Response) {
   const searchResults = await searchDoctors(request.name);
 
   res.json({ searchResults })
+}
+
+async function handleGetSlots(req: Request, res: Response) {
+  const request = req.query as { hprId: string }
+
+  const slots = await getSlots(request.hprId)
+  res.json({ slots })
 }

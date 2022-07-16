@@ -35,7 +35,9 @@ export class SocketServer {
     SocketServer.io?.sockets.send(message)
   }
 
-  static sendTo(userId: string, message: string) {
-    this.clients[userId]?.send(message)
+  static sendTo(userIds: string[], message: string) {
+    userIds.forEach(userId => {
+      this.clients[userId]?.send(message)
+    })
   }
 }

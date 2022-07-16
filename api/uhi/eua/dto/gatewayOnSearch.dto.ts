@@ -6,20 +6,19 @@ export const gatewayOnSearchRequestSchema = z.object({
       fulfillments: z.array(
         z.object({
           id: z.string(),
-          type: z.string(),
           agent: z.object({
             id: z.string(),
             name: z.string(),
             image: z.string().nullish(),
             gender: z.string(),
             tags: z.object({
-              "@abdm/gov/in/first_consultation": z.string(),
-              "@abdm/gov/in/experience": z.string(),
-              "@abdm/gov/in/languages": z.string(),
-              "@abdm/gov/in/speciality": z.string(),
-              "@abdm/gov/in/education": z.string(),
-              "@abdm/gov/in/hpr_id": z.string(),
-            }),
+              "@abdm/gov/in/first_consultation": z.string().nullish(),
+              "@abdm/gov/in/experience": z.string().nullish(),
+              "@abdm/gov/in/languages": z.string().nullish(),
+              "@abdm/gov/in/speciality": z.string().nullish(),
+              "@abdm/gov/in/education": z.string().nullish(),
+              "@abdm/gov/in/hpr_id": z.string().nullish(),
+            }).nullish(),
           }),
         })
       )

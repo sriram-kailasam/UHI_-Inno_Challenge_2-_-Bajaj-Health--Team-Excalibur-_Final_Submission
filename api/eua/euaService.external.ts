@@ -3,24 +3,32 @@ import { waitForData } from "../util/waitForData"
 import { v4 as uuid } from 'uuid'
 import { SearchResult } from "./dto/searchResult.dto";
 import { GatewayOnSearchRequest } from "../uhi/eua/dto/gatewayOnSearch.dto";
-import { euaConsumerId, euaConsumerUri } from "../configuration";
+import { defaultHspaBaseUrl, euaConsumerId, euaConsumerUri, gatewayBaseUrl } from "../configuration";
+import { getCache } from "../cache";
+import { HspaSearchResult } from "./dto/hspaSearchResult.dto";
+import dayjs from 'dayjs'
+import { UhiPayload } from "../uhi/dto/uhiPayload";
+
+const cache = getCache();
 
 export async function searchDoctors(name: string): Promise<SearchResult[]> {
   const transactionId = await sendSearchDoctorsRequest(name);
   const result = await waitForData<GatewayOnSearchRequest>(`gatewaySearch:${transactionId}`)
 
-
   const searchResults: SearchResult[] = result.message.catalog.fulfillments?.map(fulfillment => {
+    const hprId = fulfillment.agent.id;
+    cache.set(`providerUri:${hprId}`, result.context.provider_uri)
+
     return {
-      hprId: fulfillment.agent.id,
+      hprId: hprId,
       name: fulfillment.agent.name,
-      education: fulfillment.agent.tags['@abdm/gov/in/education'],
-      experience: Number(fulfillment.agent.tags["@abdm/gov/in/experience"]),
-      fees: Number(fulfillment.agent.tags["@abdm/gov/in/first_consultation"]),
+      education: fulfillment.agent.tags?.['@abdm/gov/in/education'],
+      experience: Number(fulfillment.agent.tags?.["@abdm/gov/in/experience"]),
+      fees: Number(fulfillment.agent.tags?.["@abdm/gov/in/first_consultation"]),
       gender: fulfillment.agent.gender,
       imageUri: fulfillment.agent.image,
-      speciality: fulfillment.agent.tags["@abdm/gov/in/speciality"],
-      languages: fulfillment.agent.tags["@abdm/gov/in/languages"]?.split(',')
+      speciality: fulfillment.agent.tags?.["@abdm/gov/in/speciality"],
+      languages: fulfillment.agent.tags?.["@abdm/gov/in/languages"]?.split(',')
     }
   }) || []
 
@@ -40,12 +48,10 @@ async function sendSearchDoctorsRequest(name: string) {
         "country": "IND",
         "city": "std:080",
         "action": "on_search",
-        "timestamp": "2022-07-07T10:43:48.705082Z",
+        "timestamp": new Date().toISOString(),
         "core_version": "0.7.1",
         "consumer_id": euaConsumerId,
         "consumer_uri": euaConsumerUri,
-        "provider_id": "http://100.65.158.41:8084/api/v1",
-        "provider_uri": "http://100.65.158.41:8084/api/v1",
         "transaction_id": transactionId
       },
       "message": {
@@ -53,16 +59,6 @@ async function sendSearchDoctorsRequest(name: string) {
           "fulfillment": {
             "agent": {
               "name": name
-            },
-            "start": {
-              "time": {
-                "timestamp": "2022-06-22T15:41:36"
-              }
-            },
-            "end": {
-              "time": {
-                "timestamp": "2022-06-22T23:59:59"
-              }
             },
             "type": "PhysicalConsultation"
           }
@@ -73,6 +69,69 @@ async function sendSearchDoctorsRequest(name: string) {
 
 
   })
+
+  return transactionId
+}
+
+
+export async function getSlots(hprId: string): Promise<Slot[]> {
+  const transactionId = await sendGetSlotsRequest(hprId)
+
+  const result = await waitForData<UhiPayload<HspaSearchResult>>(`gatewaySearch:${transactionId}`);
+
+  console.log({ result })
+  return result.message.catalog.fulfillments?.map((fulfillment: any) => ({
+    slotId: fulfillment.id,
+    startTime: dayjs(fulfillment.start.time.timestamp).toISOString(),
+    endTime: dayjs(fulfillment.end.time.timestamp).toISOString()
+  }))
+
+}
+
+async function sendGetSlotsRequest(hprId: string) {
+  const transactionId = uuid()
+
+  const providerUri = cache.get<string>(`providerUri:${hprId}`);
+
+  await axios({
+    baseURL: providerUri || defaultHspaBaseUrl,
+    url: "/search",
+    method: 'post',
+    data: {
+      "context": {
+        "domain": "nic2004:85111",
+        "country": "IND",
+        "city": "std:080",
+        "action": "search",
+        "timestamp": new Date().toISOString(),
+        "core_version": "0.7.1",
+        "consumer_id": euaConsumerId,
+        "consumer_uri": euaConsumerUri,
+        "transaction_id": transactionId
+      },
+      "message": {
+        "intent": {
+          "fulfillment": {
+            "agent": {
+              cred: hprId
+            },
+            "start": {
+              "time": {
+                "timestamp": new Date().toISOString()
+              }
+            },
+            "end": {
+              "time": {
+                "timestamp": "2022-07-17T23:59:59"
+              }
+            },
+            "type": "Teleconsultation"
+          }
+        }
+      }
+    }
+  })
+
 
   return transactionId
 }
