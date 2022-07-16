@@ -28,6 +28,4 @@ export class SocketServer {
   static broadcast(message: string) {
     SocketServer.io?.sockets.send(message)
   }
-
-
 }

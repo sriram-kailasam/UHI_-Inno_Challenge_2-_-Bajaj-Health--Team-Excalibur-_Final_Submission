@@ -17,7 +17,7 @@ async function handleSendMessage(req: Request, res: Response) {
 
   try {
     await axios({
-      baseURL: process.env.HSPA_CONSUMER_URI,
+      baseURL: process.env.EUA_CONSUMER_URI,
       url: '/on_message',
       method: 'post',
       data:

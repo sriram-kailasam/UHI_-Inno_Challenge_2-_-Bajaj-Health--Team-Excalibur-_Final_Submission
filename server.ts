@@ -1,3 +1,5 @@
+import 'source-map-support';
+import 'express-async-errors';
 import express, { NextFunction, Request, Response } from "express"
 import cors from "cors"
 import path from "path"
@@ -6,10 +8,10 @@ import bodyParser from "body-parser"
 import httpLogger from "pino-http"
 import 'dotenv/config'
 import { uhiHspaController } from "./api/uhi/hspa/uhiHspa.controller"
-import { Server } from 'socket.io'
 import { createServer } from 'http'
 import { SocketServer } from "./api/sockets"
 import { hspaController } from "./api/hspa/hspaController"
+import { uhiEuaController } from "./api/uhi/eua/uhiEuaController"
 
 const app = express()
 app.use(cors())
@@ -30,8 +32,10 @@ app.use(httpLogger({
   },
 }))
 
+
 app.use('/api/hspa', hspaController())
 
+app.use('/api/uhi/eua', uhiEuaController())
 app.use('/api/uhi/hspa', uhiHspaController());
 
 app.get('/eua/*', function (_, res) {
