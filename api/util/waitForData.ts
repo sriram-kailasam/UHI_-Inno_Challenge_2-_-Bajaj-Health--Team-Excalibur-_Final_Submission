@@ -3,25 +3,25 @@ import { getCache } from "../cache";
 const cache = getCache();
 
 export async function waitForData<T>(key: string) {
-  return new Promise((resolve, reject) => {
+  return new Promise<T>((resolve, reject) => {
     let times = 0;
     const interval = setInterval(async () => {
       if (times >= 10) {
-        reject(' timeout exceeded for ' + key);
+        reject('timeout exceeded for ' + key);
         clearInterval(interval);
         return;
       }
 
-      const bookingDetails = await cache.get<T>(
+      const data = await cache.get<T>(
         key
       );
 
       times++;
 
-      if (bookingDetails) {
+      if (data) {
         console.log(`Data fetched for ${key}`);
 
-        resolve(bookingDetails);
+        resolve(data);
         clearInterval(interval);
       }
     }, 1000);

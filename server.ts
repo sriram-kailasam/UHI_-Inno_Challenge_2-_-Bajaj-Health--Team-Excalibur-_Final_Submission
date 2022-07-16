@@ -12,6 +12,7 @@ import { createServer } from 'http'
 import { SocketServer } from "./api/sockets"
 import { hspaController } from "./api/hspa/hspaController"
 import { uhiEuaController } from "./api/uhi/eua/uhiEuaController"
+import { euaController } from './api/eua/euaController';
 
 const app = express()
 app.use(cors())
@@ -34,6 +35,7 @@ app.use(httpLogger({
 
 
 app.use('/api/hspa', hspaController())
+app.use('/api/eua', euaController())
 
 app.use('/api/uhi/eua', uhiEuaController())
 app.use('/api/uhi/hspa', uhiHspaController());
