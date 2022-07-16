@@ -16,7 +16,11 @@ export function hspaController() {
 async function handleSendMessage(req: Request, res: Response) {
   const payload = req.body as SendMessageRequest;
 
-  await sendMessage(payload)
+  console.log('sendMessage called', payload)
+  try { await sendMessage(payload) } catch (err) {
+    console.log(err)
+    console.log('response', (err as any)?.response?.data)
+  }
 
   res.json({ success: true })
 }

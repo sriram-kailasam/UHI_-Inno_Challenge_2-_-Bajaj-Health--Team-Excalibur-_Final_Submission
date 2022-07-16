@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { validateRequest } from "../../validateRequest";
 import { UhiPayload, uhiPayload } from "../dto/uhiPayload";
 import { onMessageDataSchema, OnMessageRequest } from "../dto/onMessage.dto";
+import { SocketServer } from "../../sockets";
 
 export function uhiHspaController() {
   const router = Router();
@@ -12,9 +13,13 @@ export function uhiHspaController() {
   return router;
 }
 
-function handleOnMessage(req: Request, res: Response) {
-  const { message } = req.body as UhiPayload<OnMessageRequest>
-  console.log({ message })
+async function handleOnMessage(req: Request, res: Response) {
+  const request = req.body as UhiPayload<OnMessageRequest>;
+
+  const message = request.message.intent.chat.content.content_value;
+  const receiver = request.message.intent.chat.reciever.person.cred;
+
+  SocketServer.sendTo(receiver, message)
 
   res.json({ success: true })
 }
