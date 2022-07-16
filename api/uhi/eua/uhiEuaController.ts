@@ -4,7 +4,7 @@ import { SocketServer } from "../../sockets";
 import { validateRequest } from "../../validateRequest";
 import { onMessageDataSchema, OnMessageRequest } from "../dto/onMessage.dto";
 import { uhiPayload, UhiPayload } from "../dto/uhiPayload";
-import { GatewayOnSearchRequest } from "./dto/gatewayOnSearch.dto";
+import { GatewayOnSearchRequest, gatewayOnSearchRequestSchema } from "./dto/gatewayOnSearch.dto";
 
 const cache = getCache();
 
@@ -12,7 +12,7 @@ export function uhiEuaController() {
   const router = Router()
 
   router.post('/on_message', validateRequest('body', uhiPayload(onMessageDataSchema)), handleOnMessage)
-  router.post('/on_search', validateRequest('body', onMessageDataSchema), handleOnSearch)
+  router.post('/on_search', validateRequest('body', gatewayOnSearchRequestSchema), handleOnSearch)
 
   return router;
 }

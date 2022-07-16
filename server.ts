@@ -49,7 +49,7 @@ app.get('/hspa/*', function (_, res) {
 });
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction): void => {
-  console.error(error)
+  console.log('server error', error.message)
 
   const status = 500;
   res.status(status).json({ error: error.message });
