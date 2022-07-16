@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment'
 import Button from '@mui/material/Button';
+import { getPatientAvatar, getPatientGender } from 'shared/utils/utils';
 import CalendarIcon from 'shared/assests/calendarIcon.svg';
 import ClockIcon from 'shared/assests/clockIcon.svg';
 import VideoCameraIcon from 'shared/assests/videoCameraIcon.svg';
-import MaleAvatar from 'shared/assests/maleAvatar.svg';
-import FemaleAvatar from 'shared/assests/femaleAvatar.svg';
 import AbhaLogo from 'shared/assests/abhaLogo.jpg';
 import { AppointmentData } from '../types';
 
@@ -19,23 +18,9 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
     return moment(time).format('hh:mm A');
   }
 
-  const getPatientGender = () => {
-    if (appointmentData.patient.gender?.[0].toLowerCase() === 'm') {
-      return 'Male';
-    }
-    return 'Female';
-  }
-  
-  const getPatientAvatar = () => {
-    if (appointmentData.patient.gender?.[0].toLowerCase() === 'm') {
-      return MaleAvatar;
-    } 
-    return FemaleAvatar;
-  }
-
   const handleViewPatientProfile = () => {
     navigate('../patientDetails', { state: appointmentData })
-  }
+  };
 
   return (
     <div className='h-44 bg-white first:mt-0 mt-4 rounded-lg p-2 flex flex-col justify-between' key={appointmentData.appointment.id}>
@@ -53,13 +38,13 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
       </div>
       <div className='flex flex-col grow-[0.4] justify-between'>
         <div className='flex'>
-          <img src={getPatientAvatar()} alt='avatar' className='h-9 w-9' />
+          <img src={getPatientAvatar(appointmentData.patient.gender)} alt='avatar' className='h-9 w-9' />
           <div className='ml-4'>
             <div className='text-sm text-[#4b4b4b] font-semibold'>
               {appointmentData.patient.name}
             </div>
             <div className='text-xs text-[#767676] mt-1'>
-              <span>{getPatientGender()} | {appointmentData.patient.age} Yrs</span>
+              <span>{getPatientGender(appointmentData.patient.gender)} | {appointmentData.patient.age} Yrs</span>
             </div>
           </div>
         </div>
@@ -75,10 +60,10 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
       </div>
       <div className='flex items-center justify-between border-t border-t-[#ebebeb] pt-1'>
         <div>
-        <Button fullWidth className='!p-2 !ml-2 !text-xs !bg-[#f2f3f9] !h-6 !text-[#4b4b4b] !normal-case !shadow-none' variant='contained'>
-          <img src={VideoCameraIcon} alt='video camera' />
-          <span className='ml-2'>Video Consult</span>
-        </Button>
+          <Button fullWidth className='!p-2 !ml-2 !text-xs !bg-[#f2f3f9] !h-6 !text-[#4b4b4b] !normal-case !shadow-none' variant='contained'>
+            <img src={VideoCameraIcon} alt='video camera' />
+            <span className='ml-2'>Video Consult</span>
+          </Button>
         </div>
         {!appointmentData.isGroupConsult && <div className='text-sm mr-2 text-[#5c2d90] font-semibold' onClick={handleViewPatientProfile}>
           View details

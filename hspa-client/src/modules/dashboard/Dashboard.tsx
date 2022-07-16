@@ -19,7 +19,7 @@ const Dashboard = () => {
   return (
     <div className='max-w-md flex flex-col items-center m-auto'>
       <Header heading='Patient Appointment List' onBack={() => console.log('nothing')}/>
-      <div className='bg-[#f2f3f9] h-full w-full p-4 mt-16'>
+      <div className='bg-[#f2f3f9] min-h-screen msx-h-full w-full p-4 mt-16'>
         {appointmentList.map((appt) => 
           <AppointmentCard {...appt} />
         )}
