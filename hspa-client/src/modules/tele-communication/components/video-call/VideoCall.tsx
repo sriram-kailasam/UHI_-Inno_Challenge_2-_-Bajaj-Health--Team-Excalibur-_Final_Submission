@@ -1,5 +1,6 @@
 import { FC, useEffect, useRef } from "react";
 import { useSetState } from "react-use";
+import { useSocket } from "socket.io-react-hook";
 
 import log from "lib/log";
 import {
@@ -7,9 +8,11 @@ import {
   rtcPeerConnectionConfig,
 } from "shared/constants";
 import { useMessage } from "modules/tele-communication/services/message";
-import { useSocket, useSocketEvent } from "socket.io-react-hook";
+import { v4 as uuid } from "uuid";
 
-interface Props {}
+interface Props {
+  clientId?: string;
+}
 
 interface State {
   cameraMode: "user" | "environment";
@@ -17,7 +20,7 @@ interface State {
   existingTracks: any[];
 }
 
-const VideoCall: FC<Props> = () => {
+const VideoCall: FC<Props> = ({ clientId = "mohit@hpr.abdm" }) => {
   const [state, setState] = useSetState<State>({
     cameraMode: "user",
     localStream: null,
@@ -33,7 +36,7 @@ const VideoCall: FC<Props> = () => {
   const { socket, connected } = useSocket(HSPA_WEB_SOCKET_URL_NGROK, {
     transports: ["websocket"],
     query: {
-      userId: "mohit@hpr.abdm",
+      userId: clientId,
     },
   });
 
@@ -43,18 +46,35 @@ const VideoCall: FC<Props> = () => {
     }
   }, [connected]);
 
-  const { lastMessage } = useSocketEvent(socket, "message");
+  const onSocketMessage = (message: string) => {
+    if (!message || message.includes("Connected as")) return;
+    const parsedMessage = JSON.parse(message);
+    const { senderId, content } = parsedMessage;
+    if (senderId === clientId) return;
+    const { value } = content;
+    const parsedContentValue = JSON.parse(value);
+    const { type, data } = parsedContentValue;
+    if (type === "OFFER") {
+      handleOffer(data);
+    }
+    if (type === "CANDIDATE") {
+      handleCandidate(data);
+    }
+    if (type === "ANSWER") {
+      handleAnswer(data);
+    }
+    console.log(parsedContentValue, "***** parsed content value");
+  };
+
   useEffect(() => {
-    console.log(socket);
-    socket.on('message', (message: any) => {
-        console.log(message);
-    });
+    socket.on("message", onSocketMessage);
   }, [socket]);
 
-  function createRTCPeerConnection() {
-    if (!(connection.current as any).addTrack) {
+  const createRTCPeerConnection = () => {
+    if ((connection.current as any).addTrack) {
       return;
     }
+    console.log(connection.current);
     connection.current = new RTCPeerConnection(rtcPeerConnectionConfig);
 
     // Add both video and audio tracks to the connection
@@ -82,17 +102,22 @@ const VideoCall: FC<Props> = () => {
 
     // This event sends the ice candidates generated from Stun or Turn server to the Receiver over web socket
     (connection.current as any).onicecandidate = (event: any) => {
+      console.log("On ice candidate called");
       if (event.candidate) {
         log("Sending Ice Candidate - " + event.candidate.candidate);
 
-        // socket.send(
-        //   JSON.stringify({
-        //     action: "onMessage",
-        //     type: "candidate",
-        //     data: event.candidate,
-        //     id: clientId,
-        //   })
-        // );
+        sendMessage({
+          senderId: clientId,
+          receiverId: ["airesh@abha"],
+          timestamp: new Date(),
+          content: {
+            id: uuid(),
+            value: JSON.stringify({
+              type: "CANDIDATE",
+              data: event.candidate,
+            }),
+          },
+        });
       }
     };
 
@@ -135,7 +160,71 @@ const VideoCall: FC<Props> = () => {
 
     log("Web RTC Peer Connection Created.");
     // document.getElementById("sendOfferButton").disabled = false;
-  }
+  };
+
+  const handleCandidate = (candidate: any) => {
+    // Avoid accepting the ice candidate if this is a message created by the current peer
+    log("Adding Ice Candidate - " + candidate.candidate);
+    (connection.current as any).addIceCandidate(new RTCIceCandidate(candidate));
+  };
+
+  /**
+   * Accepts Offer received from the Caller
+   */
+  const handleOffer = (offer: any) => {
+    log("Recieved The Offer.");
+    (connection.current as any).setRemoteDescription(
+      new RTCSessionDescription(offer)
+    );
+    //   document.getElementById("answerButton").disabled = false;
+    //   document.getElementById("sendOfferButton").disabled = true;
+  };
+
+  /**
+   * Accepts Answer received from the Receiver
+   */
+  const handleAnswer = (answer: any) => {
+    // Avoid accepting the Answer if this is a message created by the current peer
+    log("Recieved The Answer");
+    (connection.current as any).setRemoteDescription(
+      new RTCSessionDescription(answer)
+    );
+  };
+
+  /**
+   * Creates and sends the Offer to the Receiver
+   * Creates a Data channel for exchanging text messages
+   * This function is invoked by the Caller
+   */
+  const createAndSendOffer = () => {
+    // Create Offer
+    console.log(connection.current);
+    (connection.current as any).createOffer().then(
+      (offer: any) => {
+        log("Sent The Offer.");
+
+        sendMessage({
+          senderId: clientId,
+          receiverId: ["airesh@abha"],
+          timestamp: new Date(),
+          content: {
+            id: uuid(),
+            value: JSON.stringify({
+              type: "OFFER",
+              data: offer,
+            }),
+          },
+        });
+
+        // Set Offer for negotiation
+        (connection.current as any).setLocalDescription(offer);
+      },
+      (error: any) => {
+        log("Error when creating an offer.");
+        console.error(error);
+      }
+    );
+  };
 
   const {
     mutation: { mutateAsync: sendMessage },
@@ -143,8 +232,8 @@ const VideoCall: FC<Props> = () => {
 
   const sendMessageHelper = async () => {
     const response = await sendMessage({
-      senderId: "mohit@hpr.abdm",
-      receiverId: "airesh@abha",
+      senderId: clientId,
+      receiverId: ["airesh@abha"],
       timestamp: new Date(),
       content: {
         id: "CONNECT",
@@ -211,7 +300,7 @@ const VideoCall: FC<Props> = () => {
   }
 
   return (
-    <>
+    <div>
       <p>VideoCall</p>
       <video
         id="localVideo"
@@ -220,8 +309,20 @@ const VideoCall: FC<Props> = () => {
         playsInline
         autoPlay
       ></video>
-      <button onClick={sendMessageHelper}>Send message</button>
-    </>
+      <video
+        id="remoteVideo"
+        onClick={switchMobileCamera}
+        muted
+        playsInline
+        autoPlay
+      ></video>
+      <div>
+        <button onClick={sendMessageHelper}>Send message</button>
+        <button id="sendOfferButton" onClick={createAndSendOffer}>
+          Call
+        </button>
+      </div>
+    </div>
   );
 };
 
