@@ -37,11 +37,12 @@ async function handleSearch(req: Request, res: Response) {
   const { message, context } = req.body as UhiPayload<SearchRequest>;
 
   const query = message.intent.fulfillment.agent.name || message.intent.fulfillment.agent.cred;
-  const callbackUri = context.consumer_uri
 
   if (query) {
     const results = await searchDoctors(query)
-    await searchDoctorCallback(context, results)
+    if (results?.length) {
+      await searchDoctorCallback(context, results)
+    }
   }
 
   res.json({ success: true })
@@ -67,9 +68,9 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
             "fulfillment_id": String(index)
           }
         }),
-        "fulfillments": results.map(doctor => {
+        "fulfillments": results.map((doctor, index) => {
           return {
-            "id": "0",
+            "id": String(index),
             "type": "PhysicalConsultation",
             "agent": {
               "id": doctor.hprId,
