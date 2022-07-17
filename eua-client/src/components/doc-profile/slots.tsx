@@ -22,7 +22,7 @@ const Slots = ({
                     }}
                 >
                     <span className="slot-label">
-                        {dayjs(eachSlot.startTime).format("hh:mm A")}
+                        {dayjs(eachSlot.startTime).format("hh:mm A, DD MMM")}
                     </span>
                 </div>
             );

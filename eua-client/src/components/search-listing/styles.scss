@@ -179,3 +179,20 @@
         }
     }
 }
+
+.e-consssss {
+    .e-cons-btn {
+        background-color: #153e90;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        border-radius: 500px;
+        outline: none;
+        margin-top: 10px;
+
+        & > span {
+            margin-left: 6px;
+            font-size: 12px;
+        }
+    }
+}
