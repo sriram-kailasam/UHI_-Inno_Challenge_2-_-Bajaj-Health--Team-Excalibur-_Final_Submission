@@ -46,7 +46,7 @@ const AppointmentBooking = () => {
     });
 
   const handleOnBack = () => {
-    // navigate('../patientDetails', { state: appointmentData });
+    navigate('../dashboard');
   }
 
   return (

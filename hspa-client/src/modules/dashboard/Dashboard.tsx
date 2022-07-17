@@ -6,13 +6,13 @@ import { AppointmentData } from './types';
 import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
-  const hpAddress = 'sdf@hpr.abdm';
+  const hpAddress = localStorage.getItem('hpAddress')?.toString() || '';
   const [appointmentList, setAppointmentList] = useState<AppointmentData[]>([]);
   const { isLoading, data } = useGetAppointmentList(hpAddress);
 
   useEffect(() => {
     if (data && !isLoading) {
-      setAppointmentList(data);
+      setAppointmentList(data.results);
     }
   }, [data]);
 
