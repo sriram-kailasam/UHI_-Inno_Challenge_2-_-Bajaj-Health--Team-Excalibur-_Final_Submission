@@ -18,6 +18,7 @@ export async function searchDoctors(name: string): Promise<SearchResult[]> {
   let searchResults: SearchResult[] = [];
 
   results.forEach(result => {
+    console.log({ catalog: JSON.stringify(result.message.catalog) })
     searchResults = searchResults.concat(result.message.catalog.fulfillments?.map(fulfillment => {
       const hprId = fulfillment.agent.id;
       cache.set(`providerUri:${hprId}`, result.context.provider_uri)
@@ -82,14 +83,18 @@ async function sendSearchDoctorsRequest(name: string) {
 export async function getSlots(hprId: string): Promise<Slot[]> {
   const transactionId = await sendGetSlotsRequest(hprId)
 
-  const result = await waitForData<UhiPayload<HspaSearchResult>>(`gatewaySearch:${transactionId}`);
+  const result = await waitForData<UhiPayload<HspaSearchResult>[]>(`gatewaySearch:${transactionId}`);
 
-  console.log({ result })
-  return result.message.catalog.fulfillments?.map((fulfillment: any) => ({
-    slotId: fulfillment.id,
-    startTime: dayjs(fulfillment.start.time.timestamp).toISOString(),
-    endTime: dayjs(fulfillment.end.time.timestamp).toISOString()
-  }))
+
+  console.log({ result: JSON.stringify(result) })
+  return result[0]?.message.catalog.fulfillments?.map((fulfillment: any) => {
+    console.log({ fulfillment: JSON.stringify(fulfillment) })
+    return {
+      slotId: fulfillment.id,
+      startTime: dayjs(fulfillment.start.time.timestamp).toISOString(),
+      endTime: dayjs(fulfillment.end.time.timestamp).toISOString()
+    }
+  })
 
 }
 

@@ -8,3 +8,12 @@ export async function searchDoctors(query: string): Promise<Doctor[]> {
 
   return doctors;
 }
+
+
+export async function getDoctorSlots(hprId: string): Promise<Slot[]> {
+  const client = await getDbClient()
+  const doctor = await client.db().collection('doctors').findOne<Doctor>({ hprId })
+
+
+  return doctor?.slots || [];
+}

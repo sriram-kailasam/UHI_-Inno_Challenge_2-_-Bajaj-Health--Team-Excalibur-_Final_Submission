@@ -6,7 +6,7 @@ import { onMessageDataSchema, OnMessageRequest } from "../dto/onMessage.dto";
 import { uhiPayload, UhiPayload } from "../dto/uhiPayload";
 import { GatewayOnSearchRequest, gatewayOnSearchRequestSchema } from "./dto/gatewayOnSearch.dto";
 import { z } from 'zod'
-import { hspaSearchResultSchema } from "../../eua/dto/hspaSearchResult.dto";
+import { HspaSearchResult, hspaSearchResultSchema } from "../../eua/dto/hspaSearchResult.dto";
 const cache = getCache();
 
 export function uhiEuaController() {
@@ -31,7 +31,7 @@ async function handleOnMessage(req: Request, res: Response) {
 }
 
 async function handleOnSearch(req: Request, res: Response) {
-  const resultMessage = req.body as GatewayOnSearchRequest;
+  const resultMessage = req.body as GatewayOnSearchRequest | UhiPayload<HspaSearchResult>;
 
   const transactionId = resultMessage.context.transaction_id;
   console.log("search result received", transactionId)

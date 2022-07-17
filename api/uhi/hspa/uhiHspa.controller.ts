@@ -8,9 +8,10 @@ import { InitRequest, initSchema } from "./dto/init.dto";
 import { saveAppointment } from "../../appointments/appointmentsService";
 import dayjs from 'dayjs'
 import { SearchRequest, searchRequestSchema } from "./dto/searchRequest.dto";
-import { searchDoctors } from "../../doctors/doctorsService";
+import { getDoctorSlots, searchDoctors } from "../../doctors/doctorsService";
 import axios from "axios";
 import { Doctor } from "../../doctors/dto/doctor.dto";
+import { HspaSearchResult } from "../../eua/dto/hspaSearchResult.dto";
 
 export function uhiHspaController() {
   const router = Router();
@@ -38,14 +39,48 @@ async function handleSearch(req: Request, res: Response) {
 
   const query = message.intent.fulfillment.agent.name || message.intent.fulfillment.agent.cred;
 
+
   if (query) {
-    const results = await searchDoctors(query)
-    if (results?.length) {
-      await searchDoctorCallback(context, results)
+    if (context.provider_uri) {
+      const slots = await getDoctorSlots(query);
+      await doctorSlotsCallback(context, slots);
+    } else {
+      const results = await searchDoctors(query)
+      if (results?.length) {
+        await searchDoctorCallback(context, results)
+      }
     }
   }
 
   res.json({ success: true })
+}
+
+
+async function doctorSlotsCallback(context: { consumer_uri: string }, results: Slot[]) {
+  const data: UhiPayload<HspaSearchResult> = {
+    context: context,
+    message: {
+      catalog: {
+        fulfillments: results.map(slot => {
+          return {
+            id: slot.slotId,
+            start: {
+              time: { timestamp: slot.startTime }
+            },
+            end: { time: { timestamp: slot.endTime } }
+          }
+        })
+      }
+    }
+  }
+
+
+  await axios({
+    baseURL: context.consumer_uri,
+    url: '/on_search',
+    method: "post",
+    data: data
+  })
 }
 
 async function searchDoctorCallback(context: { consumer_uri: string }, results: Doctor[]) {

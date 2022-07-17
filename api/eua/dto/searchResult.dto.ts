@@ -5,7 +5,7 @@ export type SearchResult = {
   fees?: number | null;
   languages?: string[] | null;
   imageUri?: string | null;
-  gender: string
+  gender?: string | null;
   speciality?: string | null;
   education?: string | null;
 }

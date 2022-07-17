@@ -7,7 +7,9 @@ export const uhiPayload = (messageType: z.ZodType) => z.object({
 
 export type UhiPayload<T> = {
   context: {
-    consumer_uri: string
+    consumer_uri: string;
+    provider_uri?: string;
+    transaction_id?: string;
   };
   message: T;
 }

@@ -6,4 +6,7 @@ export type Doctor = {
   speciality: string;
   languages: string[];
   experience: number;
+
+
+  slots: Slot[]
 }

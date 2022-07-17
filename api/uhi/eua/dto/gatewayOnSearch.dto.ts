@@ -10,7 +10,7 @@ export const gatewayOnSearchRequestSchema = z.object({
             id: z.string(),
             name: z.string(),
             image: z.string().nullish(),
-            gender: z.string(),
+            gender: z.string().nullish(),
             tags: z.object({
               "@abdm/gov/in/first_consultation": z.string().nullish(),
               "@abdm/gov/in/experience": z.string().nullish(),
