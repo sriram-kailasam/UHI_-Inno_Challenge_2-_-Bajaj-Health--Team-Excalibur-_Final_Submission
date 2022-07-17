@@ -16,7 +16,7 @@ interface Props {}
 interface State {
     cameraMode: "user" | "environment";
     remoteStreams: any[];
-    existingTracks: any;
+    existingTracks: any[];
 }
 
 const VideoCall: FC<Props> = () => {
@@ -27,7 +27,7 @@ const VideoCall: FC<Props> = () => {
     const [state, setState] = useSetState<State>({
         cameraMode: "user",
         remoteStreams: [],
-        existingTracks: null,
+        existingTracks: [],
     });
 
     const connection = useRef({});
@@ -90,9 +90,9 @@ const VideoCall: FC<Props> = () => {
         // Add both video and audio tracks to the connection
         for (const track of (localStream.current as any).getTracks()) {
             console.log("Sending Stream.");
-            // state.existingTracks.push(
-            //     (connection.current as any).addTrack(track, localStream.current)
-            // );
+            state.existingTracks.push(
+                (connection.current as any).addTrack(track, localStream.current)
+            );
         }
 
         // This event handles displaying remote video and audio feed from the other peer
@@ -197,7 +197,7 @@ const VideoCall: FC<Props> = () => {
     const initiateSocketAndPeerConnection = (stream: any) => {
         (document.getElementById("localVideo") as any)!.srcObject = stream;
         localStream.current = stream;
-        setState({ existingTracks: stream });
+        setState({ existingTracks: [stream] });
     };
 
     const getLocalWebCamFeed = () => {
