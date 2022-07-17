@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import { BASE_URL } from "shared/constants";
 import { DoctorSearchPayload, DoctorSearchListResponse } from '../types';
 
 const doctorSearch = async (payload: DoctorSearchPayload) => {
-  const response = await axios.get<DoctorSearchListResponse>(`${process.env.REACT_APP_BASE_URL}/eua/searchDoctors`, {
+  const response = await axios.get<DoctorSearchListResponse>(`${BASE_URL}/eua/searchDoctors`, {
     params: {
       name: payload.name
     }

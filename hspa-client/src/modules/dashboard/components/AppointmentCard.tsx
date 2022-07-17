@@ -23,6 +23,18 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
     navigate('../patientDetails', { state: appointmentData })
   };
 
+  const handleVideoCall = () => {
+    const isGroupConsult = appointmentData.isGroupConsult;
+    const otherDoctor = appointmentData.groupConsult?.hrpId || '';
+    const receiverIds = [`${appointmentData.patient.abhaAddress}`];
+    if (isGroupConsult && otherDoctor) receiverIds.push(`${otherDoctor}`);
+    navigate('../video-call', { state: {
+      clientId: localStorage.getItem('hpAddress')?.toString() || '', // logged in doctr
+      receiverIds, // patient abha and secondary
+      isPrimaryDoctor: (localStorage.getItem('hpAddress')?.toString() || '') !== otherDoctor ,// if logged doctor is primary or not
+    }})
+  }
+
   return (
     <div className='h-44 bg-white first:mt-0 mt-4 rounded-lg p-2 flex flex-col justify-between' key={appointmentData.appointment.id}>
       <div className='flex justify-between border-b-[#ebebeb] border-b items-center pt-1 pb-2'>
@@ -62,7 +74,7 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
       </div>
       <div className='flex items-center justify-between border-t border-t-[#ebebeb] pt-1'>
         <div>
-          <Button fullWidth className='!p-2 !ml-2 !text-xs !bg-[#f2f3f9] !h-6 !text-[#4b4b4b] !normal-case !shadow-none' variant='contained'>
+          <Button fullWidth className='!p-2 !ml-2 !text-xs !bg-[#f2f3f9] !h-6 !text-[#4b4b4b] !normal-case !shadow-none' variant='contained' onClick={handleVideoCall}>
             <img src={VideoCameraIcon} alt='video camera' />
             <span className='ml-2'>Video Consult</span>
           </Button>

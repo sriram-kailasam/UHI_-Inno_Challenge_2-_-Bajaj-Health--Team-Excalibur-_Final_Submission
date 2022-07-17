@@ -9,3 +9,9 @@ export type MessagePayload = {
 };
 
 export type MessageResponse = {}
+
+export interface VideoCallData {
+  clientId: string;
+  receiverIds: string[];
+  isPrimaryDoctor: boolean;
+}
