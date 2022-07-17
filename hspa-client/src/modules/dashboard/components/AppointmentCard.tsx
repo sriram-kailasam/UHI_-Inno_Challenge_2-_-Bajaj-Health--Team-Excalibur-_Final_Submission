@@ -27,7 +27,7 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
     const isGroupConsult = appointmentData.isGroupConsult;
     const otherDoctor = appointmentData.groupConsult?.hprId || '';
     const receiverIds = [`${appointmentData.patient.abhaAddress}`];
-    const isPrimaryDoctor = appointmentData.hprId !== (localStorage.getItem('hpAddress')?.toString() || '');
+    const isPrimaryDoctor = appointmentData.hprId === (localStorage.getItem('hpAddress')?.toString() || '');
     console.log({otherDoctor, receiverIds, isGroupConsult })
     if (isGroupConsult) {
       if (isPrimaryDoctor) {
