@@ -5,6 +5,7 @@ import PatientDetails from 'modules/patient-details/PatientDetails';
 import RouteHspaOutlet from "./RouteHspaOutlet";
 import DoctorSearch from "modules/doctor-search/DoctorSearch";
 import VideoCall from "modules/tele-communication/components/video-call/VideoCall";
+import AppointmentBooking from "modules/doctor-appt-booking/AppointmentBooking";
 
 const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="patientDetails" element={<PatientDetails />} />
         <Route path="doctorSearch" element={<DoctorSearch />} />
+        <Route path="apptBooking" element={<AppointmentBooking />} />
         <Route path="video-call" element={<VideoCall />} />
       </Route>
     </Routes>

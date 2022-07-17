@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../redux/slice/user";
 import { validateOTP } from "./api";
+import dayjs from "dayjs";
 
 const OtpForm = ({
     requestData: { transactionId, requesterId },
@@ -28,12 +29,17 @@ const OtpForm = ({
         })
             .then(({ data }) => {
                 localStorage.setItem("auth-token", data.data.token);
+                localStorage.setItem(
+                    "user-profile",
+                    JSON.stringify(data.profile)
+                );
+                localStorage.setItem("last-login", dayjs().toISOString());
                 dispatch(
                     updateProfile({
-                        profile: data.data.profile,
+                        profile: data.profile,
                     })
                 );
-                navigate("/eua/search");
+                navigate("/eua");
             })
             .finally(() => {
                 setIsSubmitting(false);

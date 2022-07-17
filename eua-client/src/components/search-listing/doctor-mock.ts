@@ -6,6 +6,10 @@ export interface ISlot {
     endTime: string;
 }
 
+export interface ISlots {
+    slots: ISlot[];
+}
+
 export interface IDoctor {
     name: string;
     experience: number;
@@ -17,6 +21,10 @@ export interface IDoctor {
     speciality: string;
     education: string;
     slots: ISlot[];
+}
+
+export interface IDoctors {
+    searchResults: IDoctor[];
 }
 
 export const doctorListing: IDoctor[] = [

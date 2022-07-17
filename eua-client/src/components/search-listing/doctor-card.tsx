@@ -1,35 +1,48 @@
 import { Button } from "antd";
-import { doctorMale } from "../../images";
+import { useNavigate } from "react-router-dom";
+import { femaleAvatar, maleAvatar } from "../../images";
+import { IDoctor } from "./doctor-mock";
 
-const DoctorCard = () => {
+const DoctorCard = (docProps: IDoctor) => {
+    const { name, speciality, experience, fees, gender, hprId, slots } =
+        docProps || {};
+    const navigate = useNavigate();
     return (
         <div className="doctor-card">
             <div className="card-main">
-                {/* <div className="top-row">
-                    <div className="next-slot"></div>
-                    <div className="doc-id">#2378A</div>
-                </div> */}
-                <div className="doc-name-logo">
-                    <img src={doctorMale} alt="Doctor Name" />
+                <div className={`doc-name-logo`}>
+                    <img
+                        src={gender === "M" ? maleAvatar : femaleAvatar}
+                        alt="Doctor Name"
+                    />
                     <div className="doc-info-container">
-                        <div className="doc-name">Dr. Ankita Chauhan</div>
-                        <div className="doc-info">
-                            <span className="doc-spec">General Physican</span>
-                            <div className="line-vert"></div>
-                            <span className="doc-exp">2 Yrs</span>
+                        <div className="doc-name">
+                            {"Dr. " + name?.split("-")[1]?.trim()}
                         </div>
+                        <div className="doc-info">
+                            <span className="doc-spec">{speciality}</span>
+                            <div className="line-vert"></div>
+                            <span className="doc-exp">{experience} Yrs</span>
+                        </div>
+
                         <div className="doc-fee-container">
-                            <span className="doc-fees">₹ 180</span>
+                            <span className="doc-fees">₹ {fees}</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="footer">
-                <Button className="know-more-btn">
-                    <span>Know More</span>
-                </Button>
-                <Button className="book-apt-btn">
-                    <span>Book Appointment</span>
+                <Button
+                    className={`book-apt-btn`}
+                    onClick={() =>
+                        navigate(`/eua/search/${hprId}`, {
+                            state: docProps,
+                        })
+                    }
+                    disabled={false}
+                    style={{ width: "100%" }}
+                >
+                    <span>{`Book Appointment`}</span>
                 </Button>
             </div>
         </div>

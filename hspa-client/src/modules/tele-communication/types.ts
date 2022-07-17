@@ -1,6 +1,6 @@
 export type MessagePayload = {
   senderId: string;
-  receiverId: string;
+  receiverId: string[];
   timestamp: Date;
   content: {
     id: string;
@@ -9,3 +9,9 @@ export type MessagePayload = {
 };
 
 export type MessageResponse = {}
+
+export interface VideoCallData {
+  clientId: string;
+  receiverIds: string[];
+  isPrimaryDoctor: boolean;
+}

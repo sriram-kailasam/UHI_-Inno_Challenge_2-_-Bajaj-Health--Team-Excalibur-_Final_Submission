@@ -55,7 +55,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-
+    min-width: 300px;
     .login-btn,
     .otp-submit-btn {
         background-color: #153e90;

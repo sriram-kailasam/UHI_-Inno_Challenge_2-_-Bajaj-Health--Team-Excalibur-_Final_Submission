@@ -1,9 +1,9 @@
 // @ts-nocheck
 import { useState, useEffect } from "react";
-import { HSPA_WEB_SOCKET_URL_NGROK } from "shared/constants";
+import { HSPA_WEB_SOCKET_URL_HEROKU } from "shared/constants";
 import io from "socket.io-client";
 
-const socket = io(HSPA_WEB_SOCKET_URL_NGROK, { query: { userId: '12345678' } });
+const socket = io(HSPA_WEB_SOCKET_URL_HEROKU, { query: { userId: '12345678' } });
 
 const useSocketIO = (options = {}, shouldConnect = false) => {
   const [isConnected, setIsConnected] = useState(socket.connected);

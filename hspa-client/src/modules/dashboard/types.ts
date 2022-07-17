@@ -11,12 +11,13 @@ export interface AppointmentData {
   patient: {
     name: string
     abhaAddress: string
-    gender: string
-    age: string
+    gender?: string
+    age?: string
   }
   isGroupConsult: boolean
   groupConsult?: {
     name: string
+    hrpId?: string
   }
 }
 

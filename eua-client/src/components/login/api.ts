@@ -1,10 +1,12 @@
 import axios from "axios";
-import { baseUrl } from "../../utils/constants";
 
 export const requestOTP = (phrAddress: string) => {
-    return axios.post(`${baseUrl}/health-id/address/login/genrateOtp`, {
-        phrAddress,
-    });
+    return axios.post(
+        `https://bfhldevapigw.healthrx.co.in/phr-identity-module-prod/api/health-id/address/login/genrateOtp`,
+        {
+            phrAddress,
+        }
+    );
 };
 
 export const validateOTP = (payload: {
@@ -13,7 +15,7 @@ export const validateOTP = (payload: {
     otp: string;
 }) => {
     return axios.post(
-        `${baseUrl}/health-id/address/login/validateOtp`,
+        `https://bfhldevapigw.healthrx.co.in/phr-identity-module-prod/api/health-id/address/login/validateOtp`,
         payload
     );
 };
