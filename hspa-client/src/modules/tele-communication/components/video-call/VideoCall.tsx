@@ -10,12 +10,10 @@ import {
 import { useMessage } from "modules/tele-communication/services/message";
 import { v4 as uuid } from "uuid";
 import Button from "shared/common-ui/atoms/Button";
+import { useLocation } from "react-router-dom";
+import { VideoCallData } from "modules/tele-communication/types";
 
-interface Props {
-  clientId?: string;
-  receiverIds?: string[];
-  primaryDoctor?: boolean;
-}
+interface Props {}
 
 interface State {
   cameraMode: "user" | "environment";
@@ -23,11 +21,12 @@ interface State {
   remoteStreams: any[];
 }
 
-const VideoCall: FC<Props> = ({
-  clientId = "mohit@hpr.abdm",
-  receiverIds = ["airesh@abha"],
-  primaryDoctor = true,
-}) => {
+const VideoCall: FC<Props> = ({}) => {
+  const location = useLocation();
+  const videoCallData = location.state as VideoCallData;
+  const { clientId = "mohit@hpr.abdm", receiverIds = ["airesh@abha"], isPrimaryDoctor = true } =
+    videoCallData || {};
+
   const [state, setState] = useSetState<State>({
     cameraMode: "user",
     existingTracks: [],
@@ -375,7 +374,7 @@ const VideoCall: FC<Props> = ({
         autoPlay
       />
       <div className="">
-        {!!primaryDoctor ? (
+        {!!isPrimaryDoctor ? (
           <Button id="sendOfferButton" onClick={createAndSendOffer}>
             Call
           </Button>
