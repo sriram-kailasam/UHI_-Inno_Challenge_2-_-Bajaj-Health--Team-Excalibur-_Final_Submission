@@ -8,11 +8,10 @@ import {
 import { useMessage } from "../services/message";
 import { useSocket } from "socket.io-react-hook";
 import { v4 as uuid } from "uuid";
+import { useLocation } from "react-router-dom";
+import { VideoCallData } from "../types";
 
-interface Props {
-  clientId?: string;
-  receiverIds: string[];
-}
+interface Props {}
 
 interface State {
   cameraMode: "user" | "environment";
@@ -20,7 +19,10 @@ interface State {
   existingTracks: any[];
 }
 
-const VideoCall: FC<Props> = ({ clientId = "airesh@abha", receiverIds = ['mohit@hpr.abdm'] }) => {
+const VideoCall: FC<Props> = () => {
+  const location = useLocation();
+  const videoCallData = location.state as VideoCallData;
+  const { clientId = "airesh@abha", receiverIds = ['mohit@hpr.abdm'] } = videoCallData;
   const [state, setState] = useSetState<State>({
     cameraMode: "user",
     remoteStream: null,
