@@ -53,7 +53,7 @@ export async function listAppointmentsByAbhaId(abhaAddress: string): Promise<App
 export async function listAppointmentsByHprId(hprId: string): Promise<Appointment[]> {
   const client = await getDbClient();
 
-  const appointments = await client.db().collection('appointments').find<Appointment>({ hprId }).toArray();
+  const appointments = await client.db().collection('appointments').find<Appointment>({ $or: [{ hprId: hprId }, { "groupConsult.hprId": hprId }] }).toArray();
 
   return appointments;
 } 

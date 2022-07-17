@@ -44,6 +44,8 @@ async function handleGetAppointmentListByHprId(req: Request, res: Response) {
       age: appointment.patient.age,
       gender: appointment.patient.gender,
     },
+    hprId: appointment.hprId,
+    name: appointment.doctor.name,
     isGroupConsult: appointment.isGroupConsult,
     groupConsult: appointment.groupConsult
   }))

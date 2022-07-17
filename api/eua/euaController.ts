@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { listAppointmentsByAbhaId, saveAppointment } from "../appointments/appointmentsService";
 import { SaveAppointmentRequest, saveAppointmentRequestSchema } from "../appointments/dto/saveAppointment.dto";
+import { getDoctorSlots } from "../doctors/doctorsService";
 import { SendMessageRequest } from "../dto/sendMessage.dto";
 import { sendMessage } from "../hspa/hspService.external";
 import { validateRequest } from "../validateRequest";
@@ -41,7 +42,9 @@ async function handleSearchDoctors(req: Request, res: Response) {
 async function handleGetSlots(req: Request, res: Response) {
   const request = req.query as { hprId: string }
 
-  const slots = await getSlots(request.hprId)
+  const slots = await getDoctorSlots(request.hprId);
+  // const slots = await getSlots(request.hprId)
+
   res.json({ slots })
 }
 
@@ -49,7 +52,9 @@ async function handleBookAppointment(req: Request, res: Response) {
   const request = req.body as SaveAppointmentRequest;
 
   await saveAppointment(request)
-  await initAppointment(request)
+  try { await initAppointment(request) } catch (err) {
+    console.log(err)
+  }
 
   res.json({ success: true })
 }
