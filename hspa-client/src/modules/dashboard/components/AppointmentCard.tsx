@@ -39,13 +39,13 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
       </div>
       <div className='flex flex-col grow-[0.4] justify-between'>
         <div className='flex'>
-          <img src={getPatientAvatar(appointmentData.patient.gender)} alt='avatar' className='h-9 w-9' />
+          <img src={getPatientAvatar(appointmentData.patient.gender?.toString() || '')} alt='avatar' className='h-9 w-9' />
           <div className='ml-4'>
             <div className='text-sm text-[#4b4b4b] font-semibold'>
               {appointmentData.patient.name}
             </div>
             <div className='text-xs text-[#767676] mt-1'>
-              <span>{getPatientGender(appointmentData.patient.gender)} | {appointmentData.patient.age} Yrs</span>
+              <span>{getPatientGender(appointmentData.patient.gender?.toString() || '')} | {appointmentData.patient.age} Yrs</span>
             </div>
           </div>
         </div>

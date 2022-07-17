@@ -2,7 +2,7 @@ import { FC, useEffect, useRef } from "react";
 import { useSetState } from "react-use";
 
 import {
-  HSPA_WEB_SOCKET_URL_NGROK,
+  HSPA_WEB_SOCKET_URL_HEROKU,
   rtcPeerConnectionConfig,
 } from "../../../utils/constants";
 import { useMessage } from "../services/message";
@@ -11,28 +11,30 @@ import { v4 as uuid } from "uuid";
 
 interface Props {
   clientId?: string;
+  receiverIds: string[];
 }
 
 interface State {
   cameraMode: "user" | "environment";
-  localStream: any;
+  remoteStream: any;
   existingTracks: any[];
 }
 
-const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
+const VideoCall: FC<Props> = ({ clientId = "airesh@abha", receiverIds = ['mohit@hpr.abdm'] }) => {
   const [state, setState] = useSetState<State>({
     cameraMode: "user",
-    localStream: null,
+    remoteStream: null,
     existingTracks: [],
   });
 
   const connection = useRef({});
+  const localStream = useRef();
 
   useEffect(() => {
     getLocalWebCamFeed();
   }, []);
 
-  const { socket, connected } = useSocket(HSPA_WEB_SOCKET_URL_NGROK, {
+  const { socket, connected } = useSocket(HSPA_WEB_SOCKET_URL_HEROKU, {
     transports: ["websocket"],
     query: {
       userId: clientId,
@@ -40,19 +42,27 @@ const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
   });
 
   useEffect(() => {
-    if (connected) {
+    if (connected && localStream.current) {
       createRTCPeerConnection();
     }
-  }, [connected]);
+  }, [connected, localStream.current]);
 
   const onSocketMessage = (message: string) => {
-    if (!message || message.includes("Connected as")) return;
+    if (!message || message.includes("Connected as")) {
+      return;
+    }
+
     const parsedMessage = JSON.parse(message);
     const { senderId, content } = parsedMessage;
-    if (senderId === clientId) return;
+
+    if (senderId === clientId) {
+      return;
+    }
+
     const { value } = content;
     const parsedContentValue = JSON.parse(value);
     const { type, data } = parsedContentValue;
+
     if (type === "OFFER") {
       handleOffer(data);
     }
@@ -62,7 +72,6 @@ const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
     if (type === "ANSWER") {
       handleAnswer(data);
     }
-    console.log(parsedContentValue, "***** parsed content value");
   };
 
   useEffect(() => {
@@ -76,10 +85,10 @@ const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
     connection.current = new RTCPeerConnection(rtcPeerConnectionConfig);
 
     // Add both video and audio tracks to the connection
-    for (const track of state.localStream.getTracks()) {
+    for (const track of (localStream.current as any).getTracks()) {
       console.log("Sending Stream.");
       state.existingTracks.push(
-        (connection.current as any).addTrack(track, state.localStream)
+        (connection.current as any).addTrack(track, localStream.current)
       );
     }
 
@@ -88,14 +97,12 @@ const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
       console.log("Recieved Stream.", event.streams[0]);
       (document.getElementById("remoteVideo") as any)!.srcObject =
         event.streams[0];
+      setState({ remoteStream: event.streams[0] });
     };
 
     // This event handles the received data channel from the other peer
     (connection.current as any).ondatachannel = function (event: any) {
       console.log("Recieved a DataChannel.");
-      //   channel = event.channel;
-      //   setChannelEvents(channel);
-      //   document.getElementById("sendMessageButton").disabled = false;
     };
 
     // This event sends the ice candidates generated from Stun or Turn server to the Receiver over web socket
@@ -105,7 +112,7 @@ const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
 
         sendMessage({
           senderId: clientId,
-          receiverId: ["mohit@hpr.abdm"],
+          receiverId: receiverIds,
           timestamp: new Date(),
           content: {
             id: uuid(),
@@ -163,22 +170,9 @@ const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
     mutation: { mutateAsync: sendMessage },
   } = useMessage();
 
-  const sendMessageHelper = async () => {
-    const response = await sendMessage({
-      senderId: "airesh@abha",
-      receiverId: ["mohit@hpr.abdm"],
-      timestamp: new Date(),
-      content: {
-        id: "CONNECT",
-        value: "connect",
-      },
-    });
-    console.log(response);
-  };
-
   const initiateSocketAndPeerConnection = (stream: any) => {
     (document.getElementById("localVideo") as any)!.srcObject = stream;
-    setState({ localStream: stream });
+    localStream.current = stream;
   };
 
   const getLocalWebCamFeed = () => {
@@ -238,7 +232,7 @@ const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
         // Send Answer to other peer
         sendMessage({
           senderId: clientId,
-          receiverId: ["mohit@hpr.abdm"],
+          receiverId: receiverIds,
           timestamp: new Date(),
           content: {
             id: uuid(),
@@ -257,7 +251,6 @@ const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
   };
 
   const handleCandidate = (candidate: any) => {
-    // Avoid accepting the ice candidate if this is a message created by the current peer
     console.log("Adding Ice Candidate - " + candidate.candidate);
     (connection.current as any).addIceCandidate(new RTCIceCandidate(candidate));
   };
@@ -278,7 +271,6 @@ const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
    * Accepts Answer received from the Receiver
    */
   const handleAnswer = (answer: any) => {
-    // Avoid accepting the Answer if this is a message created by the current peer
     console.log("Recieved The Answer");
     (connection.current as any).setRemoteDescription(
       new RTCSessionDescription(answer)
@@ -306,6 +298,13 @@ const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
           playsInline
           autoPlay
         />
+      </div>
+      <div>
+        <button id="sendOfferButton" onClick={createAndSendAnswer}>
+          Answer
+        </button>
+      </div>
+      <div>
         <video
           id="remoteVideo"
           onClick={switchMobileCamera}
@@ -313,12 +312,6 @@ const VideoCall: FC<Props> = ({ clientId = "airesh@abha" }) => {
           playsInline
           autoPlay
         />
-      </div>
-      <div>
-        <button onClick={sendMessageHelper}>Send message</button>
-        <button id="sendOfferButton" onClick={createAndSendAnswer}>
-          Answer
-        </button>
       </div>
     </>
   );

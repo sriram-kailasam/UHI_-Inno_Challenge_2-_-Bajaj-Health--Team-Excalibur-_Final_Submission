@@ -43,13 +43,13 @@ const PatientDetails = () => {
       <Header heading='Patient Details' onBack={handleOnBack}/>
       <div className='min-h-screen msx-h-full w-full p-4 mt-16 bg-[#f2f3f9]'>
         <div className="flex items-center">
-          <img src={getPatientAvatar(appointmentData.patient.gender)} alt='patient' className="h-24 w-24" />
+          <img src={getPatientAvatar(appointmentData.patient.gender?.toString() || '')} alt='patient' className="h-24 w-24" />
           <div className="ml-4">
             <div className="text-base text-[#4b4b4b] font-semibold">
               {appointmentData.patient.name}
             </div>
             <div className="text-sm text-[#767676]">
-              {getPatientGender(appointmentData.patient.gender)} | {appointmentData.patient.age} Yrs
+              {getPatientGender(appointmentData.patient.gender?.toString() || '')} | {appointmentData.patient.age} Yrs
             </div>
           </div>
         </div>
