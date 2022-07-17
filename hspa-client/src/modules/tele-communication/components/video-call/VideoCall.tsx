@@ -20,6 +20,7 @@ interface Props {
 interface State {
   cameraMode: "user" | "environment";
   existingTracks: any[];
+  remoteStreams: any[];
 }
 
 const VideoCall: FC<Props> = ({
@@ -30,6 +31,7 @@ const VideoCall: FC<Props> = ({
   const [state, setState] = useSetState<State>({
     cameraMode: "user",
     existingTracks: [],
+    remoteStreams: [],
   });
 
   const connection = useRef({});
@@ -106,9 +108,21 @@ const VideoCall: FC<Props> = ({
 
     // This event handles displaying remote video and audio feed from the other peer
     (connection.current as any).ontrack = (event: any) => {
-      log("Recieved Stream.");
-      (document.getElementById("remoteVideo") as any)!.srcObject =
-        event.streams[0];
+      log("Recieved Stream.", event);
+      setState((oldState) => {
+        const previousRemoteStreams = oldState.remoteStreams;
+        const existInList = previousRemoteStreams.find(
+          (stream) => stream.id === event.streams[0].id
+        );
+        if (!existInList) {
+          (document.getElementById(
+            `remoteVideo-${previousRemoteStreams.length + 1}`
+          ) as any)!.srcObject = event.streams[0];
+          previousRemoteStreams.push(event.streams[0]);
+          return { ...oldState, remoteStreams: previousRemoteStreams };
+        }
+        return oldState;
+      });
     };
 
     // This event sends the ice candidates generated from Stun or Turn server to the Receiver over web socket
@@ -209,7 +223,6 @@ const VideoCall: FC<Props> = ({
    */
   const createAndSendOffer = () => {
     // Create Offer
-    console.log(connection.current);
     (connection.current as any).createOffer().then(
       (offer: any) => {
         log("Sent The Offer.");
@@ -347,16 +360,20 @@ const VideoCall: FC<Props> = ({
         playsInline
         autoPlay
       />
-      {receiverIds.map((receiverId) => (
-        <video
-          key={receiverId}
-          id={`remoteVideo-${receiverId}`}
-          onClick={switchMobileCamera}
-          muted
-          playsInline
-          autoPlay
-        />
-      ))}
+      <video
+        id="remoteVideo-1"
+        onClick={switchMobileCamera}
+        muted
+        playsInline
+        autoPlay
+      />
+      <video
+        id="remoteVideo-2"
+        onClick={switchMobileCamera}
+        muted
+        playsInline
+        autoPlay
+      />
       <div className="">
         {!!primaryDoctor ? (
           <Button id="sendOfferButton" onClick={createAndSendOffer}>

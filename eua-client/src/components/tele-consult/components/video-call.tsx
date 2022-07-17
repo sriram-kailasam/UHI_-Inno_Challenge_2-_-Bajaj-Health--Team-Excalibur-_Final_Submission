@@ -15,17 +15,18 @@ interface Props {}
 
 interface State {
   cameraMode: "user" | "environment";
-  remoteStream: any;
+  remoteStreams: any[];
   existingTracks: any[];
 }
 
 const VideoCall: FC<Props> = () => {
   const location = useLocation();
   const videoCallData = location.state as VideoCallData;
-  const { clientId = "airesh@abha", receiverIds = ['mohit@hpr.abdm'] } = videoCallData;
+  const { clientId = "airesh@abha", receiverIds = ["mohit@hpr.abdm"] } =
+    videoCallData || {};
   const [state, setState] = useSetState<State>({
     cameraMode: "user",
-    remoteStream: null,
+    remoteStreams: [],
     existingTracks: [],
   });
 
@@ -97,9 +98,20 @@ const VideoCall: FC<Props> = () => {
     // This event handles displaying remote video and audio feed from the other peer
     (connection.current as any).ontrack = (event: any) => {
       console.log("Recieved Stream.", event.streams[0]);
-      (document.getElementById("remoteVideo") as any)!.srcObject =
-        event.streams[0];
-      setState({ remoteStream: event.streams[0] });
+      setState((oldState) => {
+        const previousRemoteStreams = oldState.remoteStreams;
+        const existInList = previousRemoteStreams.find(
+          (stream) => stream.id === event.streams[0].id
+        );
+        if (!existInList) {
+          (document.getElementById(
+            `remoteVideo-${previousRemoteStreams.length + 1}`
+          ) as any)!.srcObject = event.streams[0];
+          previousRemoteStreams.push(event.streams[0]);
+          return { ...oldState, remoteStreams: previousRemoteStreams };
+        }
+        return oldState;
+      });
     };
 
     // This event handles the received data channel from the other peer
@@ -294,7 +306,24 @@ const VideoCall: FC<Props> = () => {
       <p>VideoCall</p>
       <div>
         <video
+          width="100%"
           id="localVideo"
+          onClick={switchMobileCamera}
+          muted
+          playsInline
+          autoPlay
+        />
+        <video
+          width="100%"
+          id="remoteVideo-1"
+          onClick={switchMobileCamera}
+          muted
+          playsInline
+          autoPlay
+        />
+        <video
+          width="100%"
+          id="remoteVideo-2"
           onClick={switchMobileCamera}
           muted
           playsInline
@@ -305,15 +334,6 @@ const VideoCall: FC<Props> = () => {
         <button id="sendOfferButton" onClick={createAndSendAnswer}>
           Answer
         </button>
-      </div>
-      <div>
-        <video
-          id="remoteVideo"
-          onClick={switchMobileCamera}
-          muted
-          playsInline
-          autoPlay
-        />
       </div>
     </>
   );
