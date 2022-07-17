@@ -25,6 +25,7 @@ function Login() {
         const accessToken = response.data.accessToken;
         if (accessToken) {
           localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('hpAddress', `${values.hpAddress}@hpr.abdm`);
           navigate('../dashboard');
         }
       },

@@ -1,11 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { getPatientAvatar } from 'shared/utils/utils';
 import { DoctorSearchResponse } from "../types";
 import './doctorCard.scss';
 
 const DoctorCard: React.FC<DoctorSearchResponse> = ({ ...props }) => {
+  const navigate = useNavigate();
   const getDoctorName = () => {
     return props.name.split(' - ')?.[1] || '';
+  }
+
+  const handleDoctorBooking = () => {
+    navigate('../apptBooking', { state: props });
   }
 
   return (
@@ -29,7 +35,7 @@ const DoctorCard: React.FC<DoctorSearchResponse> = ({ ...props }) => {
         </div>
       </div>
       <div className="footer">
-        <Button className="book-apt-btn">
+        <Button className="book-apt-btn" onClick={handleDoctorBooking}>
           <span>Book Appointment</span>
         </Button>
       </div>
