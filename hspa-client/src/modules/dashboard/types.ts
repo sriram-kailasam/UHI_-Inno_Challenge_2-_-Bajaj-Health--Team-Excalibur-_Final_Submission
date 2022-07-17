@@ -17,6 +17,7 @@ export interface AppointmentData {
   isGroupConsult: boolean
   groupConsult?: {
     name: string
+    hrpId?: string
   }
 }
 
