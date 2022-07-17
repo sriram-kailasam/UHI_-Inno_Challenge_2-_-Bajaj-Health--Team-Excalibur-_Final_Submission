@@ -27,13 +27,13 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
     const isGroupConsult = appointmentData.isGroupConsult;
     const otherDoctor = appointmentData.groupConsult?.hprId || '';
     const receiverIds = [`${appointmentData.patient.abhaAddress}`];
-    const isPrimaryDoctor = (localStorage.getItem('hpAddress')?.toString() || '') !== otherDoctor;
+    const isPrimaryDoctor = appointmentData.hprId !== (localStorage.getItem('hpAddress')?.toString() || '');
     console.log({otherDoctor, receiverIds, isGroupConsult })
     if (isGroupConsult) {
       if (isPrimaryDoctor) {
-        receiverIds.push(`${otherDoctor}`)
+        receiverIds.push(`${appointmentData.groupConsult?.hprId}`)
       } else {
-        receiverIds.push(localStorage.getItem('hpAddress')?.toString() || '')
+        receiverIds.push(`${appointmentData.hprId}`)
       }
     }
     navigate('../video-call', { state: {

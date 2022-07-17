@@ -19,6 +19,7 @@ export interface AppointmentData {
     name: string
     hprId?: string
   }
+  hprId?: string
 }
 
 export interface AppointmentListPayload {
