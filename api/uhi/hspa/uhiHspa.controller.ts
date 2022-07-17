@@ -7,12 +7,16 @@ import { hspaConsumerId, hspaConsumerUri } from "../../configuration";
 import { InitRequest, initSchema } from "./dto/init.dto";
 import { saveAppointment } from "../../appointments/appointmentsService";
 import dayjs from 'dayjs'
+import { SearchRequest, searchRequestSchema } from "./dto/searchRequest.dto";
+import { searchDoctors } from "../../doctors/doctorsService";
+import axios from "axios";
+import { Doctor } from "../../doctors/dto/doctor.dto";
 
 export function uhiHspaController() {
   const router = Router();
 
   router.post('/on_message', validateRequest('body', uhiPayload(onMessageDataSchema)), handleOnMessage);
-  router.post("/search", handleSearch)
+  router.post("/search", validateRequest('body', uhiPayload(searchRequestSchema)), handleSearch)
   router.post('/init', validateRequest('body', uhiPayload(initSchema)), handleInit)
 
   return router;
@@ -29,85 +33,72 @@ async function handleOnMessage(req: Request, res: Response) {
   res.json({ success: true })
 }
 
-function handleSearch(req: Request, res: Response) {
-  res.json({
+async function handleSearch(req: Request, res: Response) {
+  const { message, context } = req.body as UhiPayload<SearchRequest>;
+
+  const query = message.intent.fulfillment.agent.name || message.intent.fulfillment.agent.cred;
+  const callbackUri = context.consumer_uri
+
+  if (query) {
+    const results = await searchDoctors(query)
+    await searchDoctorCallback(context, results)
+  }
+
+  res.json({ success: true })
+}
+
+async function searchDoctorCallback(context: { consumer_uri: string }, results: Doctor[]) {
+  const data = {
     "message": {
-      "intent": null,
-      "order": null,
       "catalog": {
         "descriptor": {
-          "name": "HSPA",
-
+          "name": "HSPA"
         },
-        "items": [
-          {
-            "id": "0",
+        "items": results.map((doctor, index) => {
+          return {
+            "id": String(index),
             "descriptor": {
-              "name": "Consultation",
-
+              "name": "Consultation"
             },
             "price": {
               "currency": "INR",
-              "value": "2.0",
-
+              "value": String(doctor.fees)
             },
-            "fulfillment_id": "0"
+            "fulfillment_id": String(index)
           }
-        ],
-        "fulfillments": [
-          {
+        }),
+        "fulfillments": results.map(doctor => {
+          return {
             "id": "0",
             "type": "PhysicalConsultation",
-
             "agent": {
-              "id": "sriram@hpr.abdm",
-              "name": "sriram@hpr.abdm - Dr. Sriram Kailasam",
-
-              "gender": "M",
-              "cred": null,
+              "id": doctor.hprId,
+              "name": doctor.name,
+              "gender": doctor.gender,
               "tags": {
-                "@abdm/gov/in/first_consultation": "2.0",
-                "@abdm/gov/in/follow_up": "1.0",
-                "@abdm/gov/in/experience": "15.0",
-                "@abdm/gov/in/languages": "English, Hindi, Tamil",
-                "@abdm/gov/in/speciality": "Neurologist",
-                "@abdm/gov/in/education": "MD Medicine",
-                "@abdm/gov/in/hpr_id": "sriram@hpr.abdm",
-              },
+                "@abdm/gov/in/first_consultation": String(doctor.fees),
+                "@abdm/gov/in/experience": String(doctor.experience),
+                "@abdm/gov/in/languages": doctor.languages.join(','),
+                "@abdm/gov/in/speciality": doctor.speciality,
+                "@abdm/gov/in/hpr_id": doctor.hprId,
+              }
             },
-            "start": {
-              "time": {
-                "timestamp": "T13:26+05:30",
-
-              },
-
-            },
-            "end": {
-              "time": {
-                "timestamp": "T13:26+05:30",
-
-              },
-
-            },
-
           }
-        ]
+        })
       },
+      "order_id": null
     },
-    "context": {
-      "domain": "nic2004:85111",
-      "country": "IND",
-      "city": "std:080",
-      "action": "on_search",
-      "timestamp": new Date().toISOString(),
-      "consumer_id": "bfhl-EUA",
-      "consumer_uri": "https://d3f0-117-99-248-86.in.ngrok.io/api/uhi/eua",
-      "provider_id": hspaConsumerId,
-      "provider_uri": hspaConsumerUri,
-      "transaction_id": "ae9e6d90-fde1-11ec-b66a-f551703a8c52",
-    }
+    "context": context
   }
-  )
+
+  console.log({ data: JSON.stringify(data) })
+
+  await axios({
+    baseURL: context.consumer_uri,
+    url: '/on_search',
+    method: 'post',
+    data
+  })
 }
 
 async function handleInit(req: Request, res: Response) {
