@@ -55,7 +55,6 @@ const OtpForm = ({
                 <OtpInput
                     numInputs={6}
                     onChange={(v: string) => {
-                        console.log("this is my val", v);
                         setOTP(v);
                     }}
                     shouldAutoFocus

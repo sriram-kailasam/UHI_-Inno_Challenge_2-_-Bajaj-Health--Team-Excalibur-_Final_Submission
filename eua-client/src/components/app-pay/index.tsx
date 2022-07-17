@@ -124,7 +124,6 @@ const AppointmentPay = () => {
                             setIsLoading(true);
                             callBook()
                                 .then(({ data = {} }) => {
-                                    console.log("jhb jhb jhb ", data);
                                     if (data.success) {
                                         navigate(
                                             `/eua/search/${doctorProfile.hprId}/pay-success`,

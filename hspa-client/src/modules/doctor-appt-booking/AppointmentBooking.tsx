@@ -35,8 +35,6 @@ const AppointmentBooking = () => {
   const { mutation: { mutate: bookAppt }} = useDoctorApptBooking();
   const [selectedSlot, setSelectedSlot] = useState("");
   const isBookActive = !!selectedSlot;
-  // const appointmentData = location.state as AppointmentData;
-  console.log(location.state);
   const doctorDetails = location.state as DoctorSearchResponse;
   const { gender, name, speciality, experience, fees } = doctorDetails;
   const docHprId = doctorDetails.hprId?.toString() || '';

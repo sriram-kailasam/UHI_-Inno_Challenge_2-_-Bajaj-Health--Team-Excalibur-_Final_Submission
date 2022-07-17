@@ -2,7 +2,7 @@ import { FC, useEffect, useRef } from "react";
 import { useSetState } from "react-use";
 
 import {
-    HSPA_WEB_SOCKET_URL_HEROKU,
+    HSPA_WEB_SOCKET_URL,
     rtcPeerConnectionConfig,
 } from "../../../utils/constants";
 import { useMessage } from "../services/message";
@@ -37,7 +37,7 @@ const VideoCall: FC<Props> = () => {
         getLocalWebCamFeed();
     }, []);
 
-    const { socket, connected } = useSocket(HSPA_WEB_SOCKET_URL_HEROKU, {
+    const { socket, connected } = useSocket(HSPA_WEB_SOCKET_URL, {
         transports: ["websocket"],
         query: {
             userId: clientId,
@@ -197,6 +197,7 @@ const VideoCall: FC<Props> = () => {
     const initiateSocketAndPeerConnection = (stream: any) => {
         (document.getElementById("localVideo") as any)!.srcObject = stream;
         localStream.current = stream;
+        setState({ existingTracks: [stream] });
     };
 
     const getLocalWebCamFeed = () => {

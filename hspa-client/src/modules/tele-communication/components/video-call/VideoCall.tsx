@@ -4,7 +4,7 @@ import { useSocket } from "socket.io-react-hook";
 
 import log from "lib/log";
 import {
-  HSPA_WEB_SOCKET_URL_HEROKU,
+  HSPA_WEB_SOCKET_URL,
   rtcPeerConnectionConfig,
 } from "shared/constants";
 import { useMessage } from "modules/tele-communication/services/message";
@@ -40,7 +40,7 @@ const VideoCall: FC<Props> = ({}) => {
     getLocalWebCamFeed();
   }, []);
 
-  const { socket, connected } = useSocket(HSPA_WEB_SOCKET_URL_HEROKU, {
+  const { socket, connected } = useSocket(HSPA_WEB_SOCKET_URL, {
     transports: ["websocket"],
     query: {
       userId: clientId,
@@ -48,6 +48,7 @@ const VideoCall: FC<Props> = ({}) => {
   });
 
   useEffect(() => {
+    console.log(localStream.current);
     if (connected && localStream.current) {
       createRTCPeerConnection();
     }
@@ -84,6 +85,7 @@ const VideoCall: FC<Props> = ({}) => {
     socket.on("message", onSocketMessage);
   }, [socket]);
 
+  console.log(connection.current, '****** check this');
   const createRTCPeerConnection = () => {
     if ((connection.current as any).addTrack) {
       return;
@@ -113,6 +115,8 @@ const VideoCall: FC<Props> = ({}) => {
         const existInList = previousRemoteStreams.find(
           (stream) => stream.id === event.streams[0].id
         );
+        console.log(existInList, '****** check this existInList');
+        console.log(event.streams[0], '******** check the media stream');
         if (!existInList) {
           (document.getElementById(
             `remoteVideo-${previousRemoteStreams.length + 1}`
@@ -290,6 +294,7 @@ const VideoCall: FC<Props> = ({}) => {
   const initiateSocketAndPeerConnection = (stream: any) => {
     (document.getElementById("localVideo") as any)!.srcObject = stream;
     localStream.current = stream;
+    setState({ existingTracks: [stream] });
   };
 
   const getLocalWebCamFeed = async (onSuccess?: (stream: any) => any) => {

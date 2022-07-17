@@ -33,7 +33,7 @@ const DocProfile = () => {
     const isBookActive = !!selectedSlot;
     const selectedUserProfile = useAppSelector(selectProfile);
 
-    const { data: { data: { slots = [] } = {} } = {} } = useQuery<
+    const { data: { data: { slots = [] } = {} } = {}, isLoading } = useQuery<
         AxiosResponse<ISlots>,
         Error
     >(["doctor-slots", docHprId], () => getSlots(docHprId), {
@@ -79,6 +79,7 @@ const DocProfile = () => {
                         slots={slots}
                         onSlotSelect={(slotId) => setSelectedSlot(slotId)}
                         selectedSlotId={selectedSlot}
+                        isLoading={isLoading}
                     />
                 </div>
                 <div className="footer">
