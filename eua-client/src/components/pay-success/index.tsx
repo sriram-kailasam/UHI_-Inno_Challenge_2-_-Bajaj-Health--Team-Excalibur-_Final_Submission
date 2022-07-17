@@ -25,7 +25,7 @@ const PaySuccess = () => {
                     </span>
                     <div className="section_2_line" />
                     <span className="section_2_label">
-                        {doctorProfile.name?.split("-")[1].trim()}
+                        {"Dr. " + doctorProfile.name?.split("-")[1].trim()}
                     </span>
                 </div>
                 <p className="section_3">

@@ -3,10 +3,14 @@ import { Input } from "antd";
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
+import { useAppSelector } from "../../redux/hooks";
 import { useDebounce } from "../../utils/helper";
-import { myAppMock } from "../my-app/mock";
+import { selectProfile } from "../doc-profile";
+import { IMyAppnts, listMyApp } from "../my-app/apis";
+import { IMyApp, myAppMock } from "../my-app/mock";
 import { searchDoctor } from "./apis";
 import DoctorCard from "./doctor-card";
+import DoctorCard2 from "./doctor-card-2";
 import { IDoctors } from "./doctor-mock";
 import "./styles.scss";
 
@@ -16,6 +20,7 @@ const SearchListing = ({ isMyApp = false }) => {
     const handleSearchTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value);
     };
+    const selectedUserProfile = useAppSelector(selectProfile);
 
     const { data: { data: { searchResults = [] } = {} } = {} } = useQuery<
         AxiosResponse<IDoctors>,
@@ -25,6 +30,17 @@ const SearchListing = ({ isMyApp = false }) => {
         () => searchDoctor(debSearchText),
         {
             enabled: !isMyApp,
+        }
+    );
+
+    const { data: { data: { results = [] } = {} } = {} } = useQuery<
+        AxiosResponse<IMyAppnts>,
+        Error
+    >(
+        ["my-appointment", selectedUserProfile.id, isMyApp],
+        () => listMyApp(selectedUserProfile.id),
+        {
+            enabled: isMyApp,
         }
     );
 
@@ -39,9 +55,9 @@ const SearchListing = ({ isMyApp = false }) => {
                     placeholder="Search via Doctor Name or HPR Id"
                 />
             )}
-            {(isMyApp ? myAppMock : searchResults).map((eachItem) => (
-                <DoctorCard isMyApp={isMyApp} {...eachItem} />
-            ))}
+            {isMyApp
+                ? results.map((eachItem) => <DoctorCard2 {...eachItem} />)
+                : searchResults.map((eachItem) => <DoctorCard {...eachItem} />)}
         </div>
     );
 };
