@@ -9,13 +9,7 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 
     const isLoginExpired =
         (dayjs().diff(dayjs(localStorage.getItem("last-login")), "minutes") ||
-            10) > 120;
-
-    console.log(
-        isLoginExpired,
-        loginItems,
-        dayjs().diff(dayjs(localStorage.getItem("last-login")), "minutes")
-    );
+            10) > 12000;
 
     if (
         loginItems.id &&

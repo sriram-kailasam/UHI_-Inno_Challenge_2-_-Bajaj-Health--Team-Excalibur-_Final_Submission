@@ -46,8 +46,6 @@ const SearchListing = ({ isMyApp = false }) => {
         }
     );
 
-    console.log("kjb", results);
-
     return (
         <div className="search-listing">
             {!isMyApp && (
