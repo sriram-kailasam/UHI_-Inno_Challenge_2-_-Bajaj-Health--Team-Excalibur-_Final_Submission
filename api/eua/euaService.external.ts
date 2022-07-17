@@ -3,7 +3,7 @@ import { waitForData } from "../util/waitForData"
 import { v4 as uuid } from 'uuid'
 import { SearchResult } from "./dto/searchResult.dto";
 import { GatewayOnSearchRequest } from "../uhi/eua/dto/gatewayOnSearch.dto";
-import { defaultHspaBaseUrl, euaConsumerId, euaConsumerUri, gatewayBaseUrl } from "../configuration";
+import { defaultHspaBaseUrl, euaConsumerId, euaConsumerUri, } from "../configuration";
 import { getCache } from "../cache";
 import { HspaSearchResult } from "./dto/hspaSearchResult.dto";
 import dayjs from 'dayjs'
@@ -14,25 +14,29 @@ const cache = getCache();
 
 export async function searchDoctors(name: string): Promise<SearchResult[]> {
   const transactionId = await sendSearchDoctorsRequest(name);
-  const result = await waitForData<GatewayOnSearchRequest>(`gatewaySearch:${transactionId}`)
+  const results = await waitForData<GatewayOnSearchRequest[]>(`gatewaySearch:${transactionId}`, 3000)
+  let searchResults: SearchResult[] = [];
 
-  const searchResults: SearchResult[] = result.message.catalog.fulfillments?.map(fulfillment => {
-    const hprId = fulfillment.agent.id;
-    cache.set(`providerUri:${hprId}`, result.context.provider_uri)
+  results.forEach(result => {
+    searchResults = searchResults.concat(result.message.catalog.fulfillments?.map(fulfillment => {
+      const hprId = fulfillment.agent.id;
+      cache.set(`providerUri:${hprId}`, result.context.provider_uri)
 
-    return {
-      hprId: hprId,
-      name: fulfillment.agent.name,
-      education: fulfillment.agent.tags?.['@abdm/gov/in/education'],
-      experience: Number(fulfillment.agent.tags?.["@abdm/gov/in/experience"]),
-      fees: Number(fulfillment.agent.tags?.["@abdm/gov/in/first_consultation"]),
-      gender: fulfillment.agent.gender,
-      imageUri: fulfillment.agent.image,
-      speciality: fulfillment.agent.tags?.["@abdm/gov/in/speciality"],
-      languages: fulfillment.agent.tags?.["@abdm/gov/in/languages"]?.split(',')
-    }
-  }) || []
+      return {
+        hprId: hprId,
+        name: fulfillment.agent.name,
+        education: fulfillment.agent.tags?.['@abdm/gov/in/education'],
+        experience: Number(fulfillment.agent.tags?.["@abdm/gov/in/experience"]),
+        fees: Number(fulfillment.agent.tags?.["@abdm/gov/in/first_consultation"]),
+        gender: fulfillment.agent.gender,
+        imageUri: fulfillment.agent.image,
+        speciality: fulfillment.agent.tags?.["@abdm/gov/in/speciality"],
+        languages: fulfillment.agent.tags?.["@abdm/gov/in/languages"]?.split(',')
+      }
+    }))
 
+
+  })
   return searchResults
 }
 

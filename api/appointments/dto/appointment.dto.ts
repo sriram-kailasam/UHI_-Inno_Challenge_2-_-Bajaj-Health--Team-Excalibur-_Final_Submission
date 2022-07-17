@@ -5,7 +5,17 @@ export type Appointment = {
   slotId: string;
   hprId: string;
   abhaId: string;
+
   isGroupConsult: boolean;
+  groupConsult?: {
+    name: string;
+    hprId: string;
+  }
+
+  doctor: {
+    name: string;
+    gender?: string;
+  },
 
   patient: {
     name: string;

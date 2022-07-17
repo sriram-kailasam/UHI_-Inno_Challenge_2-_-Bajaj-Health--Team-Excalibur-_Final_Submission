@@ -89,7 +89,7 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
       },
       "order_id": null
     },
-    "context": context
+    "context": { ...context, provider_id: hspaConsumerId, provider_uri: hspaConsumerUri }
   }
 
   console.log({ data: JSON.stringify(data) })

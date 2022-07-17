@@ -35,8 +35,13 @@ async function handleOnSearch(req: Request, res: Response) {
 
   const transactionId = resultMessage.context.transaction_id;
   console.log("search result received", transactionId)
+  const key = `gatewaySearch:${transactionId}`;
   if (transactionId) {
-    cache.set(`gatewaySearch:${transactionId}`, resultMessage);
+
+    const results = cache.get<GatewayOnSearchRequest[]>(key) || []
+    console.log("existing results", JSON.stringify(results))
+    cache.set(key, [...results, resultMessage]);
+
     res.json({ success: true })
   } else {
     console.log('no fulfillments found')
