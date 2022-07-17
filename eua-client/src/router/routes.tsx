@@ -1,7 +1,6 @@
 import { DoctorSearch, EuaHome } from "../components";
 import AppointmentPay from "../components/app-pay";
 import DocProfile from "../components/doc-profile";
-import Login from "../components/login";
 import MyAppointments from "../components/my-app";
 import PaySuccess from "../components/pay-success";
 import VideoCall from "../components/tele-consult/components/video-call";
@@ -10,10 +9,6 @@ export const routes = [
     {
         element: <EuaHome />,
         isIndex: true,
-    },
-    {
-        element: <Login />,
-        path: "login",
     },
     {
         element: <DoctorSearch />,

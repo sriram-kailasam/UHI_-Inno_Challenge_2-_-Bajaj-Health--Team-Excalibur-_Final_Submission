@@ -3,7 +3,7 @@ import "./styles.scss";
 
 export interface IScreenHeader {
     label: string;
-    onBack: () => void;
+    onBack?: () => void;
     withBack: boolean;
 }
 

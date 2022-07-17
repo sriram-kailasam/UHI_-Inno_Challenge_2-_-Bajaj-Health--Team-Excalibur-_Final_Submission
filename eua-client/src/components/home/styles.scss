@@ -1,0 +1,51 @@
+.home-page {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .user-card {
+        display: flex;
+        flex-wrap: wrap;
+
+        & > img {
+            height: 240px;
+            border-radius: 10px;
+        }
+
+        .card-right {
+            display: flex;
+            flex-direction: column;
+            margin-left: 16px;
+            padding: 16px 0px;
+
+            .primary {
+                font-size: 24px;
+                font-weight: 600;
+            }
+
+            .secondary {
+                font-size: 18px;
+            }
+        }
+    }
+
+    .btn-array {
+        height: 100%;
+        display: flex;
+        flex-direction: column-reverse;
+        /* flex-direction: column; */
+        align-items: center;
+
+        & > button {
+            width: 80%;
+            background-color: #153e90;
+            border-radius: 10px;
+            outline: none;
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 16px;
+            height: 40px;
+        }
+    }
+}
