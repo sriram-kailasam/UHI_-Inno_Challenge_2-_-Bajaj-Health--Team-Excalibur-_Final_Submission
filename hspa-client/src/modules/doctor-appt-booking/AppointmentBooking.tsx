@@ -10,6 +10,8 @@ import { DoctorSearchResponse } from "modules/doctor-search/types";
 import './appointmentBooking.scss';
 import Slots from "./Slots";
 import { getPatientAvatar } from "shared/utils/utils";
+import useDoctorApptBooking from './services/useDoctorApptBooking';
+import { BASE_URL } from "shared/constants";
 
 export interface ISlot {
   slotId: string;
@@ -24,19 +26,20 @@ export interface ISlots {
 export const getSlots: (k: string) => Promise<AxiosResponse<ISlots>> = (
   hprId: string
 ) => {
-  return axios.get(`${process.env.REACT_APP_BASE_URL}/eua/getSlots?hprId=${hprId}`);
+  return axios.get(`${BASE_URL}/eua/getSlots?hprId=${hprId}`);
 };
 
 const AppointmentBooking = () => {
-  const docHprId = localStorage.getItem('hpAddress')?.toString() || '';
   const navigate = useNavigate();
   const location = useLocation();
+  const { mutation: { mutate: bookAppt }} = useDoctorApptBooking();
   const [selectedSlot, setSelectedSlot] = useState("");
   const isBookActive = !!selectedSlot;
   // const appointmentData = location.state as AppointmentData;
   console.log(location.state);
   const doctorDetails = location.state as DoctorSearchResponse;
   const { gender, name, speciality, experience, fees } = doctorDetails;
+  const docHprId = doctorDetails.hprId?.toString() || '';
 
   const { data: { data: { slots = [] } = {} } = {} } = useQuery<
         AxiosResponse<ISlots>,
@@ -47,6 +50,31 @@ const AppointmentBooking = () => {
 
   const handleOnBack = () => {
     navigate('../dashboard');
+  }
+
+  const handleApptBooking = () => {
+    const finalSlot = slots.find((i) => i.slotId === selectedSlot) || {slotId: '', startTime: '', endTime: ''};
+    bookAppt({
+      slotId: selectedSlot,
+      startTime: finalSlot?.startTime,
+      endTime: finalSlot?.endTime,
+      primaryDoctor: {
+        hprId: localStorage.getItem('hpAddress')?.toString() || '',
+        name: localStorage.getItem('name')?.toString() || '',
+      },
+      secondaryDoctor: {
+        hprId: docHprId,
+        name: name,
+      },
+      patient: {
+        name: doctorDetails?.patient.name,
+        abhaAddress: doctorDetails.patient.abhaAddress,
+      }
+    }, {
+      onSuccess: (response) => {
+        navigate('../dashboard');
+      }
+    })
   }
 
   return (
@@ -96,9 +124,7 @@ const AppointmentBooking = () => {
                 <div className="footer">
                     <Button
                         className={`book-btn${isBookActive ? "" : " disabled"}`}
-                        onClick={() => {
-                            console.log('sdf');
-                        }}
+                        onClick={handleApptBooking}
                     >
                         Book Appointment
                     </Button>

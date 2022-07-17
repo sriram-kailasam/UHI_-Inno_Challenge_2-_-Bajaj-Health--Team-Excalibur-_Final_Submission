@@ -1,3 +1,5 @@
+import { AppointmentData } from "modules/dashboard/types"
+
 export interface DoctorSearchPayload {
   name: string
 }
@@ -6,7 +8,7 @@ export interface DoctorSearchListResponse {
   searchResults: DoctorSearchResponse[]
 }
 
-export interface DoctorSearchResponse {
+export interface DoctorSearchResponse extends AppointmentData {
   hprId: string
   name: string
   education: string
