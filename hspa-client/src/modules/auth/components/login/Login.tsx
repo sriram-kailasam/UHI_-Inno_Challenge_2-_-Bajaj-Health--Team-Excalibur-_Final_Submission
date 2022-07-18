@@ -26,6 +26,7 @@ function Login() {
         if (accessToken) {
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('hpAddress', `${values.hpAddress}@hpr.abdm`);
+          localStorage.setItem('name', `${response.data.name}`)
           navigate('../dashboard');
         }
       },

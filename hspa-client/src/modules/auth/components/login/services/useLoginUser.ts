@@ -6,10 +6,8 @@ import { LoginPayload, LoginResponse } from '../types';
 
 const loginUser = async (payload: LoginPayload) => {
   const response = await axios.post<LoginResponse>(`${BASE_URL}/hspa/login`, {
-    data: {
-      hpAddress: payload.hpAddress,
-      password: payload.password,
-    }
+    hpAddress: payload.hpAddress,
+    password: payload.password,
   });
   if (response.status >= 400) return Promise.reject(response);
   return response;
