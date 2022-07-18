@@ -7,6 +7,8 @@ import profile from "./profile.svg";
 import videoOutline from "./video-outline.svg";
 import calendar from "./calendar.svg";
 import calendar2 from "./calendar-2.png";
+import nha from "./nha.png";
+import bfhl from "./bfhl.png";
 
 export {
     backIcon,
@@ -18,4 +20,6 @@ export {
     videoOutline,
     calendar,
     calendar2,
+    nha,
+    bfhl,
 };

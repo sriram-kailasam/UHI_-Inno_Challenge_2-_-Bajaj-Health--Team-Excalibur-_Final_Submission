@@ -1,15 +1,16 @@
 import { FC, useEffect, useRef } from "react";
 import { useSetState } from "react-use";
-import { useSocket } from "socket.io-react-hook";
-import { v4 as uuid } from "uuid";
-import { useLocation } from "react-router-dom";
 
 import {
   HSPA_WEB_SOCKET_URL,
   rtcPeerConnectionConfig,
 } from "../../../utils/constants";
 import { useMessage } from "../services/message";
-import { VideoCallData } from "../types";
+import { useSocket } from "socket.io-react-hook";
+import { v4 as uuid } from "uuid";
+import { useLocation } from "react-router-dom";
+import { type GroupVideoCallData } from "../types";
+import createAndSendAnswer from "../services/create-and-send-answer";
 
 interface Props {}
 
@@ -17,21 +18,52 @@ interface State {
   cameraMode: "user" | "environment";
   remoteStreams: any[];
   existingTracks: any[];
+  stopPolling: boolean;
 }
 
-const VideoCall: FC<Props> = () => {
+const GroupVideoCall: FC<Props> = () => {
   const location = useLocation();
-  const videoCallData = location.state as VideoCallData;
-  const { clientId = "airesh@abha", receiverIds = ["mohit@hpr.abdm"] } =
-    videoCallData || {};
+  const videoCallData = location.state as GroupVideoCallData;
+  const {
+    clientId = "airesh@abha",
+    primaryDoctorId = "mohit@hpr.abdm",
+    secondaryDoctorId = "sriram@hpr.abdm",
+  } = videoCallData || {};
   const [state, setState] = useSetState<State>({
     cameraMode: "user",
     remoteStreams: [],
     existingTracks: [],
+    stopPolling: false,
   });
 
-  const connection = useRef({});
+  const primaryDoctorConnection = useRef({});
+  const secondaryDoctorConnection = useRef({});
   const localStream = useRef();
+
+  /**
+   * Poll the HSPA - 1 application if it's the HSPA - 2 application
+   *
+   */
+   useEffect(() => {
+    let interval: any;
+    if (!state.stopPolling) {
+      interval = setInterval(() => {
+        sendMessage({
+          senderId: clientId,
+          receiverId: [primaryDoctorId],
+          timestamp: new Date(),
+          content: {
+            id: uuid(),
+            value: JSON.stringify({
+              type: "READY",
+              data: true,
+            }),
+          },
+        });
+      }, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [state.stopPolling]);
 
   useEffect(() => {
     getLocalWebCamFeed();
@@ -46,7 +78,8 @@ const VideoCall: FC<Props> = () => {
 
   useEffect(() => {
     if (connected && localStream.current) {
-      createRTCPeerConnection();
+      createRTCPeerConnection(primaryDoctorConnection, 1);
+      createRTCPeerConnection(secondaryDoctorConnection, 2);
     }
   }, [connected, localStream.current]);
 
@@ -67,13 +100,10 @@ const VideoCall: FC<Props> = () => {
     const { type, data } = parsedContentValue;
 
     if (type === "OFFER") {
-      handleOffer(data);
+      handleOffer({ offer: data, senderId });
     }
     if (type === "CANDIDATE") {
-      handleCandidate(data);
-    }
-    if (type === "ANSWER") {
-      handleAnswer(data);
+      handleCandidate({ candidate: data, senderId });
     }
   };
 
@@ -81,7 +111,7 @@ const VideoCall: FC<Props> = () => {
     socket.on("message", onSocketMessage);
   }, [socket]);
 
-  function createRTCPeerConnection() {
+  function createRTCPeerConnection(connection: any, index: number) {
     if ((connection.current as any).addTrack) {
       return;
     }
@@ -104,7 +134,7 @@ const VideoCall: FC<Props> = () => {
           (stream) => stream.id === event.streams[0].id
         );
         if (!existInList) {
-          (document.getElementById("remoteVideo") as any)!.srcObject =
+          (document.getElementById(`remoteVideo-${index}`) as any)!.srcObject =
             event.streams[0];
           previousRemoteStreams.push(event.streams[0]);
           return {
@@ -128,7 +158,7 @@ const VideoCall: FC<Props> = () => {
 
         sendMessage({
           senderId: clientId,
-          receiverId: receiverIds,
+          receiverId: [index === 1 ? primaryDoctorId : secondaryDoctorId],
           timestamp: new Date(),
           content: {
             id: uuid(),
@@ -237,61 +267,52 @@ const VideoCall: FC<Props> = () => {
    * Creates and sends the Answer to the Caller
    * This function is invoked by the Receiver
    */
-  const createAndSendAnswer = () => {
-    // Create Answer
-    (connection.current as any).createAnswer().then(
-      (answer: any) => {
-        console.log("Sent The Answer.");
-
-        // Set Answer for negotiation
-        (connection.current as any).setLocalDescription(answer);
-
-        // Send Answer to other peer
-        sendMessage({
-          senderId: clientId,
-          receiverId: receiverIds,
-          timestamp: new Date(),
-          content: {
-            id: uuid(),
-            value: JSON.stringify({
-              type: "ANSWER",
-              data: answer,
-            }),
-          },
-        });
-      },
-      (error: any) => {
-        console.log("Error when creating an answer.");
-        console.error(error);
-      }
-    );
+  const createAndSendAnswerPrimaryDoctor = () => {
+    createAndSendAnswer(primaryDoctorConnection, clientId, [primaryDoctorId])
   };
+  const createAndSendAnswerSecondaryDoctor = () => {
+    createAndSendAnswer(secondaryDoctorConnection, clientId, [secondaryDoctorId])
+  }
 
-  const handleCandidate = (candidate: any) => {
+  const handleCandidate = ({ candidate, senderId }: { candidate: any; senderId: string }) => {
+    if (senderId === primaryDoctorId) {
+        handleCandidatePrimaryDoctor(candidate);
+    } else {
+        handleCandidateSecondaryDoctor(candidate);
+    }
+  };
+  const handleCandidatePrimaryDoctor = (candidate: any) => {
     console.log("Adding Ice Candidate - " + candidate.candidate);
-    (connection.current as any).addIceCandidate(new RTCIceCandidate(candidate));
+    (primaryDoctorConnection.current as any).addIceCandidate(new RTCIceCandidate(candidate));
+  };
+  const handleCandidateSecondaryDoctor = (candidate: any) => {
+    console.log("Adding Ice Candidate - " + candidate.candidate);
+    (secondaryDoctorConnection.current as any).addIceCandidate(new RTCIceCandidate(candidate));
   };
 
   /**
    * Accepts Offer received from the Caller
    */
-  const handleOffer = (offer: any) => {
+  const handleOffer = ({ offer, senderId }: { offer: any; senderId: string }) => {
+    if (senderId === primaryDoctorId) {
+        handleOfferPrimaryDoctor(offer);
+        setState({ stopPolling: true });
+    } else {
+        handleOfferSecondaryDoctor(offer);
+    }
+  };
+  const handleOfferPrimaryDoctor = (offer: any) => {
     console.log("Recieved The Offer.");
-    (connection.current as any).setRemoteDescription(
+    (primaryDoctorConnection.current as any).setRemoteDescription(
       new RTCSessionDescription(offer)
     );
-    //   document.getElementById("answerButton").disabled = false;
-    //   document.getElementById("sendOfferButton").disabled = true;
   };
-
-  /**
-   * Accepts Answer received from the Receiver
-   */
-  const handleAnswer = (answer: any) => {
-    console.log("Recieved The Answer");
-    (connection.current as any).setRemoteDescription(
-      new RTCSessionDescription(answer)
+  const handleOfferSecondaryDoctor = (offer: any) => {
+    console.log("Recieved The Offer.");
+    (secondaryDoctorConnection.current as any).setRemoteDescription(
+      new RTCSessionDescription(offer)
     );
+    createAndSendAnswerSecondaryDoctor();
   };
 
   function switchMobileCamera() {
@@ -306,7 +327,7 @@ const VideoCall: FC<Props> = () => {
 
   return (
     <>
-      <p>VideoCall</p>
+      <p>GroupVideoCall</p>
       <div>
         <video
           width="100%"
@@ -318,7 +339,15 @@ const VideoCall: FC<Props> = () => {
         />
         <video
           width="100%"
-          id="remoteVideo"
+          id="remoteVideo-1"
+          onClick={switchMobileCamera}
+          muted
+          playsInline
+          autoPlay
+        />
+        <video
+          width="100%"
+          id="remoteVideo-2"
           onClick={switchMobileCamera}
           muted
           playsInline
@@ -326,7 +355,7 @@ const VideoCall: FC<Props> = () => {
         />
       </div>
       <div>
-        <button id="sendOfferButton" onClick={createAndSendAnswer}>
+        <button id="sendOfferButton" onClick={createAndSendAnswerPrimaryDoctor}>
           Answer
         </button>
       </div>
@@ -334,4 +363,4 @@ const VideoCall: FC<Props> = () => {
   );
 };
 
-export default VideoCall;
+export default GroupVideoCall;

@@ -15,3 +15,9 @@ export interface VideoCallData {
   receiverIds: string[];
   isPrimaryDoctor: boolean;
 }
+
+export interface GroupVideoCallData {
+  clientId: string;
+  patientId: string;
+  remoteDoctorId: string;
+}

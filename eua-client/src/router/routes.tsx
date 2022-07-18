@@ -3,6 +3,7 @@ import AppointmentPay from "../components/app-pay";
 import DocProfile from "../components/doc-profile";
 import MyAppointments from "../components/my-app";
 import PaySuccess from "../components/pay-success";
+import GroupVideoCall from "../components/tele-consult/components/group-video-call";
 import VideoCall from "../components/tele-consult/components/video-call";
 
 export const routes = [
@@ -33,6 +34,10 @@ export const routes = [
     {
         element: <VideoCall />,
         path: "video-call",
+    },
+    {
+        element: <GroupVideoCall />,
+        path: "group-video-call",
     },
     {
         // fallback route

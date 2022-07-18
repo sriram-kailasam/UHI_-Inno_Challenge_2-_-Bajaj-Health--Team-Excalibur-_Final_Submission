@@ -8,7 +8,8 @@ import { useMessage } from "modules/tele-communication/services/message";
 import { v4 as uuid } from "uuid";
 import Button from "shared/common-ui/atoms/Button";
 import { useLocation } from "react-router-dom";
-import { VideoCallData } from "modules/tele-communication/types";
+import { type GroupVideoCallData } from "modules/tele-communication/types";
+import createAndSendOffer from "modules/tele-communication/util/create-and-send-offer";
 
 interface Props {}
 
@@ -16,24 +17,35 @@ interface State {
   cameraMode: "user" | "environment";
   existingTracks: any[];
   remoteStreams: any[];
+  ready: {
+    remoteDoctor: boolean;
+    patient: boolean;
+  };
 }
 
-const VideoCall: FC<Props> = ({}) => {
+const GroupVideoCallPrimary: FC<Props> = () => {
   const location = useLocation();
-  const videoCallData = location.state as VideoCallData;
+  const videoCallData = location.state as GroupVideoCallData;
   const {
     clientId = "mohit@hpr.abdm",
-    receiverIds = ["airesh@abha"],
-    isPrimaryDoctor = true,
+    patientId = "airesh@abha",
+    remoteDoctorId = "sriram@hpr.abdm",
   } = videoCallData || {};
 
   const [state, setState] = useSetState<State>({
     cameraMode: "user",
     existingTracks: [],
     remoteStreams: [],
+    ready: {
+      remoteDoctor: false,
+      patient: false,
+    },
   });
 
-  const connection = useRef({});
+  // Doctor connection
+  const doctorConnection = useRef({});
+  // Patient connection
+  const patientConnection = useRef({});
   const localStream = useRef();
 
   useEffect(() => {
@@ -50,7 +62,8 @@ const VideoCall: FC<Props> = ({}) => {
   useEffect(() => {
     console.log(localStream.current);
     if (connected && localStream.current) {
-      createRTCPeerConnection();
+      createRTCPeerConnection(doctorConnection, 1);
+      createRTCPeerConnection(patientConnection, 2);
     }
   }, [connected, localStream.current]);
 
@@ -70,14 +83,14 @@ const VideoCall: FC<Props> = ({}) => {
     const parsedContentValue = JSON.parse(value);
     const { type, data } = parsedContentValue;
 
-    if (type === "OFFER") {
-      handleOffer(data);
-    }
     if (type === "CANDIDATE") {
-      handleCandidate(data);
+      handleCandidate({ candidate: data, senderId });
     }
     if (type === "ANSWER") {
-      handleAnswer(data);
+      handleAnswer({ answer: data, senderId });
+    }
+    if (type === "READY") {
+      handleReady({ data, senderId });
     }
   };
 
@@ -85,9 +98,8 @@ const VideoCall: FC<Props> = ({}) => {
     socket.on("message", onSocketMessage);
   }, [socket]);
 
-  console.log(connection.current, "****** check this");
-  const createRTCPeerConnection = () => {
-    if ((connection.current as any).addTrack) {
+  const createRTCPeerConnection = (connection: any, index: number) => {
+    if (connection.current.addTrack) {
       return;
     }
     connection.current = new RTCPeerConnection(rtcPeerConnectionConfig);
@@ -103,37 +115,31 @@ const VideoCall: FC<Props> = ({}) => {
     for (const track of (localStream.current as any)?.getTracks()) {
       log("Sending Stream.");
       state.existingTracks.push(
-        (connection.current as any).addTrack(track, localStream.current)
+        connection.current.addTrack(track, localStream.current)
       );
     }
 
     // This event handles displaying remote video and audio feed from the other peer
-    (connection.current as any).ontrack = (event: any) => {
+    connection.current.ontrack = (event: any) => {
       log("Recieved Stream.", event);
+      (document.getElementById(`remoteVideo-${index}`) as any)!.srcObject =
+        event.streams[0];
       setState((oldState) => {
         const previousRemoteStreams = oldState.remoteStreams;
-        const existInList = previousRemoteStreams.find(
-          (stream) => stream.id === event.streams[0].id
-        );
-        if (!existInList) {
-          (document.getElementById("remoteVideo") as any)!.srcObject =
-            event.streams[0];
-          previousRemoteStreams.push(event.streams[0]);
-          return { ...oldState, remoteStreams: previousRemoteStreams };
-        }
-        return oldState;
+        previousRemoteStreams.push(event.streams[0]);
+        return { ...oldState, remoteStreams: previousRemoteStreams };
       });
     };
 
     // This event sends the ice candidates generated from Stun or Turn server to the Receiver over web socket
-    (connection.current as any).onicecandidate = (event: any) => {
+    connection.current.onicecandidate = (event: any) => {
       console.log("On ice candidate called");
       if (event.candidate) {
         log("Sending Ice Candidate - " + event.candidate.candidate);
 
         sendMessage({
           senderId: clientId,
-          receiverId: receiverIds,
+          receiverId: [index === 1 ? remoteDoctorId : patientId],
           timestamp: new Date(),
           content: {
             id: uuid(),
@@ -145,75 +151,81 @@ const VideoCall: FC<Props> = ({}) => {
         });
       }
     };
-
-    // This event logs messages and handles button state according to WebRTC connection state changes
-    (connection.current as any).onconnectionstatechange = function (
-      event: any
-    ) {
-      switch ((connection.current as any).connectionState) {
-        case "connected":
-          log("Web RTC Peer Connection Connected.");
-          (document.getElementById("answerButton") as any).disabled = true;
-          (document.getElementById("sendOfferButton") as any).disabled = true;
-          (document.getElementById("hangUpButton") as any).disabled = false;
-          (document.getElementById("sendMessageButton") as any).disabled =
-            false;
-          break;
-        case "disconnected":
-          log(
-            "Web RTC Peer Connection Disconnected. Please reload the page to reconnect."
-          );
-          //   disableAllButtons();
-          break;
-        case "failed":
-          log(
-            "Web RTC Peer Connection Failed. Please reload the page to reconnect."
-          );
-          console.log(event);
-          //   disableAllButtons();
-          break;
-        case "closed":
-          log(
-            "Web RTC Peer Connection Failed. Please reload the page to reconnect."
-          );
-          //   disableAllButtons();
-          break;
-        default:
-          break;
-      }
-    };
-
-    log("Web RTC Peer Connection Created.");
-    // document.getElementById("sendOfferButton").disabled = false;
   };
 
-  const handleCandidate = (candidate: any) => {
+  const handleCandidate = ({
+    candidate,
+    senderId,
+  }: {
+    candidate: any;
+    senderId: string;
+  }) => {
+    if (senderId === patientId) {
+      handleCandidatePatient(candidate);
+    } else {
+      handleCandidateDoctor(candidate);
+    }
+  };
+  const handleCandidateDoctor = (candidate: any) => {
     // Avoid accepting the ice candidate if this is a message created by the current peer
-    log("Adding Ice Candidate - " + candidate.candidate);
-    (connection.current as any).addIceCandidate(new RTCIceCandidate(candidate));
-  };
-
-  /**
-   * Accepts Offer received from the Caller
-   */
-  const handleOffer = (offer: any) => {
-    log("Recieved The Offer.");
-    (connection.current as any).setRemoteDescription(
-      new RTCSessionDescription(offer)
+    log("Adding Ice Candidate Doctor - " + candidate.candidate);
+    (doctorConnection.current as any).addIceCandidate(
+      new RTCIceCandidate(candidate)
     );
-    //   document.getElementById("answerButton").disabled = false;
-    //   document.getElementById("sendOfferButton").disabled = true;
   };
 
+  const handleCandidatePatient = (candidate: any) => {
+    log("Adding Ice Candidate Patient - " + candidate.candidate);
+    (patientConnection.current as any).addIceCandidate(
+      new RTCIceCandidate(candidate)
+    );
+  };
+
+  const handleAnswer = ({
+    answer,
+    senderId,
+  }: {
+    answer: any;
+    senderId: string;
+  }) => {
+    if (senderId === patientId) {
+      handleAnswerPatient(answer);
+    } else {
+      handleAnswerDoctor(answer);
+    }
+  };
   /**
    * Accepts Answer received from the Receiver
    */
-  const handleAnswer = (answer: any) => {
-    // Avoid accepting the Answer if this is a message created by the current peer
+  const handleAnswerDoctor = (answer: any) => {
     log("Recieved The Answer");
-    (connection.current as any).setRemoteDescription(
+    (doctorConnection.current as any).setRemoteDescription(
       new RTCSessionDescription(answer)
     );
+  };
+
+  const handleAnswerPatient = (answer: any) => {
+    // Avoid accepting the Answer if this is a message created by the current peer
+    log("Recieved The Answer");
+    (patientConnection.current as any).setRemoteDescription(
+      new RTCSessionDescription(answer)
+    );
+  };
+
+  const handleReady = ({ data, senderId }: { data: any; senderId: string }) => {
+    console.log(data, senderId, '******** check this');
+    if (data) {
+      if (senderId === patientId) {
+        setState((oldState) => ({
+          ready: { ...oldState.ready, patient: true },
+        }));
+      } else {
+        setState((oldState) => ({
+          ready: { ...oldState.ready, remoteDoctor: true },
+        }));
+      }
+      // Handle the ready state here
+    }
   };
 
   /**
@@ -221,69 +233,21 @@ const VideoCall: FC<Props> = ({}) => {
    * Creates a Data channel for exchanging text messages
    * This function is invoked by the Caller
    */
-  const createAndSendOffer = () => {
-    // Create Offer
-    (connection.current as any).createOffer().then(
-      (offer: any) => {
-        log("Sent The Offer.");
-
-        sendMessage({
-          senderId: clientId,
-          receiverId: receiverIds,
-          timestamp: new Date(),
-          content: {
-            id: uuid(),
-            value: JSON.stringify({
-              type: "OFFER",
-              data: offer,
-            }),
-          },
-        });
-
-        // Set Offer for negotiation
-        (connection.current as any).setLocalDescription(offer);
-      },
-      (error: any) => {
-        log("Error when creating an offer.");
-        console.error(error);
-      }
-    );
+  const createAndSendOfferHandler = () => {
+    createAndSendOffer(doctorConnection, sendMessage, {
+      clientId,
+      receiverIds: [remoteDoctorId],
+    });
+    createAndSendOffer(patientConnection, sendMessage, {
+      clientId,
+      receiverIds: [patientId],
+    });
   };
 
   /**
    * Creates and sends the Answer to the Caller
    * This function is invoked by the Receiver
    */
-  const createAndSendAnswer = () => {
-    // Create Answer
-    (connection.current as any).createAnswer().then(
-      (answer: any) => {
-        console.log("Sent The Answer.");
-
-        // Set Answer for negotiation
-        (connection.current as any).setLocalDescription(answer);
-
-        // Send Answer to other peer
-        sendMessage({
-          senderId: clientId,
-          receiverId: receiverIds,
-          timestamp: new Date(),
-          content: {
-            id: uuid(),
-            value: JSON.stringify({
-              type: "ANSWER",
-              data: answer,
-            }),
-          },
-        });
-      },
-      (error: any) => {
-        console.log("Error when creating an answer.");
-        console.error(error);
-      }
-    );
-  };
-
   const {
     mutation: { mutateAsync: sendMessage },
   } = useMessage();
@@ -353,7 +317,7 @@ const VideoCall: FC<Props> = ({}) => {
 
   return (
     <div>
-      <p>VideoCall</p>
+      <p>GroupVideoCallPrimary</p>
       <video
         id="localVideo"
         onClick={switchMobileCamera}
@@ -362,20 +326,23 @@ const VideoCall: FC<Props> = ({}) => {
         autoPlay
       />
       <video
-        id="remoteVideo"
+        id="remoteVideo-1"
+        onClick={switchMobileCamera}
+        muted
+        playsInline
+        autoPlay
+      />
+      <video
+        id="remoteVideo-2"
         onClick={switchMobileCamera}
         muted
         playsInline
         autoPlay
       />
       <div className="">
-        {!!isPrimaryDoctor ? (
-          <Button id="sendOfferButton" onClick={createAndSendOffer}>
+        {state.ready.remoteDoctor && state.ready.patient && (
+          <Button id="sendOfferButton" onClick={createAndSendOfferHandler}>
             Call
-          </Button>
-        ) : (
-          <Button id="sendOfferButton" onClick={createAndSendAnswer}>
-            Answer
           </Button>
         )}
       </div>
@@ -383,4 +350,4 @@ const VideoCall: FC<Props> = ({}) => {
   );
 };
 
-export default VideoCall;
+export default GroupVideoCallPrimary;
