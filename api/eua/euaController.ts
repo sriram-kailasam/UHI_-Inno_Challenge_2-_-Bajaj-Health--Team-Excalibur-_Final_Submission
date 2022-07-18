@@ -34,9 +34,13 @@ async function handleSendMessage(req: Request, res: Response) {
 async function handleSearchDoctors(req: Request, res: Response) {
   const request = req.query as { name: string }
 
-  const searchResults = await searchDoctors(request.name);
-
-  res.json({ searchResults })
+  try {
+    const searchResults = await searchDoctors(request.name);
+    res.json({ searchResults })
+  } catch (err) {
+    console.log('search error', err)
+    res.status(500).json({ error: (err as Error)?.message })
+  }
 }
 
 async function handleGetSlots(req: Request, res: Response) {

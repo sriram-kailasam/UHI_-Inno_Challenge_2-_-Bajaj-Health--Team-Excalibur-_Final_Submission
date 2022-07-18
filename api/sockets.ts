@@ -22,9 +22,7 @@ export class SocketServer {
       socket.send("Connected as", userId)
     });
 
-    setInterval(() => {
-      console.log({ clients: Object.keys(this.clients) })
-    }, 10000)
+
     this.instance = new SocketServer();
     return this.instance
   }

@@ -2,13 +2,13 @@ import { getCache } from "../cache";
 
 const cache = getCache();
 
-export async function waitForData<T>(key: string, minWait: number = 0) {
+export async function waitForData<T>(key: string, minWait: number = 0, maxWaitTimes = 10) {
   return new Promise<T>((resolve, reject) => {
     let times = 0;
 
     setTimeout(() => {
       const interval = setInterval(async () => {
-        if (times >= 10) {
+        if (times >= maxWaitTimes) {
           reject('timeout exceeded for ' + key);
           clearInterval(interval);
           return;

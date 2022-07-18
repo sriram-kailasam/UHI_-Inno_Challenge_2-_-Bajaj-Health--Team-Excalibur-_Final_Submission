@@ -4,8 +4,11 @@ import { SendMessageRequest, sendMessageRequestSchema } from "../dto/sendMessage
 import { sendMessage } from "./hspService.external";
 import { bookGroupConsult, listAppointmentsByHprId } from "../appointments/appointmentsService";
 import { BookGroupConsultRequest, bookGroupConsultRequestSchema } from "../appointments/dto/saveAppointment.dto";
-import { fetchDoctor } from "../doctors/doctorsService";
+import { fetchDoctor, getDoctorSlots } from "../doctors/doctorsService";
 import { v4 as uuid } from "uuid"
+import { GetGroupConsultSlotsRequest, getGroupConsultSlotsRequestSchema } from "./dto/getGroupConsultSlots.dto";
+import { getSlots } from "../eua/euaService.external";
+import { getMatchingSlotPairs } from "./getGroupConsultSlots";
 
 export function hspaController() {
   const router = Router()
@@ -13,6 +16,7 @@ export function hspaController() {
   router.post('/sendMessage', validateRequest('body', sendMessageRequestSchema), handleSendMessage);
   router.get('/getAppointmentList', handleGetAppointmentListByHprId)
   router.post('/bookGroupConsult', validateRequest('body', bookGroupConsultRequestSchema), handleBookGroupConsult)
+  router.get('/groupConsultSlots', validateRequest('query', getGroupConsultSlotsRequestSchema), handleGetGroupConsultSlots)
 
   router.post('/login', handleLogin)
 
@@ -54,7 +58,6 @@ async function handleGetAppointmentListByHprId(req: Request, res: Response) {
     groupConsult: appointment.groupConsult
   }))
 
-
   res.json({ results })
 }
 
@@ -80,4 +83,15 @@ async function handleLogin(req: Request, res: Response) {
     hpAddress: hpAddress,
     name: doctor.name
   })
+}
+
+
+async function handleGetGroupConsultSlots(req: Request, res: Response) {
+  const { primaryHprId, secondaryHprId, appointmentStartTime } = req.query as GetGroupConsultSlotsRequest
+
+  const [primaryDoctorSlots, secondaryDoctorSlots] = await Promise.all([getDoctorSlots(primaryHprId), getSlots(secondaryHprId)])
+
+  const matchingSlots = getMatchingSlotPairs(primaryDoctorSlots, secondaryDoctorSlots, appointmentStartTime)
+
+  res.json({ slots: matchingSlots })
 }

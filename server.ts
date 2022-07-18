@@ -1,5 +1,6 @@
 import 'source-map-support';
 import 'express-async-errors';
+import './dayjsimports'
 import express, { NextFunction, Request, Response } from "express"
 import cors from "cors"
 import path from "path"
@@ -13,6 +14,8 @@ import { SocketServer } from "./api/sockets"
 import { hspaController } from "./api/hspa/hspaController"
 import { uhiEuaController } from "./api/uhi/eua/uhiEuaController"
 import { euaController } from './api/eua/euaController';
+var isBetween = require('dayjs/plugin/isBetween')
+
 
 const app = express()
 app.use(cors())
@@ -48,9 +51,13 @@ app.get('/hspa/*', function (_, res) {
   res.sendFile(hspaDir + '/index.html');
 });
 
-app.use((error: Error, req: Request, res: Response, next: NextFunction): void => {
+app.use((error: any, req: Request, res: Response, next: NextFunction): void => {
   console.log('server error', error.message)
   console.log('stack', error.stack)
+
+  if (error.isAxiosError) {
+    console.log('axios error response', error?.response?.data)
+  }
 
   const status = 500;
   res.status(status).json({ error: error.message });

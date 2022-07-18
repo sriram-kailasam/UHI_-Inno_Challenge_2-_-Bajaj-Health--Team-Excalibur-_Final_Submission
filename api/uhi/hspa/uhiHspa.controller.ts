@@ -12,6 +12,7 @@ import { getDoctorSlots, searchDoctors } from "../../doctors/doctorsService";
 import axios from "axios";
 import { Doctor } from "../../doctors/dto/doctor.dto";
 import { HspaSearchResult } from "../../eua/dto/hspaSearchResult.dto";
+import { Slot } from "../../eua/dto/slot.dto";
 
 export function uhiHspaController() {
   const router = Router();

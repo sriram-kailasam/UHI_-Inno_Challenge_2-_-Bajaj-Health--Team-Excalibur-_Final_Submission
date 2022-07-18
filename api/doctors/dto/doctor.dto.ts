@@ -1,3 +1,5 @@
+import { Slot } from "../../eua/dto/slot.dto";
+
 export type Doctor = {
   name: string;
   hprId: string;

@@ -1,4 +1,5 @@
 import { getDbClient } from "../database";
+import { Slot } from "../eua/dto/slot.dto";
 import { Doctor } from "./dto/doctor.dto";
 
 export async function searchDoctors(query: string): Promise<Doctor[]> {

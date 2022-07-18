@@ -9,41 +9,48 @@ import { HspaSearchResult } from "./dto/hspaSearchResult.dto";
 import dayjs from 'dayjs'
 import { UhiPayload } from "../uhi/dto/uhiPayload";
 import { SaveAppointmentRequest } from "../appointments/dto/saveAppointment.dto";
+import { Slot } from "./dto/slot.dto";
 
 const cache = getCache();
 
 export async function searchDoctors(name: string): Promise<SearchResult[]> {
   const transactionId = await sendSearchDoctorsRequest(name);
-  const results = await waitForData<GatewayOnSearchRequest[]>(`gatewaySearch:${transactionId}`, 2000)
-  let searchResults: SearchResult[] = [];
+  try {
+    const results = await waitForData<GatewayOnSearchRequest[]>(`gatewaySearch:${transactionId}`, 1000, 5)
+    let searchResults: SearchResult[] = [];
 
-  results.forEach(result => {
-    console.log({ catalog: JSON.stringify(result.message.catalog) })
-    searchResults = searchResults.concat(result.message.catalog.fulfillments?.map(fulfillment => {
-      const hprId = fulfillment.agent.id;
-      cache.set(`providerUri:${hprId}`, result.context.provider_uri)
-      cache.set(`providerId:${hprId}`, result.context.provider_id)
+    results.forEach(result => {
+      console.log({ catalog: JSON.stringify(result.message.catalog) })
+      searchResults = searchResults.concat(result.message.catalog.fulfillments?.map(fulfillment => {
+        const hprId = fulfillment.agent.id;
+        cache.set(`providerUri:${hprId}`, result.context.provider_uri)
+        cache.set(`providerId:${hprId}`, result.context.provider_id)
 
-      return {
-        hprId: hprId,
-        name: fulfillment.agent.name,
-        education: fulfillment.agent.tags?.['@abdm/gov/in/education'],
-        experience: Number(fulfillment.agent.tags?.["@abdm/gov/in/experience"]),
-        fees: Number(fulfillment.agent.tags?.["@abdm/gov/in/first_consultation"]),
-        gender: fulfillment.agent.gender,
-        imageUri: fulfillment.agent.image,
-        speciality: fulfillment.agent.tags?.["@abdm/gov/in/speciality"],
-        languages: fulfillment.agent.tags?.["@abdm/gov/in/languages"]?.split(',')
-      }
-    }))
+        return {
+          hprId: hprId,
+          name: fulfillment.agent.name,
+          education: fulfillment.agent.tags?.['@abdm/gov/in/education'],
+          experience: Number(fulfillment.agent.tags?.["@abdm/gov/in/experience"]),
+          fees: Number(fulfillment.agent.tags?.["@abdm/gov/in/first_consultation"]),
+          gender: fulfillment.agent.gender,
+          imageUri: fulfillment.agent.image,
+          speciality: fulfillment.agent.tags?.["@abdm/gov/in/speciality"],
+          languages: fulfillment.agent.tags?.["@abdm/gov/in/languages"]?.split(',')
+        }
+      }))
 
 
-  })
-  return searchResults
+    })
+    return searchResults
+  } catch {
+    return []
+  }
 }
 
 async function sendSearchDoctorsRequest(name: string) {
   const transactionId = uuid()
+
+  console.log("sending search request")
   await axios({
     baseURL: process.env.GATEWAY_BASE_URL,
     url: 'search',
@@ -51,15 +58,16 @@ async function sendSearchDoctorsRequest(name: string) {
     data:
     {
       "context": {
-        "domain": "Health",
+        "domain": "nic2004:85111",
         "country": "IND",
-        "city": "Pune",
+        "city": "std:080",
         "action": "on_search",
         "timestamp": new Date().toISOString(),
         "core_version": "0.7.1",
         "consumer_id": euaConsumerId,
         "consumer_uri": euaConsumerUri,
-        "transaction_id": transactionId
+        "transaction_id": transactionId,
+        "message_id": uuid()
       },
       "message": {
         "intent": {
@@ -72,12 +80,11 @@ async function sendSearchDoctorsRequest(name: string) {
         }
       }
     }
-
-
-
   })
 
-  return transactionId
+  console.log('search request sent')
+
+  return transactionId;
 }
 
 
@@ -120,7 +127,8 @@ async function sendGetSlotsRequest(hprId: string) {
         "consumer_uri": euaConsumerUri,
         "transaction_id": transactionId,
         "provider_id": providerId,
-        "provider_uri": providerUri
+        "provider_uri": providerUri,
+        "message_id": uuid()
       },
       "message": {
         "intent": {
@@ -168,7 +176,8 @@ export async function initAppointment(request: SaveAppointmentRequest) {
         "consumer_uri": euaConsumerUri,
         "provider_id": "http://100.65.158.41:8084/api/v1",
         "provider_uri": providerUri,
-        "transaction_id": uuid()
+        "transaction_id": uuid(),
+        "message_id": uuid()
       },
       "message": {
         "order": {
