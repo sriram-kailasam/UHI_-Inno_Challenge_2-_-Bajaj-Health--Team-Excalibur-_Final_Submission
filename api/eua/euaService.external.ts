@@ -75,7 +75,6 @@ async function sendSearchDoctorsRequest(name: string) {
             "agent": {
               "name": name
             },
-            "type": "PhysicalConsultation"
           }
         }
       }
