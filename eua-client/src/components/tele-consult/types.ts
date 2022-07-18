@@ -14,3 +14,9 @@ export interface VideoCallData {
   clientId?: string;
   receiverIds: string[];
 }
+
+export interface GroupVideoCallData {
+  clientId?: string;
+  primaryDoctorId?: string;
+  secondaryDoctorId?: string;
+}
