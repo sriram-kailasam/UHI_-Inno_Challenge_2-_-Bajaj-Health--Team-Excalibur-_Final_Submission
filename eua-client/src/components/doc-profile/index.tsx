@@ -51,7 +51,9 @@ const DocProfile = () => {
                         />
                         <div className="doc-info-container">
                             <div className="doc-name">
-                                {"Dr. " + name?.split("-")[1].trim()}
+                                {"Dr. " +
+                                    (name?.split("-")[1].trim() ||
+                                        name?.trim())}
                             </div>
                             <div className="doc-info">
                                 <span className="doc-spec">{speciality}</span>

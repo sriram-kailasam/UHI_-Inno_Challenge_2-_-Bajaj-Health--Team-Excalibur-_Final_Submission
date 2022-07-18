@@ -59,7 +59,8 @@ const AppointmentPay = () => {
                         <div className="doc-info-container">
                             <div className="doc-name">
                                 {"Dr. " +
-                                    doctorProfile.name?.split("-")[1].trim()}
+                                    (doctorProfile.name?.split("-")[1].trim() ||
+                                        doctorProfile.name?.trim())}
                             </div>
                             <div className="doc-info">
                                 <span className="doc-spec">

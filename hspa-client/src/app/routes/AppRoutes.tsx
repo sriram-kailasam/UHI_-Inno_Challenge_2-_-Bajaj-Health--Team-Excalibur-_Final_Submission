@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "modules/auth/components/login/Login";
 import Dashboard from "modules/dashboard/Dashboard";
 import PatientDetails from 'modules/patient-details/PatientDetails';
@@ -17,6 +17,8 @@ const AppRoutes = () => {
         <Route path="doctorSearch" element={<DoctorSearch />} />
         <Route path="apptBooking" element={<AppointmentBooking />} />
         <Route path="video-call" element={<VideoCall />} />
+        <Route path="*" element={<Navigate to="/hspa/login" replace />} />
+        <Route path="" element={<Navigate to="/hspa/login" replace />} />
       </Route>
     </Routes>
   )

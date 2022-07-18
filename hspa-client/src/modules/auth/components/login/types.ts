@@ -5,4 +5,6 @@ export interface LoginPayload {
 
 export interface LoginResponse {
   accessToken: string,
+  hpAddress: string
+  name: string
 }
