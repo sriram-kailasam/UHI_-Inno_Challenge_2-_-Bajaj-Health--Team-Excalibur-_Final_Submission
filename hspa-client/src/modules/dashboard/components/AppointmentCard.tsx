@@ -31,16 +31,27 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
     console.log({otherDoctor, receiverIds, isGroupConsult })
     if (isGroupConsult) {
       if (isPrimaryDoctor) {
-        receiverIds.push(`${appointmentData.groupConsult?.hprId}`)
+        receiverIds.push()
+        navigate('../grp-video-pri', { state: {
+          clientId: localStorage.getItem('hpAddress')?.toString() || '', // logged in doctr
+          patientId: appointmentData.patient.abhaAddress,
+          remoteDoctorId: `${appointmentData.groupConsult?.hprId}`,
+        }})
       } else {
         receiverIds.push(`${appointmentData.hprId}`)
+        navigate('../grp-video-sec', { state: {
+          clientId: localStorage.getItem('hpAddress')?.toString() || '',
+          patientId: appointmentData.patient.abhaAddress,
+          remoteDoctorId: `${appointmentData.hprId}`
+        }})
       }
+    } else {
+      navigate('../video-call', { state: {
+        clientId: localStorage.getItem('hpAddress')?.toString() || '', // logged in doctr
+        receiverIds, // patient abha and secondary
+        isPrimaryDoctor: (localStorage.getItem('hpAddress')?.toString() || '') !== otherDoctor ,// if logged doctor is primary or not
+      }})
     }
-    navigate('../video-call', { state: {
-      clientId: localStorage.getItem('hpAddress')?.toString() || '', // logged in doctr
-      receiverIds, // patient abha and secondary
-      isPrimaryDoctor: (localStorage.getItem('hpAddress')?.toString() || '') !== otherDoctor ,// if logged doctor is primary or not
-    }})
   }
 
   return (
