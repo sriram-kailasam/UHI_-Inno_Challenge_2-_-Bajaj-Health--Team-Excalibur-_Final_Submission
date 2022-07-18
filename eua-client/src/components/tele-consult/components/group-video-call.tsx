@@ -18,6 +18,7 @@ interface State {
   cameraMode: "user" | "environment";
   remoteStreams: any[];
   existingTracks: any[];
+  stopPolling: boolean;
 }
 
 const GroupVideoCall: FC<Props> = () => {
@@ -32,11 +33,37 @@ const GroupVideoCall: FC<Props> = () => {
     cameraMode: "user",
     remoteStreams: [],
     existingTracks: [],
+    stopPolling: false,
   });
 
   const primaryDoctorConnection = useRef({});
   const secondaryDoctorConnection = useRef({});
   const localStream = useRef();
+
+  /**
+   * Poll the HSPA - 1 application if it's the HSPA - 2 application
+   *
+   */
+   useEffect(() => {
+    let interval: any;
+    if (!state.stopPolling) {
+      interval = setInterval(() => {
+        sendMessage({
+          senderId: clientId,
+          receiverId: [primaryDoctorId],
+          timestamp: new Date(),
+          content: {
+            id: uuid(),
+            value: JSON.stringify({
+              type: "READY",
+              data: true,
+            }),
+          },
+        });
+      }, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [state.stopPolling]);
 
   useEffect(() => {
     getLocalWebCamFeed();
@@ -269,6 +296,7 @@ const GroupVideoCall: FC<Props> = () => {
   const handleOffer = ({ offer, senderId }: { offer: any; senderId: string }) => {
     if (senderId === primaryDoctorId) {
         handleOfferPrimaryDoctor(offer);
+        setState({ stopPolling: true });
     } else {
         handleOfferSecondaryDoctor(offer);
     }

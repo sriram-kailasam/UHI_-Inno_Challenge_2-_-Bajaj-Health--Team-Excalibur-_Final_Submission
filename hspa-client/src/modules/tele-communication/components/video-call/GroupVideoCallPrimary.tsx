@@ -139,7 +139,7 @@ const GroupVideoCallPrimary: FC<Props> = () => {
 
         sendMessage({
           senderId: clientId,
-          receiverId: [index === 1 ? remoteDoctorId :  patientId],
+          receiverId: [index === 1 ? remoteDoctorId : patientId],
           timestamp: new Date(),
           content: {
             id: uuid(),
@@ -213,6 +213,7 @@ const GroupVideoCallPrimary: FC<Props> = () => {
   };
 
   const handleReady = ({ data, senderId }: { data: any; senderId: string }) => {
+    console.log(data, senderId, '******** check this');
     if (data) {
       if (senderId === patientId) {
         setState((oldState) => ({
@@ -339,9 +340,11 @@ const GroupVideoCallPrimary: FC<Props> = () => {
         autoPlay
       />
       <div className="">
-        <Button id="sendOfferButton" onClick={createAndSendOfferHandler}>
-          Call
-        </Button>
+        {state.ready.remoteDoctor && state.ready.patient && (
+          <Button id="sendOfferButton" onClick={createAndSendOfferHandler}>
+            Call
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -207,6 +207,7 @@ const GroupVideoCall: FC<Props> = () => {
     if (senderId === remoteDoctorId) {
       handleOfferDoctor(offer);
       createAndSendOfferToPatient();
+      setState({ stopPolling: true });
     }
   };
   /**
