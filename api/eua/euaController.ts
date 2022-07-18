@@ -46,8 +46,8 @@ async function handleSearchDoctors(req: Request, res: Response) {
 async function handleGetSlots(req: Request, res: Response) {
   const request = req.query as { hprId: string }
 
-  // const slots = await getDoctorSlots(request.hprId);
-  const slots = await getSlots(request.hprId)
+  const slots = await getDoctorSlots(request.hprId);
+  // const slots = await getSlots(request.hprId)
 
   res.json({ slots })
 }
