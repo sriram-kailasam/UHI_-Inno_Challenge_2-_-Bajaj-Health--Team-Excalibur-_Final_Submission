@@ -4,6 +4,8 @@ import { SendMessageRequest, sendMessageRequestSchema } from "../dto/sendMessage
 import { sendMessage } from "./hspService.external";
 import { bookGroupConsult, listAppointmentsByHprId } from "../appointments/appointmentsService";
 import { BookGroupConsultRequest, bookGroupConsultRequestSchema } from "../appointments/dto/saveAppointment.dto";
+import { fetchDoctor } from "../doctors/doctorsService";
+import { v4 as uuid } from "uuid"
 
 export function hspaController() {
   const router = Router()
@@ -11,6 +13,8 @@ export function hspaController() {
   router.post('/sendMessage', validateRequest('body', sendMessageRequestSchema), handleSendMessage);
   router.get('/getAppointmentList', handleGetAppointmentListByHprId)
   router.post('/bookGroupConsult', validateRequest('body', bookGroupConsultRequestSchema), handleBookGroupConsult)
+
+  router.post('/login', handleLogin)
 
   return router;
 }
@@ -60,4 +64,20 @@ async function handleBookGroupConsult(req: Request, res: Response) {
   await bookGroupConsult(request)
 
   res.json({ success: true })
+}
+
+async function handleLogin(req: Request, res: Response) {
+  const { hpAddress } = req.body;
+
+  const doctor = await fetchDoctor(hpAddress)
+
+  if (!doctor) {
+    return res.status(404).json({ error: "Doctor not found" })
+  }
+
+  res.json({
+    accessToken: uuid(),
+    hpAddress: hpAddress,
+    name: doctor.name
+  })
 }

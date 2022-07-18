@@ -14,7 +14,7 @@ const cache = getCache();
 
 export async function searchDoctors(name: string): Promise<SearchResult[]> {
   const transactionId = await sendSearchDoctorsRequest(name);
-  const results = await waitForData<GatewayOnSearchRequest[]>(`gatewaySearch:${transactionId}`, 3000)
+  const results = await waitForData<GatewayOnSearchRequest[]>(`gatewaySearch:${transactionId}`, 2000)
   let searchResults: SearchResult[] = [];
 
   results.forEach(result => {
@@ -22,6 +22,7 @@ export async function searchDoctors(name: string): Promise<SearchResult[]> {
     searchResults = searchResults.concat(result.message.catalog.fulfillments?.map(fulfillment => {
       const hprId = fulfillment.agent.id;
       cache.set(`providerUri:${hprId}`, result.context.provider_uri)
+      cache.set(`providerId:${hprId}`, result.context.provider_id)
 
       return {
         hprId: hprId,
@@ -50,9 +51,9 @@ async function sendSearchDoctorsRequest(name: string) {
     data:
     {
       "context": {
-        "domain": "nic2004:85111",
+        "domain": "Health",
         "country": "IND",
-        "city": "std:080",
+        "city": "Pune",
         "action": "on_search",
         "timestamp": new Date().toISOString(),
         "core_version": "0.7.1",
@@ -85,7 +86,6 @@ export async function getSlots(hprId: string): Promise<Slot[]> {
 
   const result = await waitForData<UhiPayload<HspaSearchResult>[]>(`gatewaySearch:${transactionId}`);
 
-
   console.log({ result: JSON.stringify(result) })
   return result[0]?.message.catalog.fulfillments?.map((fulfillment: any) => {
     console.log({ fulfillment: JSON.stringify(fulfillment) })
@@ -102,6 +102,7 @@ async function sendGetSlotsRequest(hprId: string) {
   const transactionId = uuid()
 
   const providerUri = cache.get<string>(`providerUri:${hprId}`);
+  const providerId = cache.get<string>(`providerId:${hprId}`);
 
   await axios({
     baseURL: providerUri || defaultHspaBaseUrl,
@@ -117,7 +118,9 @@ async function sendGetSlotsRequest(hprId: string) {
         "core_version": "0.7.1",
         "consumer_id": euaConsumerId,
         "consumer_uri": euaConsumerUri,
-        "transaction_id": transactionId
+        "transaction_id": transactionId,
+        "provider_id": providerId,
+        "provider_uri": providerUri
       },
       "message": {
         "intent": {
