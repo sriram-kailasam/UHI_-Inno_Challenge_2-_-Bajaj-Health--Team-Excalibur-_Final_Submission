@@ -1,11 +1,11 @@
 import { Request, Response, Router } from "express";
 import { listAppointmentsByAbhaId, saveAppointment } from "../appointments/appointmentsService";
 import { SaveAppointmentRequest, saveAppointmentRequestSchema } from "../appointments/dto/saveAppointment.dto";
-import { getDoctorSlots } from "../doctors/doctorsService";
 import { SendMessageRequest } from "../dto/sendMessage.dto";
 import { sendMessage } from "../hspa/hspService.external";
 import { validateRequest } from "../validateRequest";
-import { getSlots, initAppointment, searchDoctors } from "./euaService.external";
+import { getSlots, initAppointment, } from "./euaService.external";
+import { searchDoctors } from '../doctors/doctorsService'
 
 export function euaController() {
   const router = Router();
