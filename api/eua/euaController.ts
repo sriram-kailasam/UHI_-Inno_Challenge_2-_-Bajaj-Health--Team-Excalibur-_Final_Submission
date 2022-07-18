@@ -5,7 +5,7 @@ import { SendMessageRequest } from "../dto/sendMessage.dto";
 import { sendMessage } from "../hspa/hspService.external";
 import { validateRequest } from "../validateRequest";
 import { getSlots, initAppointment, } from "./euaService.external";
-import { searchDoctors } from '../doctors/doctorsService'
+import { searchDoctors, getDoctorSlots } from '../doctors/doctorsService'
 
 export function euaController() {
   const router = Router();
