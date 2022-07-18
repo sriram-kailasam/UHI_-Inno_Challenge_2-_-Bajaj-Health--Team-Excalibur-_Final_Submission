@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Input } from "antd";
 import "./styles.scss";
+import { bfhl, nha } from "../../images";
 
 const LoginForm = ({
     handleInputChange,
@@ -16,6 +17,21 @@ const LoginForm = ({
     return (
         <div className="login-form">
             <div className="address-input-container">
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        marginBottom: "30px",
+                    }}
+                >
+                    <img src={nha} alt="NHA" style={{ width: "154px" }} />
+                    <img
+                        src={bfhl}
+                        alt="NHA"
+                        style={{ width: "93px", marginTop: "10px" }}
+                    />
+                </div>
                 <span className="input-label">Enter your ABHA address</span>
                 <Input
                     className="address-input"

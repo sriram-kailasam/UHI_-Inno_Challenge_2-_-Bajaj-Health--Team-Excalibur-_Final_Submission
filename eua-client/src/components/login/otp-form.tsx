@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../redux/slice/user";
 import { validateOTP } from "./api";
 import dayjs from "dayjs";
+import { bfhl, nha } from "../../images";
 
 const OtpForm = ({
     requestData: { transactionId, requesterId },
@@ -49,6 +50,21 @@ const OtpForm = ({
     return (
         <div className="otp-form">
             <div className="otp-input-container">
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        marginBottom: "30px",
+                    }}
+                >
+                    <img src={nha} alt="NHA" style={{ width: "154px" }} />
+                    <img
+                        src={bfhl}
+                        alt="NHA"
+                        style={{ width: "93px", marginTop: "10px" }}
+                    />
+                </div>
                 <span className="input-label">
                     We have sent OTP on your ABHA Address <b>xxx@sbx</b>
                 </span>
