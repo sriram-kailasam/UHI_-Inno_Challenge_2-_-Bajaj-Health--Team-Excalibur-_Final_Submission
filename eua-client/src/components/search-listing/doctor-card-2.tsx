@@ -74,12 +74,23 @@ const DoctorCard2 = (docProps: IBookPayload) => {
                     <Button
                         className="know-more-btn"
                         onClick={() => {
-                            navigate("/eua/video-call", {
-                                state: {
-                                    clientId: selectedUserProfile.id,
-                                    receiverIds: receivers,
-                                },
-                            });
+                            if (docProps.isGroupConsult) {
+                                navigate("/eua/group-video-call", {
+                                    state: {
+                                        clientId: selectedUserProfile.id,
+                                        primaryDoctorId: docProps.hprId,
+                                        secondaryDoctorId:
+                                            docProps?.groupConsult?.hprId || "",
+                                    },
+                                });
+                            } else {
+                                navigate("/eua/video-call", {
+                                    state: {
+                                        clientId: selectedUserProfile.id,
+                                        receiverIds: receivers,
+                                    },
+                                });
+                            }
                         }}
                     >
                         <span>Join Call</span>
