@@ -33,7 +33,7 @@ useEffect(() => {
   if (debounceSearchQuery) {
     doctorSearch({ name: debounceSearchQuery}, {
       onSuccess: (response) => {
-        const temp = response.data.searchResults.map((i) => {return {...i, ...appointmentData}});
+        const temp = response.data.searchResults.map((i) => {return {...appointmentData, ...i}});
         setDoctorSearchResult(temp)
       }
     })
