@@ -56,7 +56,7 @@ async function sendSearchDoctorsRequest(name: string) {
       "domain": "nic2004:85111",
       "country": "IND",
       "city": "std:080",
-      "action": "on_search",
+      "action": "search",
       "timestamp": new Date().toISOString(),
       "core_version": "0.7.1",
       "consumer_id": euaConsumerId,
