@@ -1,14 +1,22 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { calendar2 } from "../../images";
-import { IPayState } from "../doc-profile";
 import dayjs from "dayjs";
 import { Button } from "antd";
 import "./styles.scss";
+import { IDoctor, ISlot } from "../search-listing/doctor-mock";
+import { IUser } from "../../redux/slice/user";
 
-const PaySuccess = () => {
+export interface IPayStateGroup {
+    userProfile: IUser;
+    doctorProfile1: IDoctor;
+    doctorProfile2: IDoctor;
+    slotData: ISlot;
+}
+
+const GroupConsultSuccess = () => {
     const location = useLocation();
-    const { doctorProfile, userProfile, slotData } =
-        location.state as IPayState;
+    const { doctorProfile1, doctorProfile2, userProfile, slotData } =
+        location.state as IPayStateGroup;
     const navigate = useNavigate();
 
     return (
@@ -16,7 +24,7 @@ const PaySuccess = () => {
             <div className="center-card">
                 <img className="top-img" src={calendar2} alt="calendar-2" />
                 <p className="section_1">
-                    {userProfile.name?.first} , we’ve got you confirmed for your
+                    {userProfile.name?.first} , we've got you confirmed for your
                     appointment
                 </p>
                 <div className="section_2">
@@ -26,15 +34,19 @@ const PaySuccess = () => {
                     <div className="section_2_line" />
                     <span className="section_2_label">
                         {"Dr. " +
-                            (doctorProfile.name?.split("-")[1].trim() ||
-                                doctorProfile.name?.trim())}
+                            (doctorProfile1.name?.split("-")[1].trim() ||
+                                doctorProfile1.name?.trim())}
+                        {" & "}
+                        {"Dr. " +
+                            (doctorProfile2.name?.split("-")[1].trim() ||
+                                doctorProfile2.name?.trim())}
                     </span>
                 </div>
                 <p className="section_3">
                     <span className="upper">
                         {dayjs(slotData.startTime).format("dddd, DD MMMM YYYY")}
                     </span>
-                    <span className="lower">{"Tele Consultation"}</span>
+                    <span className="lower">{"Group Consultation"}</span>
                 </p>
                 <Button
                     className="my-app-btn"
@@ -47,4 +59,4 @@ const PaySuccess = () => {
     );
 };
 
-export default PaySuccess;
+export default GroupConsultSuccess;

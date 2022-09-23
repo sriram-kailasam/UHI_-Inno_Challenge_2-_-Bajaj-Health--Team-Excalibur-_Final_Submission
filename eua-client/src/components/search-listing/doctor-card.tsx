@@ -1,12 +1,25 @@
 import { Button } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { femaleAvatar, maleAvatar } from "../../images";
 import { IDoctor } from "./doctor-mock";
+import { IGroupSearch } from "./group-search";
 
 const DoctorCard = (docProps: IDoctor) => {
-    const { name, speciality, experience, fees, gender, hprId, slots } =
-        docProps || {};
+    const {
+        name,
+        speciality,
+        experience,
+        fees,
+        gender,
+        hprId,
+        bookCTA = true,
+        isGroupConsult,
+    } = docProps || {};
     const navigate = useNavigate();
+
+    const { docProfile: routedDocProfile } =
+        (useLocation().state as IGroupSearch) || {};
+
     return (
         <div className="doctor-card">
             <div className="card-main">
@@ -32,20 +45,33 @@ const DoctorCard = (docProps: IDoctor) => {
                     </div>
                 </div>
             </div>
-            <div className="footer">
-                <Button
-                    className={`book-apt-btn`}
-                    onClick={() =>
-                        navigate(`/eua/search/${hprId}`, {
-                            state: docProps,
-                        })
-                    }
-                    disabled={false}
-                    style={{ width: "100%" }}
-                >
-                    <span>{`Book Appointment`}</span>
-                </Button>
-            </div>
+            {bookCTA && (
+                <div className="footer">
+                    <Button
+                        className={`book-apt-btn`}
+                        onClick={() =>
+                            isGroupConsult
+                                ? navigate("/eua/search-group/slots", {
+                                      state: {
+                                          doctorProfile1: routedDocProfile,
+                                          doctorProfile2: docProps,
+                                      },
+                                  })
+                                : navigate(`/eua/search/${hprId}`, {
+                                      state: docProps,
+                                  })
+                        }
+                        disabled={false}
+                        style={{ width: "100%" }}
+                    >
+                        <span>
+                            {isGroupConsult
+                                ? "Select Doctor"
+                                : `Book Appointment`}
+                        </span>
+                    </Button>
+                </div>
+            )}
         </div>
     );
 };

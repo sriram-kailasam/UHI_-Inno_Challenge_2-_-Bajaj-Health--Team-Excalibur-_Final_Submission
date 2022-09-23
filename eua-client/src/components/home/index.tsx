@@ -16,17 +16,14 @@ const EuaHome = () => {
         <PageWrap label="Home" withBack={false}>
             <div className="home-page">
                 <div className="user-card">
-                    {selectedUserProfile.profilePhoto ? (
+                    {/* {!selectedUserProfile.profilePhoto ? (
                         <img
                             src={`data:image/png;base64, ${selectedUserProfile.profilePhoto}`}
                             alt="User"
                         />
-                    ) : (
-                        <img
-                            src={isMale ? maleAvatar : femaleAvatar}
-                            alt="User"
-                        />
-                    )}
+                    ) : ( */}
+                    <img src={isMale ? maleAvatar : femaleAvatar} alt="User" />
+                    {/* // )} */}
                     <div className="card-right">
                         <span className="primary">
                             {isMale ? "Mr. " : "Ms/Mrs. "}

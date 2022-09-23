@@ -10,6 +10,7 @@
         position: relative;
         border-top-left-radius: 12px;
         border-bottom: 3px solid #d4d4d4;
+        margin-bottom: 20px;
 
         .top-row {
             position: absolute;
@@ -187,4 +188,9 @@
             text-align: center;
         }
     }
+}
+
+.section-label-2 {
+    font-size: 16px;
+    font-weight: 500;
 }

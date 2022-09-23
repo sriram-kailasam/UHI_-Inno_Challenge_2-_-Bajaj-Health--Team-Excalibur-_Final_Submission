@@ -6,7 +6,7 @@
     max-width: 400px;
 
     .card-main {
-        padding: 14px;
+        margin: 15px 15px 30px;
         position: relative;
         border-top-left-radius: 12px;
 
@@ -124,7 +124,8 @@
         text-align: left;
     }
 
-    .e-cons-btn {
+    .e-cons-btn,
+    .e-cons-btn-tele {
         background-color: #153e90;
         color: #fff;
         display: flex;
@@ -137,6 +138,10 @@
             margin-left: 6px;
             font-size: 12px;
         }
+    }
+
+    .e-cons-btn-tele {
+        background-color: #7958a2;
     }
 
     .book-btn {
@@ -188,4 +193,9 @@
     display: flex;
     align-items: flex-end;
     height: 100%;
+}
+
+.section-label-2 {
+    font-size: 16px;
+    font-weight: 500;
 }

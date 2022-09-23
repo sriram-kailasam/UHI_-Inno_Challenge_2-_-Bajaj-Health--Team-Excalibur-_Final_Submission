@@ -41,7 +41,11 @@ const DocProfile = () => {
     });
 
     return (
-        <PageWrap onBack={() => navigate(-1)} withBack label="">
+        <PageWrap
+            onBack={() => navigate(-1)}
+            withBack
+            label="Slots for Teleconsult"
+        >
             <div className="doc-profile">
                 <div className="card-main">
                     <div className="doc-name-logo">
@@ -70,9 +74,9 @@ const DocProfile = () => {
                 </div>
                 <div style={{ marginTop: "10px" }}>
                     <span className="section-label">Consultation Type</span>
-                    <Button className="e-cons-btn">
+                    <Button className="e-cons-btn-tele">
                         <img src={video} alt="video" />
-                        <span>E-Consultation</span>
+                        <span>Tele-Consultation</span>
                     </Button>
                 </div>
                 <div style={{ marginTop: "10px" }}>

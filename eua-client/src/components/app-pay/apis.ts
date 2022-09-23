@@ -19,6 +19,28 @@ export interface IBookPayload extends ISlot {
     };
 }
 
+export interface IBookGroupPayload {
+    startTime: string;
+    endTime: string;
+    slotId: string;
+    primaryDoctor: {
+        hprId: string;
+        name: string;
+    };
+    secondaryDoctor: {
+        hprId: string;
+        name: string;
+    };
+    patient: {
+        name: string;
+        abhaAddress: string;
+    };
+}
+
 export const bookAppointment = (payload: IBookPayload) => {
     return axios.post(`${baseUrl}/eua/bookAppointment`, payload);
+};
+
+export const bookAppointmentGroup = (payload: IBookGroupPayload) => {
+    return axios.post(`${baseUrl}/hspa/bookGroupConsult`, payload);
 };
