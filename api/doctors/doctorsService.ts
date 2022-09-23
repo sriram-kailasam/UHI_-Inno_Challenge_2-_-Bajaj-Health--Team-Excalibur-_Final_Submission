@@ -11,9 +11,9 @@ export async function searchDoctors(query: string): Promise<Doctor[]> {
 }
 
 export async function fetchDoctor(hprId: string): Promise<Doctor | null> {
-  const client = await getDbClient()
+  const client = await getDbClient();
 
-  const doctor = await client.db().collection('doctors').findOne<Doctor>({ hprId })
+  const doctor = await client.db().collection('doctors').findOne<Doctor>({ hprId });
 
   return doctor;
 }

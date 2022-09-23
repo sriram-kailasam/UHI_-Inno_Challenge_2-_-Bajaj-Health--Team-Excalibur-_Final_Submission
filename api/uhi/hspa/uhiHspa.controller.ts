@@ -19,7 +19,7 @@ export function uhiHspaController() {
 
   router.post('/on_message', validateRequest('body', uhiPayload(onMessageDataSchema)), handleOnMessage);
   router.post("/search", validateRequest('body', uhiPayload(searchRequestSchema)), handleSearch)
-  router.post('/init', validateRequest('body', uhiPayload(initSchema)), handleInit)
+  router.post('/init', validateRequest('body', uhiPayload(initSchema)), handleInit);
 
   return router;
 }

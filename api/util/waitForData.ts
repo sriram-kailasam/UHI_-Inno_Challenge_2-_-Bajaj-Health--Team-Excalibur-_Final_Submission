@@ -9,7 +9,7 @@ export async function waitForData<T>(key: string, minWait: number = 0, maxWaitTi
     setTimeout(() => {
       const interval = setInterval(async () => {
         if (times >= maxWaitTimes) {
-          reject('timeout exceeded for ' + key);
+          reject(new Error('timeout exceeded for ' + key));
           clearInterval(interval);
           return;
         }

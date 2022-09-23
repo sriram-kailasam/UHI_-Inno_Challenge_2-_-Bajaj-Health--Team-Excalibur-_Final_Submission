@@ -6,7 +6,7 @@ export const sendMessageRequestSchema = z.object({
   timestamp: z.string(),
   content: z.object({
     id: z.string(),
-    value: z.string()
+    value: z.string(),
   })
 })
 

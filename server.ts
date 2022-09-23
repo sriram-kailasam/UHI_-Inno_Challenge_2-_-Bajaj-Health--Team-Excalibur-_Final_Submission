@@ -52,7 +52,7 @@ app.get('/hspa/*', function (_, res) {
 });
 
 app.use((error: any, req: Request, res: Response, next: NextFunction): void => {
-  console.log('server error', error.message)
+  console.log('server error', error)
   console.log('stack', error.stack)
 
   if (error.isAxiosError) {

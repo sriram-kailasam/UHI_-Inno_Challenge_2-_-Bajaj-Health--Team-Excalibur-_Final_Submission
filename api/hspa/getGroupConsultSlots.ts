@@ -19,7 +19,7 @@ export function getMatchingSlotPairs(slots1: Slot[], slots2: Slot[], minStartTim
         return;
       }
 
-      if (between(s1.startTime, s2.startTime, s2.endTime) || between(s2.startTime, s1.startTime, s2.startTime)) {
+      if (between(s1.startTime, s2.startTime, s2.endTime) || between(s2.startTime, s1.startTime, s1.endTime)) {
         matchingSlots.push({ primaryDoctorSlot: s1, secondaryDoctorSlot: s2, slotId: uuid() })
       }
     })

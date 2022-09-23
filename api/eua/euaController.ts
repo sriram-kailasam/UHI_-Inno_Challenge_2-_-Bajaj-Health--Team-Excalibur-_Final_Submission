@@ -4,8 +4,7 @@ import { SaveAppointmentRequest, saveAppointmentRequestSchema } from "../appoint
 import { SendMessageRequest } from "../dto/sendMessage.dto";
 import { sendMessage } from "../hspa/hspService.external";
 import { validateRequest } from "../validateRequest";
-import { getSlots, initAppointment, } from "./euaService.external";
-import { searchDoctors, getDoctorSlots } from '../doctors/doctorsService'
+import { searchDoctors, getSlots, initAppointment, } from "./euaService.external";
 
 export function euaController() {
   const router = Router();
@@ -46,7 +45,7 @@ async function handleSearchDoctors(req: Request, res: Response) {
 async function handleGetSlots(req: Request, res: Response) {
   const request = req.query as { hprId: string }
 
-  const slots = await getDoctorSlots(request.hprId);
+  const slots = await getSlots(request.hprId);
   // const slots = await getSlots(request.hprId)
 
   res.json({ slots })

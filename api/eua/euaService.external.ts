@@ -48,40 +48,53 @@ export async function searchDoctors(name: string): Promise<SearchResult[]> {
 }
 
 async function sendSearchDoctorsRequest(name: string) {
-  const transactionId = uuid()
+  const transactionId = uuid();
 
-  console.log("sending search request")
-  await axios({
-    baseURL: process.env.GATEWAY_BASE_URL,
-    url: 'search',
-    method: 'post',
-    data:
-    {
-      "context": {
-        "domain": "nic2004:85111",
-        "country": "IND",
-        "city": "std:080",
-        "action": "on_search",
-        "timestamp": new Date().toISOString(),
-        "core_version": "0.7.1",
-        "consumer_id": euaConsumerId,
-        "consumer_uri": euaConsumerUri,
-        "transaction_id": transactionId,
-        "message_id": uuid()
-      },
-      "message": {
-        "intent": {
-          "fulfillment": {
-            "agent": {
-              "name": name
-            },
-          }
+  console.log("sending search request");
+  const data = {
+    "context": {
+      "domain": "nic2004:85111",
+      "country": "IND",
+      "city": "std:080",
+      "action": "on_search",
+      "timestamp": new Date().toISOString(),
+      "core_version": "0.7.1",
+      "consumer_id": euaConsumerId,
+      "consumer_uri": euaConsumerUri,
+      "transaction_id": transactionId,
+      "message_id": uuid()
+    },
+    "message": {
+      "intent": {
+        "fulfillment": {
+          "agent": {
+            "name": name
+          },
+          "type": "TeleConsultation",
+          "start": {
+            "time": {
+              "timestamp": dayjs().subtract(1, 'month').toISOString()
+            }
+          },
+          "end": {
+            "time": {
+              "timestamp": dayjs().add(1, 'month').toISOString()
+            }
+          },
         }
       }
     }
+  };
+
+  console.log({ searchData: JSON.stringify(data) })
+  const response = await axios({
+    baseURL: process.env.GATEWAY_BASE_URL,
+    url: 'search',
+    method: 'post',
+    data
   })
 
-  console.log('search request sent')
+  console.log('search request sent', response.data)
 
   return transactionId;
 }
@@ -110,46 +123,51 @@ async function sendGetSlotsRequest(hprId: string) {
   const providerUri = cache.get<string>(`providerUri:${hprId}`);
   const providerId = cache.get<string>(`providerId:${hprId}`);
 
+  const data = {
+    "context": {
+      "domain": "nic2004:85111",
+      "country": "IND",
+      "city": "std:080",
+      "action": "search",
+      "timestamp": new Date().toISOString(),
+      "core_version": "0.7.1",
+      "consumer_id": euaConsumerId,
+      "consumer_uri": euaConsumerUri,
+      "transaction_id": transactionId,
+      "provider_id": providerId,
+      "provider_uri": providerUri,
+      "message_id": uuid()
+    },
+    "message": {
+      "intent": {
+        "fulfillment": {
+          "agent": {
+            cred: hprId
+          },
+          "start": {
+            "time": {
+              "timestamp": dayjs().toISOString()
+            }
+          },
+          "end": {
+            "time": {
+              "timestamp": dayjs().add(1, 'week').toISOString()
+            }
+          },
+          "type": "TeleConsultation"
+        }
+      }
+    }
+  };
+
+  console.log({ slotsData: JSON.stringify(data) })
+
+
   await axios({
     baseURL: providerUri || defaultHspaBaseUrl,
     url: "/search",
     method: 'post',
-    data: {
-      "context": {
-        "domain": "nic2004:85111",
-        "country": "IND",
-        "city": "std:080",
-        "action": "search",
-        "timestamp": new Date().toISOString(),
-        "core_version": "0.7.1",
-        "consumer_id": euaConsumerId,
-        "consumer_uri": euaConsumerUri,
-        "transaction_id": transactionId,
-        "provider_id": providerId,
-        "provider_uri": providerUri,
-        "message_id": uuid()
-      },
-      "message": {
-        "intent": {
-          "fulfillment": {
-            "agent": {
-              cred: hprId
-            },
-            "start": {
-              "time": {
-                "timestamp": new Date().toISOString()
-              }
-            },
-            "end": {
-              "time": {
-                "timestamp": "2022-07-17T23:59:59"
-              }
-            },
-            "type": "Teleconsultation"
-          }
-        }
-      }
-    }
+    data
   })
 
 
