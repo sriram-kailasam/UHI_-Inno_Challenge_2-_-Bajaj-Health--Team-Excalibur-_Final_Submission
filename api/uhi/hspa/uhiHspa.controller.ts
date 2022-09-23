@@ -106,7 +106,7 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
         "fulfillments": results.map((doctor, index) => {
           return {
             "id": String(index),
-            "type": "Groupconsultation",
+            "type": "TeleConsultation",
             "agent": {
               "id": doctor.hprId,
               "name": doctor.name,
