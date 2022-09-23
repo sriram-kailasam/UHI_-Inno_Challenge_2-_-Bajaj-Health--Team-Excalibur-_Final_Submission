@@ -59,7 +59,7 @@ async function handleSearch(req: Request, res: Response) {
 
 async function doctorSlotsCallback(context: { consumer_uri: string }, results: Slot[]) {
   const data: UhiPayload<HspaSearchResult> = {
-    context: { ...context, consumer_uri: hspaConsumerUri!, consumer_id: hspaConsumerId! },
+    context: { ...context, consumer_id: hspaConsumerId! },
     message: {
       catalog: {
         fulfillments: results.map(slot => {
@@ -126,7 +126,7 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
     },
     "context": {
       ...context,
-      consumer_id: hspaConsumerId, consumer_uri: hspaConsumerUri, provider_id: hspaConsumerId, provider_uri: hspaConsumerUri
+      consumer_id: hspaConsumerId, provider_id: hspaConsumerId, provider_uri: hspaConsumerUri
     }
   }
 
