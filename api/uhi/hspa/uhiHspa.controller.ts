@@ -3,7 +3,7 @@ import { validateRequest } from "../../validateRequest";
 import { UhiPayload, uhiPayload } from "../dto/uhiPayload";
 import { onMessageDataSchema, OnMessageRequest } from "../dto/onMessage.dto";
 import { SocketServer } from "../../sockets";
-import { gatewayBaseUrl, hspaConsumerId, hspaConsumerUri } from "../../configuration";
+import { euaConsumerId, gatewayBaseUrl, hspaConsumerId, hspaConsumerUri } from "../../configuration";
 import { InitRequest, initSchema } from "./dto/init.dto";
 import { saveAppointment } from "../../appointments/appointmentsService";
 import dayjs from 'dayjs'
@@ -107,7 +107,7 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
         "fulfillments": results.map((doctor, index) => {
           return {
             "id": String(index),
-            "type": "PhysicalConsultation",
+            "type": "Groupconsultation",
             "agent": {
               "id": doctor.hprId,
               "name": doctor.name,
@@ -125,7 +125,10 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
       },
       "order_id": null
     },
-    "context": { ...context, provider_id: hspaConsumerId, provider_uri: hspaConsumerUri }
+    "context": {
+      ...context,
+      consumer_id: hspaConsumerId, consumer_uri: hspaConsumerUri, provider_id: hspaConsumerId, provider_uri: hspaConsumerUri
+    }
   }
 
   console.log({ data: JSON.stringify(data) })

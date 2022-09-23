@@ -107,7 +107,6 @@ export async function getSlots(hprId: string): Promise<Slot[]> {
 
   console.log({ result: JSON.stringify(result) })
   return result[0]?.message.catalog.fulfillments?.map((fulfillment: any) => {
-    console.log({ fulfillment: JSON.stringify(fulfillment) })
     return {
       slotId: fulfillment.id,
       startTime: dayjs(fulfillment.start.time.timestamp).toISOString(),
