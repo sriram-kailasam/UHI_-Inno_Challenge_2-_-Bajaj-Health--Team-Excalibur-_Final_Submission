@@ -3,7 +3,7 @@ import { validateRequest } from "../../validateRequest";
 import { UhiPayload, uhiPayload } from "../dto/uhiPayload";
 import { onMessageDataSchema, OnMessageRequest } from "../dto/onMessage.dto";
 import { SocketServer } from "../../sockets";
-import { hspaConsumerId, hspaConsumerUri } from "../../configuration";
+import { gatewayBaseUrl, hspaConsumerId, hspaConsumerUri } from "../../configuration";
 import { InitRequest, initSchema } from "./dto/init.dto";
 import { saveAppointment } from "../../appointments/appointmentsService";
 import dayjs from 'dayjs'
@@ -131,7 +131,7 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
   console.log({ data: JSON.stringify(data) })
 
   await axios({
-    baseURL: context.consumer_uri,
+    baseURL: gatewayBaseUrl,
     url: '/on_search',
     method: 'post',
     data
