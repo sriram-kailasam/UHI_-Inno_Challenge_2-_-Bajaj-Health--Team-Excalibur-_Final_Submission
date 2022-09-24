@@ -21,6 +21,8 @@ export interface IDoctor {
     speciality: string;
     education: string;
     slots: ISlot[];
+    bookCTA?: boolean;
+    isGroupConsult?: boolean;
 }
 
 export interface IDoctors {

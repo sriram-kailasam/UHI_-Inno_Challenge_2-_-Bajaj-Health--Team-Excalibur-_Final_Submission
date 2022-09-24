@@ -5,6 +5,10 @@ import dayjs from "dayjs";
 import { IBookPayload } from "../app-pay/apis";
 import { useAppSelector } from "../../redux/hooks";
 import { selectProfile } from "../doc-profile";
+import { searchDoctor } from "./apis";
+import { AxiosResponse } from "axios";
+import { IDoctors } from "./doctor-mock";
+import { useQuery } from "react-query";
 
 const DoctorCard2 = (docProps: IBookPayload) => {
     const {
@@ -22,16 +26,33 @@ const DoctorCard2 = (docProps: IBookPayload) => {
         receivers.push(docProps.groupConsult.hprId);
     }
 
+    const {
+        data: { data: { searchResults = [] } = {} } = {},
+        isLoading: isFetchingDoctorDetails,
+    } = useQuery<AxiosResponse<IDoctors>, Error>(
+        ["doctor-search", docProps.hprId],
+        () => searchDoctor(docProps.hprId),
+        {
+            enabled: !!docProps.hprId,
+        }
+    );
+
     return (
         <div className="doctor-card">
             <div className="card-main">
                 {
                     <div className="top-row">
-                        <div className="next-slot">
-                            {`Appointment at ${dayjs(docProps.startTime).format(
-                                "hh:mm A"
-                            )}`}
-                        </div>
+                        {isAppointmentCancelled ? (
+                            <div className="next-slot-over">
+                                Appointment Over
+                            </div>
+                        ) : (
+                            <div className="next-slot">
+                                {`Appointment at ${dayjs(
+                                    docProps.startTime
+                                ).format("hh:mm A")}`}
+                            </div>
+                        )}
                         {/* <div className="doc-id">#2378A</div> */}
                     </div>
                 }
@@ -45,6 +66,15 @@ const DoctorCard2 = (docProps: IBookPayload) => {
                             {"Dr. " +
                                 (name?.split("-")[1]?.trim() || name?.trim())}
                         </div>
+                        {docProps.isGroupConsult && (
+                            <div className="doc-name">
+                                {"Dr. " +
+                                    (docProps.groupConsult?.name
+                                        ?.split("-")[1]
+                                        ?.trim() ||
+                                        docProps.groupConsult?.name?.trim())}
+                            </div>
+                        )}
                         <div className="doc-info" style={{ marginTop: "5px" }}>
                             <span className="doc-spec">
                                 {dayjs(docProps.startTime).format(
@@ -56,7 +86,11 @@ const DoctorCard2 = (docProps: IBookPayload) => {
                                 {dayjs(docProps.startTime).format("hh:mm A")}
                             </span>
                         </div>
-                        <div className="e-consssss">
+                        <div
+                            className={
+                                docProps.isGroupConsult ? "g-cons" : "e-cons"
+                            }
+                        >
                             <Button className="e-cons-btn">
                                 <img src={video} alt="video" />
                                 <span>
@@ -70,7 +104,7 @@ const DoctorCard2 = (docProps: IBookPayload) => {
                 </div>
             </div>
             <div className="footer">
-                {
+                {!isAppointmentCancelled && (
                     <Button
                         className="know-more-btn"
                         onClick={() => {
@@ -95,23 +129,28 @@ const DoctorCard2 = (docProps: IBookPayload) => {
                     >
                         <span>Join Call</span>
                     </Button>
-                }
+                )}
                 <Button
                     className={`book-apt-btn${` is-my-app${
                         isAppointmentCancelled ? " failed" : " success"
                     }`}`}
                     onClick={() =>
-                        navigate(`/eua/search/${docProps.hprId}`, {
-                            state: docProps,
+                        navigate(`/eua/search-group`, {
+                            state: {
+                                docProfile: searchResults[0],
+                            },
                         })
                     }
-                    disabled
+                    loading={isFetchingDoctorDetails}
+                    disabled={
+                        !isAppointmentCancelled || isFetchingDoctorDetails
+                    }
                     style={{ width: "100%" }}
                 >
                     <span>
                         {`${
                             isAppointmentCancelled
-                                ? "Appointment canceled"
+                                ? "Book Follow up or Group Consultation"
                                 : "Appointment booked"
                         }`}
                     </span>

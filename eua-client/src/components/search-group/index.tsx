@@ -1,20 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import PageWrap from "../page-wrap";
-import SearchListing from "../search-listing";
+import GroupSearch from "../search-listing/group-search";
 
-const DoctorSearch = () => {
+const DoctorSearchGroup = () => {
     const navigate = useNavigate();
     return (
         <PageWrap
-            label="Book a Teleconsultation"
+            label="Book a Group Consultation"
             withBack
             onBack={() => {
                 navigate(-1);
             }}
         >
-            <SearchListing />
+            <GroupSearch />
         </PageWrap>
     );
 };
 
-export default DoctorSearch;
+export default DoctorSearchGroup;

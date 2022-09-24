@@ -1,0 +1,14 @@
+{
+    "startTime": "2022-09-28T15:00:00.000Z",
+    "endTime": "2022-09-28T15:30:00.000Z",
+    "slotId": "87043d1f-ea7f-4575-9539-fc0b76113926",
+    "primaryDoctor": {
+        "hprId": "airesh@hpr.abdm",
+        "name": "airesh@hpr.abdm - Airesh Bhat"
+    },
+    "secondaryDoctor": {
+        "hprId": "sriram@hpr.abdm",
+        "name": "sriram@hpr.abdm - Sriram Kailasam"
+    },
+    "patient": { "name": "Shyam  Mittal", "abhaAddress": "mittalshyam1007@sbx" }
+}
