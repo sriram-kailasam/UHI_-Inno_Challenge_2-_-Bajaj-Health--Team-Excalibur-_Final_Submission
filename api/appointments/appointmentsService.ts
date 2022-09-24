@@ -3,13 +3,18 @@ import { BookGroupConsultRequest, SaveAppointmentRequest } from "./dto/saveAppoi
 import { v4 as uuid } from "uuid"
 import { Appointment } from "./dto/appointment.dto";
 
-export async function saveAppointment(request: SaveAppointmentRequest) {
+export async function saveAppointment(request: SaveAppointmentRequest): Promise<Appointment> {
   const client = await getDbClient();
 
-  await client.db().collection('appointments').insertOne({
+  const appointment: Appointment = {
     id: uuid(),
+    abhaId: request.patient.abhaAddress,
     ...request
-  })
+  };
+
+  await client.db().collection('appointments').insertOne(appointment);
+
+  return appointment;
 }
 
 export async function bookGroupConsult(request: BookGroupConsultRequest) {

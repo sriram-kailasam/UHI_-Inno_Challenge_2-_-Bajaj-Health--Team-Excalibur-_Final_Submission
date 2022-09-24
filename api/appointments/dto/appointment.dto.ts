@@ -1,7 +1,7 @@
 export type Appointment = {
   id: string
-  startTime: Date;
-  endTime: Date;
+  startTime: string;
+  endTime: string;
   slotId: string;
   hprId: string;
   abhaId: string;
@@ -14,13 +14,13 @@ export type Appointment = {
 
   doctor: {
     name: string;
-    gender?: string;
+    gender?: string | null;
   },
 
   patient: {
     name: string;
-    age: string;
+    age?: string;
     abhaAddress: string,
-    gender: string
+    gender?: string
   }
 }

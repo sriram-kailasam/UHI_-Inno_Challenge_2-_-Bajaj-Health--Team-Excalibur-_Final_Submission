@@ -11,7 +11,7 @@ export type UhiPayload<T> = {
     consumer_uri: string;
     provider_uri?: string;
     transaction_id?: string;
-
+    action?: string;
   };
   message: T;
 }

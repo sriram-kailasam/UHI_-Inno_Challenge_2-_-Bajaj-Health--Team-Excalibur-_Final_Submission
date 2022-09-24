@@ -13,6 +13,7 @@ import axios from "axios";
 import { Doctor } from "../../doctors/dto/doctor.dto";
 import { HspaSearchResult } from "../../eua/dto/hspaSearchResult.dto";
 import { Slot } from "../../eua/dto/slot.dto";
+import { Appointment } from "../../appointments/dto/appointment.dto";
 
 export function uhiHspaController() {
   const router = Router();
@@ -59,7 +60,7 @@ async function handleSearch(req: Request, res: Response) {
 
 async function doctorSlotsCallback(context: { consumer_uri: string }, results: Slot[]) {
   const data: UhiPayload<HspaSearchResult> = {
-    context: { ...context, consumer_id: hspaConsumerId! },
+    context: { ...context, action: 'on_search', consumer_id: hspaConsumerId! },
     message: {
       catalog: {
         fulfillments: results.map(slot => {
@@ -126,6 +127,7 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
     },
     "context": {
       ...context,
+      action: 'on_search',
       consumer_id: hspaConsumerId, provider_id: hspaConsumerId, provider_uri: hspaConsumerUri
     }
   }
@@ -141,9 +143,9 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
 }
 
 async function handleInit(req: Request, res: Response) {
-  const { message } = req.body as UhiPayload<InitRequest>;
+  const { context, message } = req.body as UhiPayload<InitRequest>;
 
-  saveAppointment({
+  const appointment = await saveAppointment({
     hprId: message.order.fulfillment.agent.id,
     slotId: message.order.fulfillment.id,
     startTime: dayjs(message.order.fulfillment.start.time.timestamp).toISOString(),
@@ -159,5 +161,80 @@ async function handleInit(req: Request, res: Response) {
     }
   })
 
+
+  sendInitCallback(context, appointment)
+
   res.json({ success: true })
+}
+
+async function sendInitCallback(context: { consumer_uri: string }, appointment: Appointment) {
+  const data = {
+    "context": { ...context },
+    "message": {
+      "order": {
+        "id": appointment.id,
+        "item": {
+          "id": "1",
+          "descriptor": {
+            "name": "Consultation"
+          },
+          "price": {
+            "currency": "INR",
+            "value": "600"
+          },
+          "fulfillment_id": appointment.id
+        },
+        "fulfillment": {
+          "id": appointment.id,
+          "type": "Teleconsultation",
+          "agent": {
+            "id": appointment.hprId,
+            "name": appointment.doctor.name,
+            "gender": appointment.doctor.gender,
+            "tags": {
+            }
+          },
+          "start": {
+            "time": {
+              "timestamp": appointment.startTime
+            }
+          },
+          "end": {
+            "time": {
+              "timestamp": appointment.endTime
+            }
+          },
+          "tags": {
+            "@abdm/gov.in/slot_id": appointment.id
+          }
+        },
+        "billing": {
+          "name": appointment.patient.name,
+        },
+        "quote": {
+          "price": {
+            "currency": "INR",
+            "value": "1000"
+          },
+        },
+        "customer": {
+          "id": "",
+          "cred": appointment.abhaId
+        },
+        "payment": {
+          "type": "ON-ORDER",
+          "status": "NOT-PAID",
+          "tl_method": null,
+          "params": null
+        }
+      }
+    }
+  }
+
+  await axios({
+    method: 'post',
+    baseURL: context.consumer_uri,
+    url: "/on_init",
+    data: data
+  })
 }
