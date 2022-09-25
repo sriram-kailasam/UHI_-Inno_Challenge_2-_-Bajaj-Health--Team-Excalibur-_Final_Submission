@@ -1,7 +1,8 @@
 export type Appointment = {
   id: string
-  startTime: string;
-  endTime: string;
+  createdAt: Date;
+  startTime: Date;
+  endTime: Date;
   slotId: string;
   hprId: string;
   abhaId: string;

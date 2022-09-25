@@ -9,7 +9,10 @@ export async function saveAppointment(request: SaveAppointmentRequest): Promise<
   const appointment: Appointment = {
     id: uuid(),
     abhaId: request.patient.abhaAddress,
-    ...request
+    ...request,
+    startTime: new Date(request.startTime),
+    endTime: new Date(request.endTime),
+    createdAt: new Date()
   };
 
   await client.db().collection('appointments').insertOne(appointment);

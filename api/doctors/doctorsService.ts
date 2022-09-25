@@ -1,6 +1,7 @@
 import { getDbClient } from "../database";
 import { Slot } from "../eua/dto/slot.dto";
 import { Doctor } from "./dto/doctor.dto";
+import dayjs from 'dayjs'
 
 export async function searchDoctors(query: string): Promise<Doctor[]> {
   const client = await getDbClient()
@@ -23,5 +24,6 @@ export async function getDoctorSlots(hprId: string): Promise<Slot[]> {
   const doctor = await client.db().collection('doctors').findOne<Doctor>({ hprId })
 
 
-  return doctor?.slots || [];
+  const now = new Date();
+  return doctor?.slots?.filter(slot => dayjs(slot.startTime).isAfter(now)) || [];
 }
