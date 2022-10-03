@@ -8,7 +8,7 @@ import { InitRequest, initSchema } from "./dto/init.dto";
 import { saveAppointment, bookGroupConsult } from "../../appointments/appointmentsService";
 import dayjs from 'dayjs'
 import { SearchRequest, searchRequestSchema } from "./dto/searchRequest.dto";
-import { getDoctorSlots, searchDoctors } from "../../doctors/doctorsService";
+import { fetchDoctor, getDoctorSlots, searchDoctors } from "../../doctors/doctorsService";
 import axios from "axios";
 import { Doctor } from "../../doctors/dto/doctor.dto";
 import { HspaSearchResult } from "../../eua/dto/hspaSearchResult.dto";
@@ -45,8 +45,12 @@ async function handleSearch(req: Request, res: Response) {
 
   if (query) {
     if (context.provider_uri) {
-      const slots = await getDoctorSlots(query);
-      await doctorSlotsCallback(context, slots);
+      const [doctor, slots] = await Promise.all([fetchDoctor(query), getDoctorSlots(query)]);
+      if (doctor) {
+        await doctorSlotsCallback(context, doctor, slots);
+      } else {
+        console.log("Doctor not found for ", query)
+      }
     } else {
       const results = await searchDoctors(query)
       if (results?.length) {
@@ -59,14 +63,29 @@ async function handleSearch(req: Request, res: Response) {
 }
 
 
-async function doctorSlotsCallback(context: { consumer_uri: string }, results: Slot[]) {
+async function doctorSlotsCallback(context: { consumer_uri: string }, doctor: Doctor, slots: Slot[]) {
   const data: UhiPayload<HspaSearchResult> = {
     context: { ...context, action: 'on_search', consumer_id: hspaConsumerId! },
     message: {
       catalog: {
-        fulfillments: results.map(slot => {
+        fulfillments: slots.map(slot => {
           return {
             id: slot.slotId,
+            type: "Teleconsultation",
+            "agent": {
+              "id": doctor.hprId,
+              "name": doctor.name,
+              "gender": doctor.gender,
+              "tags": {
+                "@abdm/gov/in/first_consultation": String(doctor.fees),
+                "@abdm/gov/in/upi_id": doctor.upiId,
+                "@abdm/gov/in/follow_up": String(doctor.fees),
+                "@abdm/gov/in/experience": String(doctor.experience),
+                "@abdm/gov/in/languages": doctor.languages?.join(", "),
+                "@abdm/gov/in/speciality": doctor.speciality,
+                "@abdm/gov/in/hpr_id": doctor.hprId,
+              }
+            },
             start: {
               time: { timestamp: slot.startTime }
             },

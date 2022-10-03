@@ -8,7 +8,7 @@ export type Doctor = {
   speciality: string;
   languages: string[];
   experience: number;
-
+  upiId: string;
 
   slots: Slot[]
 }
