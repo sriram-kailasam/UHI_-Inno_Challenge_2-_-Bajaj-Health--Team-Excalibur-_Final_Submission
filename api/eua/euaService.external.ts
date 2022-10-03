@@ -39,7 +39,6 @@ export async function searchDoctors(name: string): Promise<SearchResult[]> {
         }
       }))
 
-
     })
     return searchResults
   } catch {

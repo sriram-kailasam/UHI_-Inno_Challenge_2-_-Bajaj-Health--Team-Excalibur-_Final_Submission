@@ -5,7 +5,7 @@ import { onMessageDataSchema, OnMessageRequest } from "../dto/onMessage.dto";
 import { SocketServer } from "../../sockets";
 import { euaConsumerId, gatewayBaseUrl, hspaConsumerId, hspaConsumerUri } from "../../configuration";
 import { InitRequest, initSchema } from "./dto/init.dto";
-import { saveAppointment } from "../../appointments/appointmentsService";
+import { saveAppointment, bookGroupConsult } from "../../appointments/appointmentsService";
 import dayjs from 'dayjs'
 import { SearchRequest, searchRequestSchema } from "./dto/searchRequest.dto";
 import { getDoctorSlots, searchDoctors } from "../../doctors/doctorsService";
@@ -14,6 +14,7 @@ import { Doctor } from "../../doctors/dto/doctor.dto";
 import { HspaSearchResult } from "../../eua/dto/hspaSearchResult.dto";
 import { Slot } from "../../eua/dto/slot.dto";
 import { Appointment } from "../../appointments/dto/appointment.dto";
+import { ConfirmRequest, confirmSchema } from "./dto/confirm.dto";
 
 export function uhiHspaController() {
   const router = Router();
@@ -21,6 +22,7 @@ export function uhiHspaController() {
   router.post('/on_message', validateRequest('body', uhiPayload(onMessageDataSchema)), handleOnMessage);
   router.post("/search", validateRequest('body', uhiPayload(searchRequestSchema)), handleSearch)
   router.post('/init', validateRequest('body', uhiPayload(initSchema)), handleInit);
+  router.post('/confirm', validateRequest('body', uhiPayload(confirmSchema)), handleConfirm)
 
   return router;
 }
@@ -40,7 +42,6 @@ async function handleSearch(req: Request, res: Response) {
   const { message, context } = req.body as UhiPayload<SearchRequest>;
 
   const query = message.intent.fulfillment.agent.name || message.intent.fulfillment.agent.cred;
-
 
   if (query) {
     if (context.provider_uri) {
@@ -130,7 +131,7 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
       action: 'on_search',
       consumer_id: hspaConsumerId, provider_id: hspaConsumerId, provider_uri: hspaConsumerUri
     }
-  }
+  };
 
   console.log({ data: JSON.stringify(data) })
 
@@ -145,26 +146,50 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
 async function handleInit(req: Request, res: Response) {
   const { context, message } = req.body as UhiPayload<InitRequest>;
 
-  const appointment = await saveAppointment({
-    hprId: message.order.fulfillment.agent.id,
-    slotId: message.order.fulfillment.id,
-    startTime: dayjs(message.order.fulfillment.start.time.timestamp).toISOString(),
-    endTime: dayjs(message.order.fulfillment.end.time.timestamp).toISOString(),
-    isGroupConsult: false,
-    doctor: {
-      name: message.order.fulfillment.agent.name,
-      gender: message.order.fulfillment.agent.gender
-    },
-    patient: {
-      abhaAddress: message.order.customer.cred,
-      name: message.order.billing.name,
+  const { tags } = message.order.fulfillment;
+  const isGroupConsult = message.order.fulfillment.tags["@abdm/gov.in/group_consult"] ?? false;
+
+  let appointment: Appointment;
+
+  if (isGroupConsult) {
+    appointment = await bookGroupConsult({
+      slotId: message.order.fulfillment.id,
+      startTime: dayjs(message.order.fulfillment.start.time.timestamp).toISOString(),
+      endTime: dayjs(message.order.fulfillment.end.time.timestamp).toISOString(),
+      primaryDoctor: {
+        hprId: tags["@abdm/gov.in/primary_doctor_hpr_id"]!
+      },
+      secondaryDoctor: {
+        hprId: tags["@abdm/gov.in/secondary_doctor_hpr_id"]!
+      },
+      patient: {
+        abhaAddress: message.order.customer.cred,
+        name: message.order.billing.name,
+      }
     }
-  })
+    );
+  } else {
+    appointment = await saveAppointment({
+      isGroupConsult: false,
+      hprId: message.order.fulfillment.agent.id,
+      slotId: message.order.fulfillment.id,
+      startTime: dayjs(message.order.fulfillment.start.time.timestamp).toISOString(),
+      endTime: dayjs(message.order.fulfillment.end.time.timestamp).toISOString(),
+      doctor: {
+        name: message.order.fulfillment.agent.name,
+        gender: message.order.fulfillment.agent.gender
+      },
+      patient: {
+        abhaAddress: message.order.customer.cred,
+        name: message.order.billing.name,
+      }
+    });
 
+  }
 
-  sendInitCallback(context, appointment)
+  sendInitCallback(context, appointment);
 
-  res.json({ success: true })
+  res.json({ success: true });
 }
 
 async function sendInitCallback(context: { consumer_uri: string }, appointment: Appointment) {
@@ -218,7 +243,7 @@ async function sendInitCallback(context: { consumer_uri: string }, appointment: 
           },
         },
         "customer": {
-          "id": "",
+          "id": appointment.abhaId,
           "cred": appointment.abhaId
         },
         "payment": {
@@ -232,9 +257,24 @@ async function sendInitCallback(context: { consumer_uri: string }, appointment: 
   }
 
   await axios({
-    method: 'post',
     baseURL: context.consumer_uri,
     url: "/on_init",
+    method: 'post',
     data: data
   })
+}
+
+async function handleConfirm(req: Request, res: Response) {
+  const { context, message } = req.body as UhiPayload<ConfirmRequest>;
+
+  await axios({
+    baseURL: context.consumer_uri,
+    url: "/on_confirm",
+    method: "post",
+    data: {
+      context, message
+    }
+  });
+
+  res.json({ success: true })
 }

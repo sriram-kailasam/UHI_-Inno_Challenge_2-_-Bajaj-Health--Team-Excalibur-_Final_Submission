@@ -1,4 +1,4 @@
-import { string, z } from "zod"
+import { z } from "zod"
 
 export const saveAppointmentRequestSchema = z.object({
   startTime: z.string(),
@@ -25,12 +25,12 @@ export const bookGroupConsultRequestSchema = z.object({
 
   "primaryDoctor": z.object({
     "hprId": z.string(),
-    "name": z.string(),
+    "name": z.string().nullish(),
     "gender": z.string().nullish()
   }),
   "secondaryDoctor": z.object({
     "hprId": z.string(),
-    "name": z.string()
+    "name": z.string().nullish()
   }),
 
   "patient": z.object({

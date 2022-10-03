@@ -20,11 +20,12 @@ export async function saveAppointment(request: SaveAppointmentRequest): Promise<
   return appointment;
 }
 
-export async function bookGroupConsult(request: BookGroupConsultRequest) {
+export async function bookGroupConsult(request: BookGroupConsultRequest): Promise<Appointment> {
   const client = await getDbClient();
 
-  await client.db().collection('appointments').insertOne({
+  const appointment: Appointment = {
     id: uuid(),
+    createdAt: new Date(),
     startTime: new Date(request.startTime),
     endTime: new Date(request.endTime),
     slotId: request.slotId,
@@ -46,7 +47,11 @@ export async function bookGroupConsult(request: BookGroupConsultRequest) {
       name: request.patient.name,
       abhaAddress: request.patient.abhaAddress,
     }
-  })
+  };
+
+  await client.db().collection('appointments').insertOne(appointment);
+
+  return appointment;
 }
 
 export async function listAppointmentsByAbhaId(abhaAddress: string): Promise<Appointment[]> {

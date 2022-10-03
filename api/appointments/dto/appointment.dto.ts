@@ -9,12 +9,12 @@ export type Appointment = {
 
   isGroupConsult: boolean;
   groupConsult?: {
-    name: string;
+    name?: string | null;
     hprId: string;
   }
 
   doctor: {
-    name: string;
+    name?: string | null;
     gender?: string | null;
   },
 
