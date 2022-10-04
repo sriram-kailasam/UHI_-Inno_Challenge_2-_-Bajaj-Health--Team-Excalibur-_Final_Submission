@@ -45,7 +45,14 @@ async function handleSearch(req: Request, res: Response) {
 
   if (query) {
     if (context.provider_uri) {
-      const [doctor, slots] = await Promise.all([fetchDoctor(query), getDoctorSlots(query)]);
+      const startTime = dayjs(message.intent.fulfillment.start?.time.timestamp);
+      const endTime = message.intent.fulfillment.end?.time.timestamp ? dayjs(message.intent.fulfillment.end?.time.timestamp) : startTime.add(1, 'month');
+
+      const [doctor, slots] = await Promise.all([
+        fetchDoctor(query),
+        getDoctorSlots(query, startTime.toDate(), endTime.toDate())
+      ]);
+
       if (doctor) {
         await doctorSlotsCallback(context, doctor, slots);
       } else {

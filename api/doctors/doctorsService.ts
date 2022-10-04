@@ -19,11 +19,12 @@ export async function fetchDoctor(hprId: string): Promise<Doctor | null> {
   return doctor;
 }
 
-export async function getDoctorSlots(hprId: string): Promise<Slot[]> {
+export async function getDoctorSlots(hprId: string, startTime?: Date, endTime?: Date): Promise<Slot[]> {
   const client = await getDbClient()
   const doctor = await client.db().collection('doctors').findOne<Doctor>({ hprId })
 
+  startTime = startTime || new Date();
+  endTime = endTime || dayjs(startTime).add(1, 'month').toDate()
 
-  const now = new Date();
-  return doctor?.slots?.filter(slot => dayjs(slot.startTime).isAfter(now)) || [];
+  return doctor?.slots?.filter(slot => dayjs(slot.startTime).isBetween(startTime, endTime)) || [];
 }

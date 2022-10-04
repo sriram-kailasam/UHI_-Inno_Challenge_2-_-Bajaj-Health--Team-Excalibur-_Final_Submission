@@ -1,24 +1,5 @@
-import dayjs from "dayjs";
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import utc from 'dayjs/plugin/utc'
-
 import { z } from "zod"
-
-dayjs.extend(customParseFormat)
-dayjs.extend(utc);
-
-const withoutTimezoneFormat = "YYYY-MM-DDTHH:mm:ss";
-const withoutTimezoneLength = withoutTimezoneFormat.length;
-
-function addTimezone(time: string): string {
-  if (time?.length <= withoutTimezoneLength) {
-    const converted = dayjs(time, withoutTimezoneFormat).utcOffset("+0530", true).format();
-    console.log({ time, converted })
-    return converted
-  }
-
-  return time;
-}
+import { addTimezone } from "../../../util/addTimeZone"
 
 export const initSchema = z.object({
   order: z.object({
