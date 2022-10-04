@@ -15,6 +15,7 @@ import { HspaSearchResult } from "../../eua/dto/hspaSearchResult.dto";
 import { Slot } from "../../eua/dto/slot.dto";
 import { Appointment } from "../../appointments/dto/appointment.dto";
 import { ConfirmRequest, confirmSchema } from "./dto/confirm.dto";
+import { runSafe } from "../../util/runSafe";
 
 export function uhiHspaController() {
   const router = Router();
@@ -54,14 +55,14 @@ async function handleSearch(req: Request, res: Response) {
       ]);
 
       if (doctor) {
-        await doctorSlotsCallback(context, doctor, slots);
+        await runSafe(doctorSlotsCallback(context, doctor, slots));
       } else {
         console.log("Doctor not found for ", query)
       }
     } else {
       const results = await searchDoctors(query)
       if (results?.length) {
-        await searchDoctorCallback(context, results)
+        await runSafe(searchDoctorCallback(context, results))
       }
     }
   }
@@ -213,7 +214,7 @@ async function handleInit(req: Request, res: Response) {
 
   }
 
-  sendInitCallback(context, appointment);
+  runSafe(sendInitCallback(context, appointment));
 
   res.json({ success: true });
 }
@@ -285,7 +286,7 @@ async function sendInitCallback(context: { consumer_uri: string }, appointment: 
   await axios({
     baseURL: context.consumer_uri,
     url: "/on_init",
-    method: 'post',
+    method: 'POST',
     data: data
   })
 }
