@@ -217,73 +217,15 @@ async function handleInit(req: Request, res: Response) {
 
   }
 
-  runSafe(sendInitCallback(context, appointment));
+  runSafe(sendInitCallback({ context, message }));
 
   res.json({ success: true });
 }
 
-async function sendInitCallback(context: { consumer_uri: string }, appointment: Appointment) {
+async function sendInitCallback({ context, message }: UhiPayload<InitRequest>) {
   const data = {
-    "context": { ...context },
-    "message": {
-      "order": {
-        "id": appointment.id,
-        "item": {
-          "id": "1",
-          "descriptor": {
-            "name": "Consultation"
-          },
-          "price": {
-            "currency": "INR",
-            "value": "600"
-          },
-          "fulfillment_id": appointment.id
-        },
-        "fulfillment": {
-          "id": appointment.id,
-          "type": "Teleconsultation",
-          "agent": {
-            "id": appointment.hprId,
-            "name": appointment.doctor.name,
-            "gender": appointment.doctor.gender,
-            "tags": {
-            }
-          },
-          "start": {
-            "time": {
-              "timestamp": appointment.startTime
-            }
-          },
-          "end": {
-            "time": {
-              "timestamp": appointment.endTime
-            }
-          },
-          "tags": {
-            "@abdm/gov.in/slot_id": appointment.id
-          }
-        },
-        "billing": {
-          "name": appointment.patient.name,
-        },
-        "quote": {
-          "price": {
-            "currency": "INR",
-            "value": "1000"
-          },
-        },
-        "customer": {
-          "id": appointment.abhaId,
-          "cred": appointment.abhaId
-        },
-        "payment": {
-          "type": "ON-ORDER",
-          "status": "NOT-PAID",
-          "tl_method": null,
-          "params": null
-        }
-      }
-    }
+    "context": { ...context, action: 'on_init', consumer_id: hspaConsumerId },
+    "message": message
   }
 
   await axios({
@@ -302,7 +244,10 @@ async function handleConfirm(req: Request, res: Response) {
     url: "/on_confirm",
     method: "post",
     data: {
-      context, message
+      context: {
+        ...context, action: "on_confirm", consumer_id: hspaConsumerId
+      },
+      message
     }
   });
 
