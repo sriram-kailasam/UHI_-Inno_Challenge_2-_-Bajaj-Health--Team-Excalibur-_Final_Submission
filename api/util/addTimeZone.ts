@@ -10,7 +10,7 @@ const withoutTimezoneLength = withoutTimezoneFormat.length;
 
 export function addTimezone(time: string): string {
   if (time?.length <= withoutTimezoneLength) {
-    time + "+0530";
+    return time + "+0530";
   }
 
   return time;
