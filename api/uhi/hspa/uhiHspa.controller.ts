@@ -247,7 +247,7 @@ async function handleConfirm(req: Request, res: Response) {
       context: {
         ...context, action: "on_confirm", consumer_id: hspaConsumerId
       },
-      message
+      message: { ...message, state: "CONFIRMED" }
     }
   });
 
