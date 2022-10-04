@@ -80,6 +80,9 @@ async function doctorSlotsCallback(context: { consumer_uri: string }, doctor: Do
           return {
             id: slot.slotId,
             type: "Teleconsultation",
+            tags: {
+              "@abdm/gov.in/slot": slot.slotId
+            },
             "agent": {
               "id": doctor.hprId,
               "name": doctor.name,
