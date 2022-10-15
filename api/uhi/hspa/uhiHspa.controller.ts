@@ -16,6 +16,7 @@ import { Slot } from "../../eua/dto/slot.dto";
 import { Appointment } from "../../appointments/dto/appointment.dto";
 import { ConfirmRequest, confirmSchema } from "./dto/confirm.dto";
 import { runSafe } from "../../util/runSafe";
+import { getCache } from "../../cache";
 
 export function uhiHspaController() {
   const router = Router();
@@ -27,6 +28,8 @@ export function uhiHspaController() {
 
   return router;
 }
+
+const cache = getCache();
 
 async function handleOnMessage(req: Request, res: Response) {
   const request = req.body as UhiPayload<OnMessageRequest>;
@@ -177,28 +180,45 @@ async function handleInit(req: Request, res: Response) {
   const { context, message } = req.body as UhiPayload<InitRequest>;
 
   const { tags } = message.order.fulfillment;
-  const isGroupConsult = message.order.fulfillment.tags["@abdm/gov.in/group_consult"] ?? false;
+  const isGroupConsult = message.order.fulfillment.tags["@abdm/gov.in/groupConsultation"] === "true";
+
+  const abhaAddress = message.order.customer.cred;
+
+  cache.set(`providerUri:${abhaAddress}`, context.consumer_uri)
 
   let appointment: Appointment;
 
   if (isGroupConsult) {
+    const primaryHprId = tags["@abdm/gov.in/primaryHprAddress"]!
+    const secondaryHprId = tags["@abdm/gov.in/secondaryHprAddress"]!
+
+    cache.set(`providerUri:${primaryHprId}`, tags["@abdm/gov.in/primaryDoctorProviderUrl"])
+    cache.set(`providerUri:${secondaryHprId}`, tags["@abdm/gov.in/secondaryDoctorProviderUrl"])
+
     appointment = await bookGroupConsult({
       slotId: message.order.fulfillment.id,
       startTime: dayjs(message.order.fulfillment.start.time.timestamp).toISOString(),
       endTime: dayjs(message.order.fulfillment.end.time.timestamp).toISOString(),
       primaryDoctor: {
-        hprId: tags["@abdm/gov.in/primary_doctor_hpr_id"]!
+        hprId: primaryHprId,
+        name: tags["@abdm/gov.in/primaryDoctorName"],
+        gender: tags["@abdm/gov.in/primaryDoctorGender"]
       },
       secondaryDoctor: {
-        hprId: tags["@abdm/gov.in/secondary_doctor_hpr_id"]!
+        hprId: secondaryHprId,
+        name: tags["@abdm/gov.in/secondaryDoctorName"]
       },
       patient: {
-        abhaAddress: message.order.customer.cred,
+        abhaAddress,
         name: message.order.billing.name,
       }
     }
     );
   } else {
+    const hprId = message.order.fulfillment.agent.id;
+
+    cache.set(`providerUri:${hprId}`, context.consumer_uri);
+
     appointment = await saveAppointment({
       isGroupConsult: false,
       hprId: message.order.fulfillment.agent.id,

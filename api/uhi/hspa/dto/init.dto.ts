@@ -26,10 +26,19 @@ export const initSchema = z.object({
         })
       }),
       tags: z.object({
-        "@abdm/gov.in/slot_id": z.string().nullish(),
-        "@abdm/gov.in/group_consult": z.boolean().nullish(),
-        "@abdm/gov.in/primary_doctor_hpr_id": z.string().nullish(),
-        "@abdm/gov.in/secondary_doctor_hpr_id": z.string().nullish()
+        "@abdm/gov.in/groupConsultation": z.string().nullish(),
+        "@abdm/gov.in/primaryHprAddress": z.string().nullish(),
+        "@abdm/gov.in/secondaryHprAddress": z.string().nullish(),
+        "@abdm/gov.in/patientName": z.string().nullish(),
+        "@abdm/gov.in/patientPHRAddress": z.string().nullish(),
+        "@abdm/gov.in/patientGender": z.string().nullish(),
+        "@abdm/gov.in/primaryDoctorName": z.string().nullish(),
+        "@abdm/gov.in/primaryDoctorGender": z.string().nullish(),
+        "@abdm/gov.in/primaryDoctorProviderUrl": z.string().nullish(),
+        "@abdm/gov.in/secondaryDoctorName": z.string().nullish(),
+        "@abdm/gov.in/secondaryDoctorGender": z.string().nullish(),
+        "@abdm/gov.in/secondaryDoctorProviderUrl": z.string().nullish(),
+        "@abdm/gov.in/consumerUrl": z.string().nullish()
       })
     }),
     customer: z.object({ id: z.string(), cred: z.string() })
