@@ -179,7 +179,7 @@ async function searchDoctorCallback(context: { consumer_uri: string }, results: 
 async function handleInit(req: Request, res: Response) {
   const { context, message } = req.body as UhiPayload<InitRequest>;
 
-  const { tags } = message.order.fulfillment;
+  const { tags } = message.order.fulfillment.agent;
   const isGroupConsult = message.order.fulfillment.agent.tags["@abdm/gov.in/groupConsultation"] === "true";
 
   const abhaAddress = message.order.customer.cred;
@@ -189,8 +189,8 @@ async function handleInit(req: Request, res: Response) {
   let appointment: Appointment;
 
   if (isGroupConsult) {
-    const primaryHprId = message.order.fulfillment.agent.tags["@abdm/gov.in/primaryHprAddress"]!
-    const secondaryHprId = message.order.fulfillment.agent.tags["@abdm/gov.in/secondaryHprAddress"]!
+    const primaryHprId = tags["@abdm/gov.in/primaryHprAddress"]!
+    const secondaryHprId = tags["@abdm/gov.in/secondaryHprAddress"]!
 
     cache.set(`providerUri:${primaryHprId}`, tags["@abdm/gov.in/primaryDoctorProviderUrl"])
     cache.set(`providerUri:${secondaryHprId}`, tags["@abdm/gov.in/secondaryDoctorProviderUrl"])
