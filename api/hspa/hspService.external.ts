@@ -33,9 +33,9 @@ export async function sendMessage(payload: SendMessageRequest) {
               "consumer_uri": baseUrl,
               "provider_id": process.env.HSPA_CONSUMER_ID,
               "provider_uri": process.env.HSPA_CONSUMER_URI,
-              "message_id": uuid(),
+              "message_id": "b86fe6c3-bdb3-4969-95ab-d183bb950115",
               "timestamp": new Date().toISOString(),
-              "transaction_id": uuid()
+              "transaction_id": "4433dd66-4c46-4514-a448-58322ae7f80d"
             },
             "message": {
               "intent": {
