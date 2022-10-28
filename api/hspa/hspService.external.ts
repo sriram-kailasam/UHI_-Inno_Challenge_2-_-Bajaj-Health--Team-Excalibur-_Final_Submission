@@ -42,12 +42,18 @@ export async function sendMessage(payload: SendMessageRequest) {
                 "chat": {
                   "sender": {
                     "person": {
-                      "cred": payload.senderId
+                      "cred": payload.senderId,
+                      "name": "Sriram Kailasam",
+                      "gender": "M",
+                      "image": "image",
                     }
                   },
                   "receiver": {
                     "person": {
-                      "cred": receiverId
+                      "cred": receiverId,
+                      "name": "Ganesh Vikram Borse",
+                      "gender": "M",
+                      "image": "image",
                     }
                   },
                   "content": {
