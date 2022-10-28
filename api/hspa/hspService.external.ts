@@ -30,8 +30,9 @@ export async function sendMessage(payload: SendMessageRequest) {
               "city": "std:080",
               "action": "message",
               "core_version": "0.7.1",
-              "consumer_id": process.env.HSPA_CONSUMER_ID,
-              "consumer_uri": process.env.HSPA_CONSUMER_URI,
+              "consumer_uri": baseUrl,
+              "provider_id": process.env.HSPA_CONSUMER_ID,
+              "provider_uri": process.env.HSPA_CONSUMER_URI,
               "message_id": uuid(),
               "timestamp": new Date().toISOString(),
               "transaction_id": uuid()
