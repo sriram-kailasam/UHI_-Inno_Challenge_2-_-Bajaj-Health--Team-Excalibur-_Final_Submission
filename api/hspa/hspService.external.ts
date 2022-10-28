@@ -45,7 +45,7 @@ export async function sendMessage(payload: SendMessageRequest) {
                       "cred": payload.senderId
                     }
                   },
-                  "reciever": {
+                  "receiver": {
                     "person": {
                       "cred": receiverId
                     }
