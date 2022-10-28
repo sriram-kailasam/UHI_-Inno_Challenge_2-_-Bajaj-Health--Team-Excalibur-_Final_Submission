@@ -28,7 +28,7 @@ export async function sendMessage(payload: SendMessageRequest) {
               "domain": "nic2004:85111",
               "country": "IND",
               "city": "std:080",
-              "action": "message",
+              "action": "on_message",
               "core_version": "0.7.1",
               "consumer_uri": baseUrl,
               "provider_id": process.env.HSPA_CONSUMER_ID,
