@@ -51,7 +51,8 @@ export async function sendMessage(payload: SendMessageRequest) {
                   },
                   "content": {
                     "content_id": payload.content.id,
-                    "content_value": JSON.stringify(payload)
+                    "content_value": JSON.stringify(payload),
+                    "content_type": "video_call_signalling"
                   },
                   "time": {
                     "timestamp": payload.timestamp
