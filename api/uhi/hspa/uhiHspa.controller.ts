@@ -184,7 +184,7 @@ async function handleInit(req: Request, res: Response) {
 
   const abhaAddress = message.order.customer.cred;
 
-  cache.set(`providerUri:${abhaAddress}`, context.consumer_uri)
+  cache.set(`providerUri:${abhaAddress}`, context.consumer_uri);
 
   let appointment: Appointment;
 
@@ -236,6 +236,8 @@ async function handleInit(req: Request, res: Response) {
     });
 
   }
+
+  cache.set(`transactionId:${appointment.id}`, context.transaction_id);
 
   runSafe(sendInitCallback({ context, message }));
 
