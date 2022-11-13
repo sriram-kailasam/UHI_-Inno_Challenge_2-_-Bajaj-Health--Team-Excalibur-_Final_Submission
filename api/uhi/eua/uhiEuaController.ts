@@ -13,7 +13,10 @@ export function uhiEuaController() {
   const router = Router()
 
   router.post('/on_message', validateRequest('body', uhiPayload(onMessageDataSchema)), handleOnMessage)
-  router.post('/on_search', validateRequest('body', z.union([gatewayOnSearchRequestSchema, uhiPayload(hspaSearchResultSchema)])), handleOnSearch)
+  router.post('/on_search', validateRequest('body', z.union([
+    uhiPayload(gatewayOnSearchRequestSchema),
+    uhiPayload(hspaSearchResultSchema)
+  ])), handleOnSearch)
 
   return router;
 }
@@ -31,7 +34,7 @@ async function handleOnMessage(req: Request, res: Response) {
 }
 
 async function handleOnSearch(req: Request, res: Response) {
-  const resultMessage = req.body as GatewayOnSearchRequest | UhiPayload<HspaSearchResult>;
+  const resultMessage = req.body as UhiPayload<GatewayOnSearchRequest> | UhiPayload<HspaSearchResult>;
 
   const transactionId = resultMessage.context.transaction_id;
   console.log("search result received", transactionId)

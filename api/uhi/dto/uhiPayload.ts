@@ -9,6 +9,7 @@ export type UhiPayload<T> = {
   context: {
     consumer_id: string;
     consumer_uri: string;
+    provider_id?: string
     provider_uri?: string;
     transaction_id?: string;
     action?: string;

@@ -16,12 +16,12 @@ const cache = getCache();
 export async function searchDoctors(name: string): Promise<SearchResult[]> {
   const transactionId = await sendSearchDoctorsRequest(name);
   try {
-    const results = await waitForData<GatewayOnSearchRequest[]>(`gatewaySearch:${transactionId}`, 1000, 5)
+    const results = await waitForData<UhiPayload<GatewayOnSearchRequest>[]>(`gatewaySearch:${transactionId}`, 1000, 5)
     let searchResults: SearchResult[] = [];
 
     results.forEach(result => {
       console.log({ catalog: JSON.stringify(result.message.catalog) })
-      searchResults = searchResults.concat(result.message.catalog.fulfillments?.map(fulfillment => {
+      searchResults = searchResults.concat(result.message.catalog.providers[0]?.fulfillments?.map(fulfillment => {
         const hprId = fulfillment.agent.id;
         cache.set(`providerUri:${hprId}`, result.context.provider_uri)
         cache.set(`providerId:${hprId}`, result.context.provider_id)
@@ -33,8 +33,7 @@ export async function searchDoctors(name: string): Promise<SearchResult[]> {
           experience: Number(fulfillment.agent.tags?.["@abdm/gov/in/experience"]),
           fees: Number(fulfillment.agent.tags?.["@abdm/gov/in/first_consultation"]),
           gender: fulfillment.agent.gender,
-          imageUri: fulfillment.agent.image,
-          speciality: fulfillment.agent.tags?.["@abdm/gov/in/speciality"],
+          speciality: "Cardiology",
           languages: fulfillment.agent.tags?.["@abdm/gov/in/languages"]?.split(',')
         }
       }))
@@ -105,7 +104,7 @@ export async function getSlots(hprId: string): Promise<Slot[]> {
   const result = await waitForData<UhiPayload<HspaSearchResult>[]>(`gatewaySearch:${transactionId}`);
 
   console.log({ result: JSON.stringify(result) })
-  return result[0]?.message.catalog.fulfillments?.map((fulfillment: any) => {
+  return result[0]?.message.catalog.providers[0]?.fulfillments?.map((fulfillment: any) => {
     return {
       slotId: fulfillment.id,
       startTime: dayjs(fulfillment.start.time.timestamp).toISOString(),

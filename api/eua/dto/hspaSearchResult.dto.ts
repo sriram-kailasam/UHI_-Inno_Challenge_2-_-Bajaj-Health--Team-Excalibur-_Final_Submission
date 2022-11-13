@@ -2,11 +2,23 @@ import { z } from "zod"
 
 export const hspaSearchResultSchema = z.object({
   catalog: z.object({
-    fulfillments: z.array(
+    descriptor: z.object({
+      name: z.string().optional()
+    }).optional(),
+    providers: z.array(
       z.object({
-        id: z.string(),
-        start: z.object({ time: z.object({ timestamp: z.string() }) }),
-        end: z.object({ time: z.object({ timestamp: z.string() }) }),
+        id: z.string().optional(),
+        descriptor: z.object({
+          name: z.string().optional()
+        }).optional(),
+        fulfillments: z.array(
+          z.object({
+            id: z.string(),
+            start: z.object({ time: z.object({ timestamp: z.string() }) }),
+            end: z.object({ time: z.object({ timestamp: z.string() }) }),
+          })
+        ),
+        locations: z.array(z.any())
       })
     )
   })

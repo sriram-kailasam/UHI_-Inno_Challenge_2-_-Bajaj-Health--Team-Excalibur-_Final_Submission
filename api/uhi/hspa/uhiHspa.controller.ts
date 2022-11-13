@@ -17,6 +17,7 @@ import { Appointment } from "../../appointments/dto/appointment.dto";
 import { ConfirmRequest, confirmSchema } from "./dto/confirm.dto";
 import { runSafe } from "../../util/runSafe";
 import { getCache } from "../../cache";
+import { GatewayOnSearchRequest } from "../eua/dto/gatewayOnSearch.dto";
 
 export function uhiHspaController() {
   const router = Router();
@@ -79,33 +80,58 @@ async function doctorSlotsCallback(context: { consumer_uri: string }, doctor: Do
     context: { ...context, action: 'on_search', consumer_id: hspaConsumerId! },
     message: {
       catalog: {
-        fulfillments: slots.map(slot => {
-          return {
-            id: slot.slotId,
-            type: "Teleconsultation",
-            tags: {
-              "@abdm/gov.in/slot": slot.slotId
-            },
-            "agent": {
-              "id": doctor.hprId,
-              "name": doctor.name,
-              "gender": doctor.gender,
-              "tags": {
-                "@abdm/gov/in/first_consultation": String(doctor.fees),
-                "@abdm/gov/in/upi_id": doctor.upiId,
-                "@abdm/gov/in/follow_up": String(doctor.fees),
-                "@abdm/gov/in/experience": String(doctor.experience),
-                "@abdm/gov/in/languages": doctor.languages?.join(", "),
-                "@abdm/gov/in/speciality": doctor.speciality,
-                "@abdm/gov/in/hpr_id": doctor.hprId,
-              }
-            },
-            start: {
-              time: { timestamp: slot.startTime }
-            },
-            end: { time: { timestamp: slot.endTime } }
-          }
-        })
+        providers: [{
+          id: "1",
+          descriptor: {
+            name: "bfhl-HSPA"
+          },
+          fulfillments: slots.map(slot => {
+            return {
+              id: slot.slotId,
+              type: "Teleconsultation",
+              tags: {
+                "@abdm/gov.in/slot": slot.slotId
+              },
+              "agent": {
+                "id": doctor.hprId,
+                "name": doctor.name,
+                "gender": doctor.gender,
+                "tags": {
+                  "@abdm/gov/in/first_consultation": String(doctor.fees),
+                  "@abdm/gov/in/upi_id": doctor.upiId,
+                  "@abdm/gov/in/follow_up": String(doctor.fees),
+                  "@abdm/gov/in/experience": String(doctor.experience),
+                  "@abdm/gov/in/languages": doctor.languages?.join(", "),
+                  "@abdm/gov/in/speciality": doctor.speciality,
+                  "@abdm/gov/in/hpr_id": doctor.hprId,
+                }
+              },
+              start: {
+                time: { timestamp: slot.startTime }
+              },
+              end: { time: { timestamp: slot.endTime } }
+            }
+          }),
+          "locations": [
+            {
+              "id": "1",
+              "descriptor": {
+                "name": "Reference HSPA"
+              },
+              "city": {
+                "name": "Delhi",
+                "code": "011"
+              },
+              "country": {
+                "name": "INDIA",
+                "code": "+91"
+              },
+              "gps": "28.629855426041697 77.21924201083478",
+              "address": "3rd, 7th & 9th Floor, Tower-L, Jeevan Bharati Building, Connaught Place, New Delhi, Delhi 110001"
+            }
+          ]
+        }],
+
       }
     }
   }
@@ -119,50 +145,70 @@ async function doctorSlotsCallback(context: { consumer_uri: string }, doctor: Do
 }
 
 async function searchDoctorCallback(context: { consumer_uri: string }, results: Doctor[]) {
-  const data = {
+  const fulfillments = results.map((doctor, index) => {
+    return {
+      "id": String(index),
+      "type": "TeleConsultation",
+      "agent": {
+        "id": doctor.hprId,
+        "name": doctor.name,
+        "gender": doctor.gender,
+        "tags": {
+          "@abdm/gov/in/first_consultation": String(doctor.fees),
+          "@abdm/gov/in/experience": String(doctor.experience),
+          "@abdm/gov/in/languages": doctor.languages.join(','),
+          "@abdm/gov/in/speciality": doctor.speciality,
+          "@abdm/gov/in/hpr_id": doctor.hprId,
+        }
+      },
+    }
+  });
+
+  const items = results.map((doctor, index) => {
+    return {
+      "id": String(index),
+      "descriptor": {
+        "name": "Consultation"
+      },
+      category_id: String(index),
+      "price": {
+        "currency": "INR",
+        "value": String(doctor.fees)
+      },
+      "fulfillment_id": String(index)
+    }
+  });
+
+  const categories = [{
+    "id": "0",
+    "descriptor": {
+      "name": "Cardiology"
+    }
+  }]
+
+  const data: UhiPayload<GatewayOnSearchRequest> = {
     "message": {
       "catalog": {
         "descriptor": {
           "name": "HSPA"
         },
-        "items": results.map((doctor, index) => {
-          return {
-            "id": String(index),
-            "descriptor": {
-              "name": "Consultation"
-            },
-            "price": {
-              "currency": "INR",
-              "value": String(doctor.fees)
-            },
-            "fulfillment_id": String(index)
-          }
-        }),
-        "fulfillments": results.map((doctor, index) => {
-          return {
-            "id": String(index),
-            "type": "TeleConsultation",
-            "agent": {
-              "id": doctor.hprId,
-              "name": doctor.name,
-              "gender": doctor.gender,
-              "tags": {
-                "@abdm/gov/in/first_consultation": String(doctor.fees),
-                "@abdm/gov/in/experience": String(doctor.experience),
-                "@abdm/gov/in/languages": doctor.languages.join(','),
-                "@abdm/gov/in/speciality": doctor.speciality,
-                "@abdm/gov/in/hpr_id": doctor.hprId,
-              }
-            },
-          }
-        })
+        providers: [{
+          id: "1",
+          descriptor: {
+            name: "bfhl-HSPA"
+          },
+          categories,
+          fulfillments,
+          locations: [],
+          items
+        }],
       },
-      "order_id": null
     },
+
     "context": {
       ...context,
       action: 'on_search',
-      consumer_id: hspaConsumerId, provider_id: hspaConsumerId, provider_uri: hspaConsumerUri
+      consumer_id: hspaConsumerId!, provider_id: hspaConsumerId, provider_uri: hspaConsumerUri
     }
   };
 
