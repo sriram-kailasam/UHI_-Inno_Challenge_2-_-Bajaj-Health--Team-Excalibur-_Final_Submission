@@ -25,6 +25,7 @@ const VideoCall: FC<Props> = ({}) => {
     clientId = "mohit@hpr.abdm",
     receiverIds = ["airesh@abha"],
     isPrimaryDoctor = true,
+    appointmentId,
   } = videoCallData || {};
 
   const [state, setState] = useSetState<State>({
@@ -133,6 +134,7 @@ const VideoCall: FC<Props> = ({}) => {
 
         sendMessage({
           senderId: clientId,
+          appointmentId,
           receiverId: receiverIds,
           timestamp: new Date(),
           content: {
@@ -229,6 +231,7 @@ const VideoCall: FC<Props> = ({}) => {
 
         sendMessage({
           senderId: clientId,
+          appointmentId,
           receiverId: receiverIds,
           timestamp: new Date(),
           content: {
@@ -266,6 +269,7 @@ const VideoCall: FC<Props> = ({}) => {
         // Send Answer to other peer
         sendMessage({
           senderId: clientId,
+          appointmentId,
           receiverId: receiverIds,
           timestamp: new Date(),
           content: {

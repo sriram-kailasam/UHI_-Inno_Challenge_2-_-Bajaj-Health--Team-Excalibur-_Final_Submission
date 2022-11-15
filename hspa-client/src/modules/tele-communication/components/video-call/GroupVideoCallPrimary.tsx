@@ -30,6 +30,7 @@ const GroupVideoCallPrimary: FC<Props> = () => {
     clientId = "mohit@hpr.abdm",
     patientId = "airesh@abha",
     remoteDoctorId = "sriram@hpr.abdm",
+    appointmentId,
   } = videoCallData || {};
 
   const [state, setState] = useSetState<State>({
@@ -139,6 +140,7 @@ const GroupVideoCallPrimary: FC<Props> = () => {
 
         sendMessage({
           senderId: clientId,
+          appointmentId,
           receiverId: [index === 1 ? remoteDoctorId : patientId],
           timestamp: new Date(),
           content: {

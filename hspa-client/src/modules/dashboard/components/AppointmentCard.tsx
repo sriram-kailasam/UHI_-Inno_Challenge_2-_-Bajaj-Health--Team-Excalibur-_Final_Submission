@@ -36,13 +36,15 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
           clientId: localStorage.getItem('hpAddress')?.toString() || '', // logged in doctr
           patientId: appointmentData.patient.abhaAddress,
           remoteDoctorId: `${appointmentData.groupConsult?.hprId}`,
+          appointmentId: appointmentData.appointment.id,
         }})
       } else {
         receiverIds.push(`${appointmentData.hprId}`)
         navigate('../grp-video-sec', { state: {
           clientId: localStorage.getItem('hpAddress')?.toString() || '',
           patientId: appointmentData.patient.abhaAddress,
-          remoteDoctorId: `${appointmentData.hprId}`
+          remoteDoctorId: `${appointmentData.hprId}`,
+          appointmentId: appointmentData.appointment.id,
         }})
       }
     } else {
@@ -50,6 +52,7 @@ const AppointmentCard: React.FC<AppointmentData> = ({ ...appointmentData }) => {
         clientId: localStorage.getItem('hpAddress')?.toString() || '', // logged in doctr
         receiverIds, // patient abha and secondary
         isPrimaryDoctor: (localStorage.getItem('hpAddress')?.toString() || '') !== otherDoctor ,// if logged doctor is primary or not
+        appointmentId: appointmentData.appointment.id,
       }})
     }
   }

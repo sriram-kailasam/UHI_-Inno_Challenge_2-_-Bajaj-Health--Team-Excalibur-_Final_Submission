@@ -26,6 +26,7 @@ const GroupVideoCall: FC<Props> = () => {
     clientId = "mohit@hpr.abdm",
     patientId = "airesh@abha",
     remoteDoctorId = "sriram@hpr.abdm",
+    appointmentId,
   } = videoCallData || {};
 
   const [state, setState] = useSetState<State>({
@@ -53,6 +54,7 @@ const GroupVideoCall: FC<Props> = () => {
       interval = setInterval(() => {
         sendMessage({
           senderId: clientId,
+          appointmentId,
           receiverId: [remoteDoctorId],
           timestamp: new Date(),
           content: {
@@ -60,6 +62,7 @@ const GroupVideoCall: FC<Props> = () => {
             value: JSON.stringify({
               type: "READY",
               data: true,
+              sender: clientId
             }),
           },
         });
@@ -89,15 +92,12 @@ const GroupVideoCall: FC<Props> = () => {
     }
 
     const parsedMessage = JSON.parse(message);
-    const { senderId, content } = parsedMessage;
+    const { data, sender: senderId, type } = parsedMessage;
 
+    console.log("Message received", parsedMessage);
     if (senderId === clientId) {
       return;
     }
-
-    const { value } = content;
-    const parsedContentValue = JSON.parse(value);
-    const { type, data } = parsedContentValue;
 
     if (type === "OFFER") {
       handleOffer({ offer: data, senderId });
@@ -155,13 +155,24 @@ const GroupVideoCall: FC<Props> = () => {
 
         sendMessage({
           senderId: clientId,
+          appointmentId,
           receiverId: [index === 1 ? remoteDoctorId : patientId],
           timestamp: new Date(),
           content: {
             id: uuid(),
             value: JSON.stringify({
               type: "CANDIDATE",
-              data: event.candidate,
+              data: {
+                to: patientId,
+                from: clientId,
+                session_id: `${clientId}-${patientId}`,
+                candidate: {
+                  sdpMLineIndex: event.candidate.sdpMLineIndex,
+                  sdpMid: event.candidate.sdpMid,
+                  candidate: event.candidate.candidate,
+                },
+                sender: clientId,
+              },
             }),
           },
         });
@@ -182,18 +193,26 @@ const GroupVideoCall: FC<Props> = () => {
       handleCandidateDoctor(candidate);
     }
   };
-  const handleCandidateDoctor = (candidate: any) => {
+  const handleCandidateDoctor = ({ candidate }: { candidate: any }) => {
     // Avoid accepting the ice candidate if this is a message created by the current peer
-    log("Adding Ice Candidate - " + candidate.candidate);
+    log("Adding Ice Candidate - ", candidate.candidate);
     (primaryDoctorConnection.current as any).addIceCandidate(
-      new RTCIceCandidate(candidate)
+      new RTCIceCandidate({
+        candidate: candidate.candidate,
+        sdpMid: candidate.sdpMid,
+        sdpMLineIndex: candidate.sdpMLineIndex,
+      })
     );
   };
-  const handleCandidatePatient = (candidate: any) => {
+  const handleCandidatePatient = ({ candidate }: { candidate: any }) => {
     // Avoid accepting the ice candidate if this is a message created by the current peer
     log("Adding Ice Candidate - " + candidate.candidate);
     (patientConnection.current as any).addIceCandidate(
-      new RTCIceCandidate(candidate)
+      new RTCIceCandidate({
+        candidate: candidate.candidate,
+        sdpMid: candidate.sdpMid,
+        sdpMLineIndex: candidate.sdpMLineIndex,
+      })
     );
   };
 
@@ -216,7 +235,10 @@ const GroupVideoCall: FC<Props> = () => {
   const handleOfferDoctor = (offer: any) => {
     log("Recieved The Offer.");
     (primaryDoctorConnection.current as any).setRemoteDescription(
-      new RTCSessionDescription(offer)
+      new RTCSessionDescription({
+        sdp: offer.description.sdp,
+        type: offer.description.type,
+      })
     );
   };
 
@@ -234,11 +256,11 @@ const GroupVideoCall: FC<Props> = () => {
       handleAnswerPatient(answer);
     }
   };
-  const handleAnswerPatient = (answer: any) => {
+  const handleAnswerPatient = ({ description: answer }: { description: any }) => {
     // Avoid accepting the Answer if this is a message created by the current peer
-    log("Recieved The Answer");
+    log("Recieved The Answer", answer);
     (patientConnection.current as any).setRemoteDescription(
-      new RTCSessionDescription(answer)
+      new RTCSessionDescription({ sdp: answer.sdp, type: answer.type })
     );
   };
 
@@ -255,13 +277,21 @@ const GroupVideoCall: FC<Props> = () => {
 
         sendMessage({
           senderId: clientId,
+          appointmentId,
           receiverId: [patientId],
           timestamp: new Date(),
           content: {
             id: uuid(),
             value: JSON.stringify({
               type: "OFFER",
-              data: offer,
+              data: {
+                to: patientId,
+                from: clientId,
+                session_id: `${clientId}-${patientId}`,
+                description: { sdp: offer.sdp, type: offer.type },
+                media: "video",
+              },
+              sender: clientId
             }),
           },
         });
@@ -292,13 +322,20 @@ const GroupVideoCall: FC<Props> = () => {
         // Send Answer to other peer
         sendMessage({
           senderId: clientId,
+          appointmentId,
           receiverId: [remoteDoctorId],
           timestamp: new Date(),
           content: {
             id: uuid(),
             value: JSON.stringify({
               type: "ANSWER",
-              data: answer,
+              data: {
+                to: remoteDoctorId,
+                from: clientId,
+                session_id: `${remoteDoctorId}-${clientId}`,
+                description: { sdp: answer.sdp, type: answer.type },
+              },
+              sender: clientId,
             }),
           },
         });
